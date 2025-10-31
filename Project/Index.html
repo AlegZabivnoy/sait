@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Wai Kinomo">
+    <title>Wai Kinomo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="Исходники/Logo.png" alt="Логотип" class="logo-img">
+                    <span class="logo-text">МійСайт</span>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#home" class="nav-link">Головна</a></li>
+                        <li class="nav-item"><a href="#services" class="nav-link">Послуги</a></li>
+                        <li class="nav-item"><a href="#about" class="nav-link">Про нас</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">Контакти</a></li>
+                    </ul>
+                </nav>
+                <button class="menu-toggle" aria-label="Відкрити меню">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Головна секція (Hero) -->
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title"></h1>
+                    <p class="hero-subtitle">Професійна розробка сайтів, які приносять результат</p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn btn-primary">Наші послуги</a>
+                        <a href="#contact" class="btn btn-secondary">Зв'язатися</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція послуг -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2 class="section-title">Наші послуги</h2>
+                <p class="section-subtitle">Комплексні рішення для вашого бізнесу</p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
+                        </div>
+                        <h3 class="service-title">Веб-розробка</h3>
+                        <p class="service-description">Створення сучасних адаптивних сайтів з використанням новітніх технологій</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
+                        </div>
+                        <h3 class="service-title">UI/UX Дизайн</h3>
+                        <p class="service-description">Розробка зручного та привабливого інтерфейсу для ваших користувачів</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
+                        </div>
+                        <h3 class="service-title">SEO Оптимізація</h3>
+                        <p class="service-description">Підвищення видимості вашого сайту в пошукових системах</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
+                        </div>
+                        <h3 class="service-title">Підтримка</h3>
+                        <p class="service-description">Технічна підтримка та оновлення вашого веб-проекту 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція "Про нас" -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">Про нас</h2>
+                        <p>Ми — команда професіоналів з багаторічним досвідом у веб-розробці. Наша мета — створювати якісні веб-рішення, які допомагають бізнесу розвиватися.</p>
+                        <p>Працюємо з найсучаснішими технологіями та завжди слідкуємо за трендами в індустрії.</p>
+                        <a href="#contact" class="btn btn-primary">Зв'язатися з нами</a>
+                    </div>
+                    <div class="about-image">
+                        <img src="Исходники/Bacground.png" alt="Про нас" class="about-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секція контактів -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title">Зв'яжіться з нами</h2>
+                <p class="section-subtitle">Готові почати ваш проект? Напишіть нам!</p>
+                
+                <form class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Ім'я</label>
+                            <input type="text" id="name" name="name" placeholder="Ваше ім'я" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Повідомлення</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Ваше повідомлення..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Відправити</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>МійСайт</h4>
+                    <p>Професійні веб-рішення для вашого бізнесу</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Навігація</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Головна</a></li>
+                        <li><a href="#services">Послуги</a></li>
+                        <li><a href="#about">Про нас</a></li>
+                        <li><a href="#contact">Контакти</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакти</h4>
+                    <ul class="footer-links">
+                        <li>Email: info@example.com</li>
+                        <li>Тел: +380 XX XXX XX XX</li>
+                        <li>Адреса: м. Київ, Україна</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 МійСайт. Всі права захищені.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
