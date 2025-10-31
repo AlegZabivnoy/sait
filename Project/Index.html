@@ -3,168 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Wai Kinomo">
-    <title>Wai Kinomo</title>
+    <meta name="description" content="Experience Japan's Culinary Soul at Wai Kimono">
+    <title>Wai Kimono - Japanese Restaurant</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="Исходники/Logo.png" alt="Логотип" class="logo-img">
-                    <span class="logo-text">МійСайт</span>
-                </div>
-                <nav class="nav">
-                    <ul class="nav-list">
-                        <li class="nav-item"><a href="#home" class="nav-link">Головна</a></li>
-                        <li class="nav-item"><a href="#services" class="nav-link">Послуги</a></li>
-                        <li class="nav-item"><a href="#about" class="nav-link">Про нас</a></li>
-                        <li class="nav-item"><a href="#contact" class="nav-link">Контакти</a></li>
-                    </ul>
-                </nav>
-                <button class="menu-toggle" aria-label="Відкрити меню">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <img src="Исходники/Logo.png" alt="Wai Kimono Logo" class="logo-img">
+                <span class="logo-text">Wai Kimono</span>
             </div>
         </div>
-    </header>
 
-    <!-- Головна секція (Hero) -->
-    <main>
-        <section class="hero" id="home">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title"></h1>
-                    <p class="hero-subtitle">Професійна розробка сайтів, які приносять результат</p>
-                    <div class="hero-buttons">
-                        <a href="#services" class="btn btn-primary">Наші послуги</a>
-                        <a href="#contact" class="btn btn-secondary">Зв'язатися</a>
+        <nav class="sidebar-nav">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#menu" class="nav-link">Menu</a>
+            <a href="#events" class="nav-link">Events</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#location" class="nav-link">Location</a>
+            <a href="#booking" class="nav-link book-btn">Book a table</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p class="social-title">Our social media</p>
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="Instagram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                    </svg>
+                </a>
+                <a href="#" class="social-link" aria-label="LinkedIn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Homepage Section -->
+        <section class="hero-section" id="home">
+            <div class="hero-bg">
+                <img src="Исходники/Bacground.png" alt="Japanese Cuisine" class="hero-image">
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <p class="hero-label">Homepage</p>
+                <h1 class="hero-title">Experience Japan's Culinary Soul at Wai Kimono.</h1>
+                <div class="hero-description">
+                    <p>Welcome to Wai Kimono, where culinary excellence meets Japanese tradition. Wai Kimono offers an immersive dining experience inspired by the rich heritage of Japan. Our chefs meticulously prepare each dish, blending traditional techniques with innovative flair to create a symphony of flavors that will tantalize your taste buds.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section class="menu-section" id="menu">
+            <div class="section-content">
+                <p class="section-label">Menu</p>
+                <h2 class="section-title-white">Our Signature Dishes</h2>
+                <p class="section-description">Discover our carefully curated menu featuring authentic Japanese cuisine prepared by master chefs.</p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section class="events-section" id="events">
+            <div class="section-content">
+                <p class="section-label">Events</p>
+                <h2 class="section-title-white">Special Events</h2>
+                <p class="section-description">Join us for exclusive culinary events, seasonal celebrations, and traditional Japanese ceremonies.</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="section-content">
+                <p class="section-label">About Us</p>
+                <h2 class="section-title-white">Our Story</h2>
+                <p class="section-description">Founded with a passion for authentic Japanese cuisine, Wai Kimono brings the essence of Japan to your table. Our master chefs have trained in Tokyo's finest establishments, bringing decades of experience and traditional techniques to every dish we serve.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="section-content">
+                <p class="section-label">Contact</p>
+                <h2 class="section-title-white">Get in Touch</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Address</h3>
+                        <p>123 Sakura Street<br>Tokyo District, Kyiv</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Phone</h3>
+                        <p>+380 XX XXX XX XX</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p>info@waikimono.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Hours</h3>
+                        <p>Mon-Fri: 12:00 - 23:00<br>Sat-Sun: 11:00 - 00:00</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Секція послуг -->
-        <section class="services" id="services">
-            <div class="container">
-                <h2 class="section-title">Наші послуги</h2>
-                <p class="section-subtitle">Комплексні рішення для вашого бізнесу</p>
-                
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
-                        </div>
-                        <h3 class="service-title">Веб-розробка</h3>
-                        <p class="service-description">Створення сучасних адаптивних сайтів з використанням новітніх технологій</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
-                        </div>
-                        <h3 class="service-title">UI/UX Дизайн</h3>
-                        <p class="service-description">Розробка зручного та привабливого інтерфейсу для ваших користувачів</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
-                        </div>
-                        <h3 class="service-title">SEO Оптимізація</h3>
-                        <p class="service-description">Підвищення видимості вашого сайту в пошукових системах</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <img src="Исходники/Icons.png" alt="Іконка" class="icon-img">
-                        </div>
-                        <h3 class="service-title">Підтримка</h3>
-                        <p class="service-description">Технічна підтримка та оновлення вашого веб-проекту 24/7</p>
-                    </div>
-                </div>
+        <!-- Location Section -->
+        <section class="location-section" id="location">
+            <div class="section-content">
+                <p class="section-label">Location</p>
+                <h2 class="section-title-white">Find Us</h2>
+                <p class="section-description">Located in the heart of the city, easily accessible by public transport.</p>
             </div>
         </section>
 
-        <!-- Секція "Про нас" -->
-        <section class="about" id="about">
-            <div class="container">
-                <div class="about-content">
-                    <div class="about-text">
-                        <h2 class="section-title">Про нас</h2>
-                        <p>Ми — команда професіоналів з багаторічним досвідом у веб-розробці. Наша мета — створювати якісні веб-рішення, які допомагають бізнесу розвиватися.</p>
-                        <p>Працюємо з найсучаснішими технологіями та завжди слідкуємо за трендами в індустрії.</p>
-                        <a href="#contact" class="btn btn-primary">Зв'язатися з нами</a>
-                    </div>
-                    <div class="about-image">
-                        <img src="Исходники/Bacground.png" alt="Про нас" class="about-img">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Секція контактів -->
-        <section class="contact" id="contact">
-            <div class="container">
-                <h2 class="section-title">Зв'яжіться з нами</h2>
-                <p class="section-subtitle">Готові почати ваш проект? Напишіть нам!</p>
-                
-                <form class="contact-form">
-                    <div class="form-row">
+        <!-- Booking Section -->
+        <section class="booking-section" id="booking">
+            <div class="section-content">
+                <p class="section-label">Reservation</p>
+                <h2 class="section-title-white">Book a Table</h2>
+                <form class="booking-form">
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label for="name">Ім'я</label>
-                            <input type="text" id="name" name="name" placeholder="Ваше ім'я" required>
+                            <label for="booking-name">Name</label>
+                            <input type="text" id="booking-name" name="name" placeholder="Your name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                            <label for="booking-email">Email</label>
+                            <input type="email" id="booking-email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-phone">Phone</label>
+                            <input type="tel" id="booking-phone" name="phone" placeholder="+380 XX XXX XX XX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-date">Date</label>
+                            <input type="date" id="booking-date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-time">Time</label>
+                            <input type="time" id="booking-time" name="time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-guests">Guests</label>
+                            <select id="booking-guests" name="guests" required>
+                                <option value="">Select number</option>
+                                <option value="1">1 person</option>
+                                <option value="2">2 people</option>
+                                <option value="3">3 people</option>
+                                <option value="4">4 people</option>
+                                <option value="5">5+ people</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="message">Повідомлення</label>
-                        <textarea id="message" name="message" rows="5" placeholder="Ваше повідомлення..." required></textarea>
+                        <label for="booking-message">Special Requests</label>
+                        <textarea id="booking-message" name="message" rows="4" placeholder="Any special requests or dietary requirements..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Відправити</button>
+                    <button type="submit" class="btn btn-primary">Reserve Table</button>
                 </form>
             </div>
         </section>
     </main>
-
-    <!-- Футер -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>МійСайт</h4>
-                    <p>Професійні веб-рішення для вашого бізнесу</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Навігація</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Головна</a></li>
-                        <li><a href="#services">Послуги</a></li>
-                        <li><a href="#about">Про нас</a></li>
-                        <li><a href="#contact">Контакти</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Контакти</h4>
-                    <ul class="footer-links">
-                        <li>Email: info@example.com</li>
-                        <li>Тел: +380 XX XXX XX XX</li>
-                        <li>Адреса: м. Київ, Україна</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 МійСайт. Всі права захищені.</p>
-            </div>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
