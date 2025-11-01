@@ -1,28 +1,26 @@
-// =============================================
-// Мобільне меню
-// =============================================
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const sidebar = document.querySelector('.sidebar');
+const navLinks = document.querySelectorAll('.nav-link');
 
-if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        menuToggle.classList.toggle('active');
+if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        mobileMenuToggle.classList.toggle('active');
     });
 }
 
-// Закриття меню при кліку на посилання
-const navLinks = document.querySelectorAll('.nav-link');
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        nav.classList.remove('active');
-        menuToggle.classList.remove('active');
+        sidebar.classList.remove('active');
+        if (mobileMenuToggle) {
+            mobileMenuToggle.classList.remove('active');
+        }
+        
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
     });
 });
 
-// =============================================
-// Плавна прокрутка до секцій
-// =============================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -44,9 +42,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// =============================================
-// Анімація появи елементів при прокрутці
-// =============================================
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -61,62 +56,117 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Спостереження за картками послуг
 document.querySelectorAll('.service-card').forEach(card => {
     observer.observe(card);
 });
 
-// =============================================
-// Обробка форми контактів
-// =============================================
-const contactForm = document.querySelector('.contact-form');
+const bookingForm = document.querySelector('.booking-form');
 
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+if (bookingForm) {
+    const dateInput = document.getElementById('booking-date');
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    }
+
+    bookingForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // Отримання даних форми
-        const formData = new FormData(contactForm);
+        const formData = new FormData(bookingForm);
         const data = Object.fromEntries(formData);
         
-        console.log('Дані форми:', data);
+        if (!validateBookingForm(data)) {
+            return;
+        }
         
-        // Тут можна додати відправку на сервер
-        // fetch('/api/contact', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(data)
-        // });
+        console.log('Дані бронювання:', data);
         
-        // Показати повідомлення про успіх
-        alert('Дякуємо за ваше повідомлення! Ми зв\'яжемось з вами найближчим часом.');
+        const submitBtn = bookingForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Processing...';
+        submitBtn.disabled = true;
         
-        // Очистити форму
-        contactForm.reset();
+        setTimeout(() => {
+            showNotification('Thank you! Your table has been reserved. We will send you a confirmation email shortly.', 'success');
+            
+            bookingForm.reset();
+            
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }, 1500);
     });
 }
 
-// =============================================
-// Зміна стилю header при прокрутці
-// =============================================
-let lastScroll = 0;
-const header = document.querySelector('.header');
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
+function validateBookingForm(data) {
+    const phoneRegex = /^\+?[\d\s\-()]+$/;
+    if (!phoneRegex.test(data.phone)) {
+        showNotification('Please enter a valid phone number', 'error');
+        return false;
     }
     
-    lastScroll = currentScroll;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+        showNotification('Please enter a valid email address', 'error');
+        return false;
+    }
+    
+    const selectedDate = new Date(data.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (selectedDate < today) {
+        showNotification('Please select a future date', 'error');
+        return false;
+    }
+    
+    return true;
+}
+
+function showNotification(message, type = 'info') {
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 5000);
+}
+
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+    const scrollPosition = window.pageYOffset + 200;
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
 });
 
-// =============================================
-// Додаткові CSS класи для анімацій
-// =============================================
 const style = document.createElement('style');
 style.textContent = `
     .fade-in {
