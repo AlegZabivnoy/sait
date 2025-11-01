@@ -83,11 +83,11 @@ if (bookingForm) {
         
         const submitBtn = bookingForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Processing...';
+        submitBtn.textContent = 'Обробка...';
         submitBtn.disabled = true;
         
         setTimeout(() => {
-            showNotification('Thank you! Your table has been reserved. We will send you a confirmation email shortly.', 'success');
+            showNotification('Дякуємо! Ваш столик заброньовано. Ми надішлемо вам підтвердження на електронну пошту найближчим часом.', 'success');
             
             bookingForm.reset();
             
@@ -100,13 +100,13 @@ if (bookingForm) {
 function validateBookingForm(data) {
     const phoneRegex = /^\+?[\d\s\-()]+$/;
     if (!phoneRegex.test(data.phone)) {
-        showNotification('Please enter a valid phone number', 'error');
+        showNotification('Будь ласка, введіть правильний номер телефону', 'error');
         return false;
     }
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
-        showNotification('Please enter a valid email address', 'error');
+        showNotification('Будь ласка, введіть правильну адресу електронної пошти', 'error');
         return false;
     }
     
@@ -115,7 +115,7 @@ function validateBookingForm(data) {
     today.setHours(0, 0, 0, 0);
     
     if (selectedDate < today) {
-        showNotification('Please select a future date', 'error');
+        showNotification('Будь ласка, оберіть майбутню дату', 'error');
         return false;
     }
     
