@@ -83,16 +83,5 @@ function deleteQuiz(quizName) {
     }
 }
 
-/**
- * Екранувати HTML
- * @param {string} text
- * @returns {string}
- */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
 // Ініціалізація при завантаженні
 window.onload = initManagePage;
