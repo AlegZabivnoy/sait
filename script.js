@@ -101,9 +101,7 @@ function showResults() {
     resultContainer.style.display = 'block';
     
     let resultsHTML = '<div class="result-summary">Дякуємо за проходження опитування!</div>';
-    
-    resultsHTML += '<img src="photo_2025-11-05_21-04-01.jpg" alt="Результат" class="result-image">';
-    
+     
     questions.forEach((question, index) => {
         const answerIndex = userAnswers[index];
         const answer = question.answers[answerIndex];
