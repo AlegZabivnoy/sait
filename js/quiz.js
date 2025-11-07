@@ -1,25 +1,33 @@
-const questions = [
-    {
-        question: "Який улюблений предмет ",
-        answers: ["Матаналіз", "ОП", "ЛААГ", "КДМ"]
-    },
-    {
-        question: "Який ваш улюблений викладач",
-        answers: ["Туганських Олександр Антонович", "Бойко Ірина Віталіївна", "Колосова Олена Петрівна", "Стаматієва Вікторія В'ячеславівна"]
-    },
-    {
-        question: "Який найважкіший предмет для вас?",
-        answers: ["Матаналіз", "АСД", "КДМ", "ЛААГ"]
-    },
-
-];
-
+let questions = [];
+let currentQuiz = null;
 let currentQuestion = 0;
 let userAnswers = [];
 
 function initQuiz() {
+    // Завантажуємо вибраний квіз з LocalStorage
+    currentQuiz = storageService.getSelectedQuiz();
+    
+    if (!currentQuiz || !currentQuiz.questions || currentQuiz.questions.length === 0) {
+        alert('Квіз не знайдено або він порожній!');
+        window.location.href = '../index.html';
+        return;
+    }
+    
+    // Конвертуємо структуру даних для сумісності
+    questions = currentQuiz.questions.map(q => ({
+        question: q.text,
+        answers: q.options.map(o => o.text)
+    }));
+    
     currentQuestion = 0;
     userAnswers = [];
+    
+    // Оновлюємо заголовок
+    const titleElement = document.querySelector('h1');
+    if (titleElement) {
+        titleElement.textContent = currentQuiz.name;
+    }
+    
     showQuestion();
 }
 
@@ -100,21 +108,66 @@ function showResults() {
     quizContainer.style.display = 'none';
     resultContainer.style.display = 'block';
     
-    let resultsHTML = '<div class="result-summary">Дякуємо за проходження опитування!</div>';
-     
-    questions.forEach((question, index) => {
-        const answerIndex = userAnswers[index];
-        const answer = question.answers[answerIndex];
+    // Підраховуємо правильні відповіді
+    let correctCount = 0;
+    const resultDetails = [];
+    
+    currentQuiz.questions.forEach((question, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const selectedOption = question.options[userAnswerIndex];
+        const isCorrect = selectedOption.isCorrect;
+        
+        if (isCorrect) {
+            correctCount++;
+        }
+        
+        resultDetails.push({
+            question: question.text,
+            answer: selectedOption.text,
+            isCorrect: isCorrect
+        });
+    });
+    
+    const score = correctCount;
+    const total = currentQuiz.questions.length;
+    const percentage = Math.round((score / total) * 100);
+    
+    let resultsHTML = `
+        <div class="result-summary">
+            <h3>Дякуємо за проходження квізу!</h3>
+            <p class="score">Ваш результат: ${score} з ${total} (${percentage}%)</p>
+        </div>
+    `;
+    
+    resultDetails.forEach((item, index) => {
+        const statusClass = item.isCorrect ? 'correct' : 'incorrect';
+        const statusIcon = item.isCorrect ? '✓' : '✗';
         
         resultsHTML += `
-            <div class="result-item">
-                <div class="result-question">${index + 1}. ${question.question}</div>
-                <div class="result-answer">Ваша відповідь: ${answer}</div>
+            <div class="result-item ${statusClass}">
+                <div class="result-question">
+                    <span class="question-number">${index + 1}.</span> ${item.question}
+                </div>
+                <div class="result-answer">
+                    <span class="status-icon">${statusIcon}</span>
+                    Ваша відповідь: ${item.answer}
+                </div>
             </div>
         `;
     });
     
     resultContent.innerHTML = resultsHTML;
+    
+    // Зберігаємо результат в LocalStorage
+    const result = {
+        timestamp: new Date().toISOString(),
+        quizName: currentQuiz.name,
+        summary: `${score}/${total} (${percentage}%)`,
+        answers: userAnswers.map(answerIndex => [answerIndex]),
+        score: score
+    };
+    
+    storageService.addResult(result);
 }
 
 function restartQuiz() {

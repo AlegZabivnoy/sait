@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створення квізу</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="site-title">My Perfect Quiz</h1>
+            <nav class="header-nav">
+                <button onclick="location.href='../index.html'" class="nav-btn">Головна</button>
+                <button onclick="location.href='../manage/index.html'" class="nav-btn">Управління</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <section class="create-section">
+            <h2 class="section-title-dark" id="page-title">Створення нового квізу</h2>
+            
+            <form id="quiz-form" class="quiz-form">
+                <div class="form-group">
+                    <label for="quiz-name">Назва квізу *</label>
+                    <input type="text" id="quiz-name" required placeholder="Введіть назву квізу">
+                </div>
+
+                <div class="form-group">
+                    <label for="quiz-description">Опис квізу *</label>
+                    <textarea id="quiz-description" required placeholder="Опишіть квіз" rows="3"></textarea>
+                </div>
+
+                <div class="questions-section">
+                    <div class="section-header">
+                        <h3>Питання</h3>
+                        <button type="button" onclick="addQuestion()" class="add-question-btn">+ Додати питання</button>
+                    </div>
+                    <div id="questions-container">
+                        <!-- Питання будуть додані динамічно -->
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="save-quiz-btn">💾 Зберегти квіз</button>
+                    <button type="button" onclick="cancelCreate()" class="cancel-btn">❌ Скасувати</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="language-selector">
+                <label for="lang">Мова:</label>
+                <select id="lang">
+                    <option value="uk" selected>Українська</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <p class="copyright">© 2025 My Perfect Quiz. Навчальний проект.</p>
+        </div>
+    </footer>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/create.js"></script>
+</body>
+</html>

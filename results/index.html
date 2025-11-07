@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результати квізів</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="site-title">My Perfect Quiz</h1>
+            <nav class="header-nav">
+                <button onclick="location.href='../index.html'" class="nav-btn">Головна</button>
+                <button onclick="location.href='../manage/index.html'" class="nav-btn">Управління</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <section class="results-section">
+            <div class="section-header">
+                <h2 class="section-title-dark">Історія результатів</h2>
+                <button onclick="clearAllResults()" class="clear-all-btn" id="clear-btn" style="display: none;">
+                    🗑️ Очистити всю історію
+                </button>
+            </div>
+
+            <div id="results-list" class="results-list">
+                <!-- Результати будуть додані динамічно -->
+            </div>
+
+            <div id="empty-results-state" class="empty-state" style="display: none;">
+                <p>Ще немає пройдених квізів.</p>
+                <button onclick="location.href='../index.html'" class="create-quiz-btn">Пройти квіз</button>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="language-selector">
+                <label for="lang">Мова:</label>
+                <select id="lang">
+                    <option value="uk" selected>Українська</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <p class="copyright">© 2025 My Perfect Quiz. Навчальний проект.</p>
+        </div>
+    </footer>
+
+    <script src="../js/storage.js"></script>
+    <script src="../js/results.js"></script>
+</body>
+</html>
