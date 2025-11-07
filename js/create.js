@@ -47,6 +47,17 @@ function loadQuizForEditing() {
 }
 
 /**
+ * Оновити лічильник питань
+ */
+function updateQuestionCounter() {
+    const total = document.querySelectorAll('.question-block').length;
+    const counter = document.getElementById('questions-total');
+    if (counter) {
+        counter.textContent = total;
+    }
+}
+
+/**
  * Додати нове питання
  * @param {QuizQuestion} questionData - Дані питання (для редагування)
  */
@@ -67,23 +78,30 @@ function addQuestion(questionData = null) {
     questionDiv.innerHTML = `
         <div class="question-header">
             <h4>Питання ${questionCounter}</h4>
-            <button type="button" onclick="removeQuestion(${questionCounter})" class="remove-question-btn">🗑️ Видалити</button>
+            <button type="button" onclick="removeQuestion(${questionCounter})" class="remove-question-btn" title="Видалити питання">
+                🗑️ Видалити
+            </button>
         </div>
         
         <div class="form-group">
             <label>Текст питання *</label>
-            <input type="text" class="question-text" required placeholder="Введіть питання" value="${escapeHtml(questionText)}">
+            <input type="text" class="question-text" required placeholder="Введіть текст питання" value="${escapeHtml(questionText)}">
         </div>
 
-        <div class="options-container" id="options-${questionCounter}">
-            <label>Варіанти відповідей *</label>
-            ${options.map((opt, index) => createOptionHTML(questionCounter, index, opt)).join('')}
+        <div class="options-section">
+            <label>Варіанти відповідей * (позначте правильні)</label>
+            <div class="options-container" id="options-${questionCounter}">
+                ${options.map((opt, index) => createOptionHTML(questionCounter, index, opt)).join('')}
+            </div>
+            <button type="button" onclick="addOption(${questionCounter})" class="add-option-btn">+ Додати варіант</button>
         </div>
-
-        <button type="button" onclick="addOption(${questionCounter})" class="add-option-btn">+ Додати варіант</button>
     `;
     
     container.appendChild(questionDiv);
+    updateQuestionCounter();
+    
+    // Прокрутка до нового питання
+    questionDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 /**
@@ -99,12 +117,13 @@ function createOptionHTML(questionId, optionIndex, optionData = null) {
     
     return `
         <div class="option-item" id="option-${questionId}-${optionIndex}">
-            <input type="text" class="option-text" required placeholder="Варіант ${optionIndex + 1}" value="${escapeHtml(text)}">
-            <label class="checkbox-label">
+            <div class="option-number">${optionIndex + 1}</div>
+            <input type="text" class="option-text" required placeholder="Текст варіанту" value="${escapeHtml(text)}">
+            <label class="checkbox-label" title="Позначити як правильну відповідь">
                 <input type="checkbox" class="option-correct" ${isCorrect ? 'checked' : ''}>
-                <span>Правильна</span>
+                <span>✓ Правильна</span>
             </label>
-            <button type="button" onclick="removeOption(${questionId}, ${optionIndex})" class="remove-option-btn">✖</button>
+            <button type="button" onclick="removeOption(${questionId}, ${optionIndex})" class="remove-option-btn" title="Видалити варіант">✖</button>
         </div>
     `;
 }
@@ -160,6 +179,7 @@ function removeQuestion(questionId) {
     if (confirm('Видалити це питання?')) {
         questionElement.remove();
         updateQuestionNumbers();
+        updateQuestionCounter();
     }
 }
 
