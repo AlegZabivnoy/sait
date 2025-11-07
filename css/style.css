@@ -1,766 +1,640 @@
-/**
- * ============================================
- * ГЛОБАЛЬНІ СТИЛІ ДЛЯ СИСТЕМИ КВІЗІВ
- * ============================================
- * 
- * Цей файл містить всі стилі для застосунку
- * 
- * Навчальні концепції CSS:
- * - Box model (margin, padding, border)
- * - Flexbox для вирівнювання
- * - CSS Grid для сіток
- * - Transitions та animations
- * - Gradient backgrounds
- * - Media queries для адаптивності
- * - Pseudo-classes (:hover, :focus, :active)
- * 
- * Структура файлу:
- * 1. Глобальні стилі
- * 2. Header (шапка)
- * 3. Контейнери та секції
- * 4. Картки квізів
- * 5. Форми
- * 6. Кнопки
- * 7. Анімації
- * 8. Media queries (адаптивність)
- */
-
 /* ============================================
-   СКИДАННЯ СТИЛІВ БРАУЗЕРА (CSS Reset)
+   ГЛОБАЛЬНІ СТИЛІ ТА СКИДАННЯ
    ============================================ */
 
-/**
- * Універсальний селектор *
- * Застосовує базові стилі до ВСІХ елементів
- * box-sizing: border-box - робить розрахунок розмірів зручнішим
- */
+/* Скидання стилів браузера за замовчуванням */
 * {
-    margin: 0;                    /* Прибираємо зовнішні відступи */
-    padding: 0;                   /* Прибираємо внутрішні відступи */
-    box-sizing: border-box;       /* Ширина включає padding та border */
-}
-
-/* ============================================
-   СТИЛІ BODY (основа сторінки)
-   ============================================ */
-
-/**
- * Базові стилі для всієї сторінки
- * linear-gradient - створює плавний перехід між кольорами
- * min-height: 100vh - мінімальна висота = 100% висоти viewport
- */
-body {
-    /* Шрифт (system fonts для кращої продуктивності) */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-    /* Фоновий градієнт (від синього до фіолетового, 135 градусів) */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    
-    /* Мінімальна висота = висота екрану (viewport height) */
-    min-height: 100vh;
-    
-    /* Прибираємо стандартні відступи */
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+/* CSS змінні для кольорів та параметрів */
+:root {
+    /* Основні кольори - Чорно-червона тематика */
+    --primary-color: #dc2626;
+    --primary-dark: #991b1b;
+    --primary-light: #ef4444;
+    --secondary-color: #b91c1c;
+    --secondary-dark: #7f1d1d;
+    
+    /* Відтінки червоного */
+    --red-glow: #ff1744;
+    --red-bright: #ff5252;
+    --red-dark: #c62828;
+    
+    /* Кольори фону */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #121212;
+    --bg-tertiary: #1a1a1a;
+    --bg-card: #1e1e1e;
+    --bg-hover: #252525;
+    --bg-dark: #000000;
+    
+    /* Кольори тексту */
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-light: #7a7a7a;
+    --text-white: #ffffff;
+    --text-red: #ff5252;
+    
+    /* Кольори стану */
+    --success-color: #dc2626;
+    --error-color: #ff1744;
+    --warning-color: #ff5252;
+    --info-color: #ef4444;
+    
+    /* Відступи та розміри */
+    --border-radius: 12px;
+    --border-radius-small: 8px;
+    --border-radius-large: 20px;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Тіні з червоним відтінком */
+    --shadow-sm: 0 1px 2px 0 rgba(220, 38, 38, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(220, 38, 38, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(220, 38, 38, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(220, 38, 38, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+    --shadow-red-glow: 0 0 20px rgba(255, 23, 68, 0.5), 0 0 40px rgba(255, 23, 68, 0.3);
+    --shadow-red-intense: 0 0 30px rgba(255, 23, 68, 0.7), 0 0 60px rgba(255, 23, 68, 0.4);
+    
+    /* Переходи */
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 300ms ease-in-out;
+    --transition-smooth: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Основні стилі для body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #330000 100%);
+    min-height: 100vh;
+    color: var(--text-primary);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Глобальні стилі для всіх кнопок */
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Анімований фоновий патерн */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 100px,
+            rgba(220, 38, 38, 0.03) 100px,
+            rgba(220, 38, 38, 0.03) 200px
+        );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Червоні світлові плями на фоні */
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 23, 68, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(185, 28, 28, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatingGlow 20s ease-in-out infinite;
+}
+
+@keyframes floatingGlow {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5%, 5%) rotate(90deg); }
+    50% { transform: translate(-5%, 5%) rotate(180deg); }
+    75% { transform: translate(-5%, -5%) rotate(270deg); }
+}
+
+/* Альтернативний фон для сторінки квізу */
+body.quiz-page {
+    background: linear-gradient(135deg, #0d0000 0%, #1a0505 50%, #2d0a0a 100%);
+}
+
+body.quiz-page::after {
+    background: 
+        radial-gradient(circle at 30% 40%, rgba(255, 23, 68, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(220, 38, 38, 0.15) 0%, transparent 50%);
 }
 
 /* ============================================
-   HEADER - ШАПКА САЙТУ
+   ШАПКА САЙТУ (HEADER)
    ============================================ */
 
-/**
- * Стилі для header
- * position: sticky - фіксує header при прокрутці
- * z-index: 1000 - розміщує header поверх інших елементів
- */
 .header {
-    /* Білий фон з прозорістю 95% */
-    background: rgba(255, 255, 255, 0.95);
-    
-    /* Тінь для об'ємності */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    
-    /* Липкий header - залишається зверху при прокрутці */
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-sm) 0;
     position: sticky;
     top: 0;
-    
-    /* z-index визначає порядок накладання елементів (чим більше - тим вище) */
     z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--primary-color);
+    position: relative;
 }
 
-/**
- * Контейнер для вмісту header
- * Використовує Flexbox для розміщення елементів
- */
+/* Світловий ефект знизу хедера */
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--red-glow) 50%, 
+        transparent 100%);
+    box-shadow: 0 0 10px var(--red-glow);
+    animation: headerGlow 3s ease-in-out infinite;
+}
+
+@keyframes headerGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
 .header-content {
-    /* Максимальна ширина контенту */
     max-width: 1200px;
-    
-    /* Центрування контейнера */
     margin: 0 auto;
-    
-    /* Внутрішні відступи */
-    padding: 15px 20px;
-    
-    /* FLEXBOX - сучасний спосіб вирівнювання */
-    display: flex;                        /* Включаємо flexbox */
-    justify-content: space-between;       /* Розподіляємо простір між елементами */
-    align-items: center;                  /* Вирівнюємо по вертикалі по центру */
+    padding: 0 var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/**
- * Заголовок сайту в header
- */
 .site-title {
-    color: #667eea;           /* Фіолетовий колір */
-    font-size: 1.8em;         /* 1.8 * 16px (базовий розмір) = 28.8px */
-    margin: 0;                /* Прибираємо стандартний margin */
-}
-
-/**
- * Навігаційне меню
- * Використовує flexbox + gap для відступів між кнопками
- */
-.header-nav {
-    display: flex;            /* Flexbox для розміщення кнопок в ряд */
-    gap: 15px;                /* Відступ між кнопками (новий спосіб!) */
-}
-
-}
-
-/**
- * Кнопки навігації в header
- * 
- * Навчальні концепції:
- * - transition - плавна зміна властивостей
- * - transform - трансформація елемента (зсув, поворот, масштаб)
- * - cursor: pointer - міняє курсор при наведенні
- */
-.nav-btn {
-    /* Колір фону та тексту */
-    background: #667eea;
-    color: white;
-    
-    /* Прибираємо стандартні стилі кнопки */
-    border: none;
-    
-    /* Округлені кути */
-    border-radius: 8px;
-    
-    /* Внутрішні відступи */
-    padding: 10px 20px;
-    
-    /* Розмір шрифту */
-    font-size: 1em;
-    
-    /* Курсор-рука при наведенні */
+    font-size: 1.75rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--text-white) 0%, var(--red-bright) 50%, var(--red-glow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     cursor: pointer;
-    
-    /* TRANSITION - плавна анімація зміни всіх властивостей за 0.3 секунди */
-    transition: all 0.3s ease;
+    transition: all var(--transition-normal);
+    position: relative;
+    text-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
+    filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.6));
 }
 
-/**
- * Псевдоклас :hover
- * Спрацьовує коли користувач наводить курсор на елемент
- */
+.site-title:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.9));
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.header-nav {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.nav-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-white);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-small);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.nav-btn:hover::before {
+    left: 100%;
+}
+
 .nav-btn:hover {
-    /* Темніший відтінок при наведенні */
-    background: #5568d3;
-    
-    /* TRANSFORM - зсуваємо кнопку вгору на 2 пікселі (ефект "підняття") */
+    background: linear-gradient(135deg, var(--red-glow) 0%, var(--primary-color) 100%);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-bright);
 }
 
-/**
- * Спеціальна кнопка "Управління" з іншим кольором
- */
+.nav-btn:active {
+    transform: translateY(0);
+}
+
 .manage-btn {
-    background: #764ba2;      /* Фіолетовий фон */
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
 }
 
 .manage-btn:hover {
-    background: #5d3a82;      /* Темніший фіолетовий при наведенні */
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--secondary-dark) 100%);
+    box-shadow: var(--shadow-red-glow);
 }
 
-/* Main container for pages with header */
-.main-container {
+/* ============================================
+   КОНТЕЙНЕР ТА ОСНОВНИЙ МАКЕТ
+   ============================================ */
+
+.container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: var(--spacing-lg) var(--spacing-md);
+    position: relative;
+    z-index: 1;
 }
 
-/* Welcome section */
+.main-container {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+}
+
+/* ============================================
+   СЕКЦІЯ ПРИВІТАННЯ
+   ============================================ */
+
 .welcome-section {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.5s ease-in;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.1);
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+    border: 2px solid var(--primary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Світловий ефект по краях */
+.welcome-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius-large);
+    padding: 2px;
+    background: linear-gradient(45deg, 
+        var(--red-glow), 
+        var(--primary-color), 
+        var(--red-dark), 
+        var(--primary-color), 
+        var(--red-glow));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0.5;
+    animation: borderRotate 4s linear infinite;
+}
+
+@keyframes borderRotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .welcome-section h2 {
-    color: #667eea;
-    margin-bottom: 15px;
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-white);
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.7);
+    position: relative;
+    z-index: 1;
 }
 
 .welcome-text {
-    color: #666;
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-lg) auto;
+    position: relative;
+    z-index: 1;
 }
 
 .create-quiz-cta {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 35px;
-    font-size: 1.2em;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--red-glow) 100%);
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-red-glow);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.create-quiz-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+    z-index: -1;
+}
+
+.create-quiz-cta:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .create-quiz-cta:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-red-intense);
+    border-color: var(--red-glow);
+    background: linear-gradient(135deg, var(--red-glow) 0%, var(--primary-light) 100%);
 }
 
-/* Quiz grid */
-.section-title {
-    color: white;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
+/* ============================================
+   СЕКЦІЯ КВІЗІВ
+   ============================================ */
+
+.quizzes-section {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
+    animation: fadeInUp 0.8s ease-out;
+    border: 2px solid rgba(220, 38, 38, 0.3);
 }
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-white);
+    text-align: center;
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+}
+
+.section-title-dark {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-white);
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+}
+
+/* ============================================
+   СІТКА КВІЗІВ (GRID)
+   ============================================ */
 
 .quiz-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    margin-bottom: 40px;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
 }
 
-/* Quiz card */
+/* Картка квізу */
 .quiz-card {
-    background: white;
-    border-radius: 15px;
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-    animation: fadeIn 0.5s ease-in;
-    display: flex;
-    flex-direction: column;
+    box-shadow: var(--shadow-md);
+}
+
+.quiz-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red-glow), var(--primary-color), var(--red-dark));
+    transform: scaleX(0);
+    transition: transform var(--transition-normal);
+}
+
+.quiz-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .quiz-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-bright);
+}
+
+.quiz-card:hover::before {
+    transform: scaleX(1);
+}
+
+.quiz-card:hover::after {
+    opacity: 1;
+}
+
+.quiz-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-white);
+    position: relative;
+    z-index: 1;
 }
 
 .quiz-card-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
-}
-
-.quiz-name {
-    color: white;
-    font-size: 1.4em;
-    margin: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .quiz-card-body {
-    padding: 20px;
-    flex-grow: 1;
-}
-
-.quiz-description {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.quiz-info {
-    color: #999;
-    font-size: 0.9em;
-}
-
-.quiz-questions-count {
-    display: inline-block;
+    position: relative;
+    z-index: 1;
 }
 
 .quiz-card-footer {
-    padding: 0 20px 20px;
+    position: relative;
+    z-index: 1;
+    margin-top: var(--spacing-md);
+    display: flex;
+    justify-content: center;
+}
+
+.quiz-name {
+    font-size: 1.5rem;
+    color: var(--text-white);
+}
+
+.quiz-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.quiz-questions-count {
+    color: var(--text-light);
+    font-size: 0.9rem;
 }
 
 .go-to-quiz-btn {
     width: 100%;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 20px;
-    font-size: 1.1em;
+    padding: 0.8rem 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    font-size: 1rem;
 }
 
 .go-to-quiz-btn:hover {
-    background: #5568d3;
-    transform: scale(1.02);
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: scale(1.05);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
 }
 
-/* Empty state */
+.quiz-card p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.quiz-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.quiz-questions {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.start-quiz-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.start-quiz-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: scale(1.05);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-bright);
+}
+
+/* ============================================
+   ПОРОЖНІЙ СТАН (EMPTY STATE)
+   ============================================ */
+
 .empty-state {
-    background: white;
-    border-radius: 15px;
-    padding: 60px 40px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
 }
 
 .empty-state p {
-    color: #666;
-    font-size: 1.2em;
-    margin-bottom: 20px;
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-lg);
 }
 
 .create-quiz-btn {
-    background: #764ba2;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 15px 30px;
-    font-size: 1.1em;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
 }
 
 .create-quiz-btn:hover {
-    background: #5d3a82;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
 }
 
-/* Footer */
-.footer {
-    background: rgba(255, 255, 255, 0.95);
-    margin-top: auto;
-    padding: 20px;
-}
+/* ============================================
+   ФОРМА СТВОРЕННЯ КВІЗУ
+   ============================================ */
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.language-selector {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.language-selector label {
-    color: #666;
-    font-weight: bold;
-}
-
-.language-selector select {
-    padding: 8px 12px;
-    border: 2px solid #667eea;
-    border-radius: 6px;
-    background: white;
-    color: #667eea;
-    font-size: 1em;
-    cursor: pointer;
-}
-
-.copyright {
-    color: #999;
-    font-size: 0.9em;
-}
-
-/* Container for quiz page */
-body.quiz-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.container {
-    width: 100%;
-    max-width: 800px;
-}
-
-#quiz-container, #result-container {
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-h1 {
-    color: #667eea;
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5em;
-}
-
-h2 {
-    color: #333;
-    margin-bottom: 25px;
-    font-size: 1.5em;
-    line-height: 1.4;
-}
-
-.answers-grid {
-    display: grid;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.answer-btn {
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 20px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-    color: #333;
-}
-
-.answer-btn:hover {
-    background: #e8e9ff;
-    border-color: #667eea;
-    transform: translateX(5px);
-}
-
-.answer-btn.selected {
-    background: #667eea;
-    border-color: #667eea;
-    color: white;
-    font-weight: bold;
-}
-
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-}
-
-button {
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 30px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-}
-
-button:hover:not(:disabled) {
-    background: #5568d3;
-    transform: scale(1.05);
-}
-
-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-#question-counter {
-    color: #666;
-    font-size: 1.1em;
-    font-weight: bold;
-}
-
-#result-content {
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 30px;
-    margin: 20px 0;
-}
-
-.result-item {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.result-item:last-child {
-    border-bottom: none;
-}
-
-.result-question {
-    font-weight: bold;
-    color: #667eea;
-    margin-bottom: 8px;
-    font-size: 1.1em;
-}
-
-.result-answer {
-    color: #333;
-    font-size: 1em;
-    padding-left: 20px;
-}
-
-.result-summary {
-    text-align: center;
-    font-size: 1.3em;
-    color: #667eea;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-}
-
-.result-image {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 12px;
-    margin: 30px auto;
-    display: block;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    animation: zoomIn 0.6s ease-out;
-}
-
-@keyframes zoomIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.restart-btn {
-    display: inline-block;
-    margin: 30px 10px 0;
-    background: #764ba2;
-}
-
-.restart-btn:hover {
-    background: #5d3a82;
-}
-
-.home-btn {
-    display: inline-block;
-    margin: 30px 10px 0;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 30px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-}
-
-.home-btn:hover {
-    background: #5568d3;
-    transform: scale(1.05);
-}
-
-/* Result styles with correct/incorrect */
-.result-item.correct {
-    border-left: 4px solid #4caf50;
-    background: #f1f8f4;
-}
-
-.result-item.incorrect {
-    border-left: 4px solid #f44336;
-    background: #fef1f0;
-}
-
-.status-icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 20px;
-    margin-right: 8px;
-    font-weight: bold;
-}
-
-.result-item.correct .status-icon {
-    background: #4caf50;
-    color: white;
-}
-
-.result-item.incorrect .status-icon {
-    background: #f44336;
-    color: white;
-}
-
-.score {
-    font-size: 1.5em;
-    color: #667eea;
-    font-weight: bold;
-    margin: 15px 0;
-}
-
-/* Manage page styles */
-.manage-section {
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.section-title-dark {
-    color: #667eea;
-    margin: 0;
-    font-size: 2em;
-}
-
-.create-new-btn {
-    background: #764ba2;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 25px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-}
-
-.create-new-btn:hover {
-    background: #5d3a82;
-    transform: scale(1.05);
-}
-
-.manage-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.manage-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    border-left: 4px solid #667eea;
-    transition: all 0.3s ease;
-}
-
-.manage-item:hover {
-    background: #e8e9ff;
-    transform: translateX(5px);
-}
-
-.manage-item-info {
-    flex-grow: 1;
-}
-
-.manage-quiz-name {
-    color: #667eea;
-    font-size: 1.4em;
-    margin: 0 0 10px 0;
-}
-
-.manage-quiz-description {
-    color: #666;
-    margin: 0 0 8px 0;
-    line-height: 1.5;
-}
-
-.manage-quiz-meta {
-    color: #999;
-    font-size: 0.9em;
-    margin: 0;
-}
-
-.manage-item-actions {
-    display: flex;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.edit-btn, .delete-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-}
-
-.edit-btn {
-    background: #667eea;
-    color: white;
-}
-
-.edit-btn:hover {
-    background: #5568d3;
-    transform: scale(1.05);
-}
-
-.delete-btn {
-    background: #f44336;
-    color: white;
-}
-
-.delete-btn:hover {
-    background: #d32f2f;
-    transform: scale(1.05);
-}
-
-/* Create page styles */
 .create-section {
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
+    animation: fadeInUp 0.6s ease-out;
+    border: 2px solid rgba(220, 38, 38, 0.3);
 }
 
 .quiz-form {
@@ -769,482 +643,1079 @@ button:disabled {
 }
 
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: var(--spacing-lg);
 }
 
 .form-group label {
     display: block;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 8px;
-    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-white);
+    font-size: 1rem;
 }
 
 .form-group input[type="text"],
 .form-group textarea {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1em;
+    padding: 0.8rem;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius-small);
+    font-size: 1rem;
     font-family: inherit;
-    transition: all 0.3s ease;
+    transition: all var(--transition-fast);
+    background: var(--bg-secondary);
+    color: var(--text-white);
 }
 
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2), 0 0 20px rgba(220, 38, 38, 0.3);
+    background: var(--bg-tertiary);
 }
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ============================================
+   СЕКЦІЯ ПИТАНЬ
+   ============================================ */
 
 .questions-section {
-    margin-top: 40px;
+    margin-top: var(--spacing-xl);
 }
 
-.questions-section h3 {
-    color: #667eea;
-    font-size: 1.5em;
-    margin: 0 0 5px 0;
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.section-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-white);
+    text-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
 }
 
 .questions-counter {
-    color: #999;
-    font-size: 0.95em;
-    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
 }
 
 .add-question-btn {
-    background: #764ba2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 0.7rem 1.3rem;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
 }
 
 .add-question-btn:hover {
-    background: #5d3a82;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
 }
 
 #questions-container {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: var(--spacing-lg);
 }
 
+/* Картка питання */
+.question-card {
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    animation: fadeInScale 0.3s ease-out;
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+}
+
+/* Альтернативні класи для блоків питань */
 .question-block {
-    background: #f8f9fa;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 25px;
-    position: relative;
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    animation: fadeInScale 0.3s ease-out;
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+}
+
+.option-item {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.option-item input[type="text"] {
+    flex: 1;
+    padding: 0.6rem;
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius-small);
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    background: var(--bg-secondary);
+    color: var(--text-white);
+}
+
+.option-item input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+}
+
+.option-item input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
 }
 
 .question-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-md);
 }
 
 .question-header h4 {
-    color: #667eea;
-    font-size: 1.3em;
-    margin: 0;
+    color: var(--text-white);
+    font-size: 1.1rem;
 }
 
-.remove-question-btn {
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 15px;
+.delete-question-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-glow);
+    border-radius: var(--border-radius-small);
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9em;
+    transition: all var(--transition-fast);
+    font-size: 0.9rem;
 }
 
-.remove-question-btn:hover {
-    background: #d32f2f;
+.delete-question-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow), var(--error-color));
+    transform: scale(1.05);
+    box-shadow: var(--shadow-red-glow);
 }
 
-.options-container {
-    margin-top: 15px;
+.answers-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
 }
 
-.options-section {
-    margin-top: 20px;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-}
-
-.options-section > label {
-    display: block;
-    color: #666;
-    font-weight: bold;
-    margin-bottom: 12px;
-    font-size: 1.05em;
-}
-
-.option-item {
-    display: grid;
-    grid-template-columns: 30px 1fr auto auto;
-    gap: 10px;
-    align-items: center;
-    background: #f8f9fa;
-    padding: 12px;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
-    transition: all 0.3s ease;
-}
-
-.option-item:hover {
-    border-color: #667eea;
-    background: white;
-}
-
-.option-number {
-    background: #667eea;
-    color: white;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
+.answer-item {
     display: flex;
+    gap: var(--spacing-sm);
     align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.9em;
 }
 
-.option-text {
-    padding: 10px 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 6px;
-    font-size: 1em;
-    font-family: inherit;
+.answer-item input[type="text"] {
+    flex: 1;
+    padding: 0.6rem;
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius-small);
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    background: var(--bg-secondary);
+    color: var(--text-white);
 }
 
-.option-text:focus {
+.answer-item input[type="text"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
 }
 
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #666;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-    padding: 6px 12px;
-    background: white;
-    border-radius: 6px;
-    border: 2px solid #e0e0e0;
-    transition: all 0.3s ease;
-}
-
-.checkbox-label:hover {
-    border-color: #4caf50;
-}
-
-.checkbox-label input[type="checkbox"]:checked + span {
-    color: #4caf50;
-}
-
-.checkbox-label input[type="checkbox"] {
+.answer-item input[type="radio"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: #4caf50;
+    accent-color: var(--primary-color);
 }
 
-.remove-option-btn {
-    background: #ff5252;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2em;
+.answer-item label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    min-width: 120px;
 }
 
-.remove-option-btn:hover {
-    background: #f44336;
-    transform: scale(1.1);
-}
-
-.add-option-btn {
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin-top: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.95em;
-}
-
-.add-option-btn:hover {
-    background: #5568d3;
-}
+/* ============================================
+   КНОПКИ ДІЙ ФОРМИ
+   ============================================ */
 
 .form-actions {
-    margin-top: 40px;
     display: flex;
-    gap: 15px;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
     justify-content: center;
 }
 
 .save-quiz-btn {
-    background: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 15px 40px;
-    font-size: 1.2em;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
 }
 
 .save-quiz-btn:hover {
-    background: #45a049;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
 }
 
 .cancel-btn {
-    background: #999;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 15px 40px;
-    font-size: 1.2em;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--bg-hover), var(--bg-dark));
+    color: var(--text-white);
+    border: 2px solid var(--text-light);
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
 }
 
 .cancel-btn:hover {
-    background: #777;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--text-secondary), var(--bg-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--text-secondary);
 }
 
-/* Results page styles */
+/* ============================================
+   СТОРІНКА КВІЗУ (ПРОХОДЖЕННЯ)
+   ============================================ */
+
+#quiz-container {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeInUp 0.6s ease-out;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+}
+
+#quiz-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-white);
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+}
+
+#question-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-white);
+    line-height: 1.5;
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, transparent 100%);
+    border-radius: var(--border-radius-small);
+    border-left: 4px solid var(--primary-color);
+}
+
+#question-container {
+    margin-bottom: var(--spacing-xl);
+}
+
+.answers-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.answer-option {
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 1rem;
+    text-align: left;
+    color: var(--text-white);
+    position: relative;
+    overflow: hidden;
+}
+
+.answer-option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+    transition: width var(--transition-normal);
+    z-index: 0;
+}
+
+.answer-option:hover {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, var(--bg-hover) 100%);
+    border-color: var(--primary-color);
+    transform: translateX(10px);
+    box-shadow: var(--shadow-md);
+}
+
+.answer-option:hover::before {
+    width: 5px;
+}
+
+.answer-option.selected {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border-color: var(--red-bright);
+    box-shadow: var(--shadow-red-glow);
+}
+
+.answer-option.correct {
+    background: linear-gradient(135deg, var(--primary-color), var(--red-dark));
+    color: var(--text-white);
+    border-color: var(--red-bright);
+    box-shadow: var(--shadow-red-glow);
+}
+
+.answer-option.incorrect {
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    color: var(--text-secondary);
+    border-color: var(--text-light);
+    opacity: 0.6;
+}
+
+/* Стилі для кнопок відповідей (альтернативний клас) */
+.answer-btn {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    font-size: 1rem;
+    text-align: center;
+    color: var(--text-white);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.answer-btn::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary-color) 0%, transparent 100%);
+    transition: width var(--transition-normal);
+    z-index: 0;
+}
+
+.answer-btn:hover {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.25) 0%, var(--bg-hover) 100%);
+    border-color: var(--primary-color);
+    transform: translateX(8px);
+    box-shadow: var(--shadow-md);
+}
+
+.answer-btn:hover::before {
+    width: 6px;
+}
+
+.answer-btn.selected {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-white);
+    border-color: var(--red-bright);
+    box-shadow: var(--shadow-red-glow);
+    font-weight: 600;
+}
+
+.answer-btn.selected::before {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.answer-btn.correct {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--red-dark) 100%);
+    color: var(--text-white);
+    border-color: var(--red-bright);
+    box-shadow: var(--shadow-red-intense);
+    animation: correctPulse 0.6s ease-out;
+}
+
+.answer-btn.incorrect {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, rgba(127, 29, 29, 0.3) 100%);
+    color: var(--text-secondary);
+    border-color: rgba(220, 38, 38, 0.2);
+    opacity: 0.7;
+}
+
+/* Анімація для правильної відповіді */
+@keyframes correctPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: var(--shadow-md);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: var(--shadow-red-intense);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: var(--shadow-red-glow);
+    }
+}
+
+/* ============================================
+   НАВІГАЦІЯ КВІЗУ
+   ============================================ */
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 2px solid rgba(220, 38, 38, 0.2);
+}
+
+.navigation button {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.navigation button:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+
+.navigation button:disabled {
+    background: linear-gradient(135deg, var(--bg-hover), var(--bg-dark));
+    cursor: not-allowed;
+    opacity: 0.5;
+    border-color: var(--text-light);
+}
+
+#prev-btn,
+#next-btn {
+    min-width: 120px;
+    font-size: 1rem;
+}
+
+#prev-btn:not(:disabled):hover {
+    transform: translateY(-2px) translateX(-2px);
+}
+
+#next-btn:not(:disabled):hover {
+    transform: translateY(-2px) translateX(2px);
+}
+
+#question-counter {
+    font-weight: 600;
+    color: var(--text-white);
+    font-size: 1rem;
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%);
+    border-radius: var(--border-radius-small);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* ============================================
+   КОНТЕЙНЕР РЕЗУЛЬТАТІВ
+   ============================================ */
+
+#result-container {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    animation: fadeInScale 0.6s ease-out;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+}
+
+#result-container h1 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-white);
+    text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+}
+
+#result-content {
+    margin-bottom: var(--spacing-xl);
+}
+
+.score-display {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: var(--spacing-lg) 0;
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color), var(--red-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.8));
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.result-message {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.restart-btn,
+.home-btn {
+    padding: 1rem 2rem;
+    margin: var(--spacing-sm);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+}
+
+.restart-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+
+.home-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+}
+
+.home-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+
+/* ============================================
+   СТОРІНКА УПРАВЛІННЯ
+   ============================================ */
+
+.manage-section {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
+    animation: fadeInUp 0.6s ease-out;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+}
+
+.create-new-btn {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
+}
+
+.create-new-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+
+.manage-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.manage-card {
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-fast);
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+}
+
+.manage-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.manage-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: var(--spacing-sm);
+}
+
+.manage-card h3 {
+    font-size: 1.3rem;
+    color: var(--text-white);
+}
+
+.manage-card p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.manage-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.edit-btn,
+.delete-btn,
+.view-btn {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.9rem;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border-color: var(--red-bright);
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    color: var(--text-white);
+    border-color: var(--text-light);
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+
+.view-btn {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border-color: var(--red-bright);
+}
+
+.view-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+}
+
+/* ============================================
+   СТОРІНКА РЕЗУЛЬТАТІВ
+   ============================================ */
+
 .results-section {
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
+    animation: fadeInUp 0.6s ease-out;
+    border: 2px solid rgba(220, 38, 38, 0.3);
 }
 
 .clear-all-btn {
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
 }
 
 .clear-all-btn:hover {
-    background: #d32f2f;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, var(--red-glow), var(--error-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-intense);
+    border-color: var(--red-glow);
 }
 
 .results-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-top: 30px;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
 }
 
 .result-card {
-    background: #f8f9fa;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-fast);
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
 }
 
 .result-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
 }
 
 .result-card-header {
-    padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
+    margin-bottom: var(--spacing-sm);
 }
 
-.result-card-header.excellent {
-    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+.result-card h3 {
+    font-size: 1.3rem;
+    color: var(--text-white);
 }
 
-.result-card-header.good {
-    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+.result-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-small);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    box-shadow: var(--shadow-red-glow);
 }
 
-.result-card-header.average {
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+.result-score.low {
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    border-color: var(--text-light);
+    box-shadow: none;
 }
 
-.result-card-header.poor {
-    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
-}
-
-.result-quiz-name {
-    color: white;
-    font-size: 1.4em;
-    margin: 0;
-}
-
-.result-status {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: bold;
-}
-
-.result-card-body {
-    padding: 20px;
+.result-score.medium {
+    background: linear-gradient(135deg, var(--warning-color), var(--primary-color));
+    border-color: var(--red-bright);
 }
 
 .result-date {
-    color: #999;
-    font-size: 0.95em;
-    margin: 0 0 10px 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: var(--spacing-xs);
 }
 
-.result-summary-text {
-    color: #667eea;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0 0 8px 0;
+.result-details {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
+    color: var(--text-secondary);
 }
 
-.result-score-detail {
-    color: #666;
-    margin: 0;
+/* ============================================
+   ФУТЕР
+   ============================================ */
+
+.footer {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    padding: var(--spacing-lg) 0;
+    margin-top: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    border-top: 2px solid var(--primary-color);
+    position: relative;
 }
 
-.result-card-footer {
-    padding: 0 20px 20px;
+.footer::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--red-glow) 50%, 
+        transparent 100%);
+    box-shadow: 0 0 10px var(--red-glow);
 }
 
-.delete-result-btn {
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.language-selector label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.language-selector select {
+    padding: 0.5rem 1rem;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius-small);
+    background: var(--bg-card);
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.95em;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+    color: var(--text-white);
 }
 
-.delete-result-btn:hover {
-    background: #d32f2f;
-    transform: scale(1.05);
+.language-selector select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
 }
 
-@media (max-width: 600px) {
-    #quiz-container, #result-container {
-        padding: 25px;
-    }
+.copyright {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
 
-    h1 {
-        font-size: 2em;
-    }
+/* ============================================
+   АНІМАЦІЇ
+   ============================================ */
 
-    h2 {
-        font-size: 1.2em;
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-    .answer-btn {
-        padding: 15px;
-        font-size: 1em;
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* ============================================
+   АДАПТИВНИЙ ДИЗАЙН (RESPONSIVE)
+   ============================================ */
+
+/* Планшети */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .site-title {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 2rem;
     }
     
     .quiz-grid {
         grid-template-columns: 1fr;
     }
     
-    .header-content {
+    .form-actions {
         flex-direction: column;
-        gap: 15px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: start;
     }
     
     .footer-content {
         flex-direction: column;
         text-align: center;
     }
+}
+
+/* Мобільні пристрої */
+@media (max-width: 480px) {
+    .container {
+        padding: var(--spacing-md);
+    }
     
-    .manage-item {
+    .welcome-section,
+    .quizzes-section,
+    .create-section,
+    .manage-section,
+    .results-section {
+        padding: var(--spacing-md);
+    }
+    
+    .site-title {
+        font-size: 1.2rem;
+    }
+    
+    .nav-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .welcome-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-text {
+        font-size: 1rem;
+    }
+    
+    .section-title,
+    .section-title-dark {
+        font-size: 1.5rem;
+    }
+    
+    .manage-actions {
+        flex-wrap: wrap;
+    }
+    
+    .answer-item {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: start;
     }
-    
-    .manage-item-actions {
-        width: 100%;
-        margin-top: 15px;
-    }
-    
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .option-item {
-        grid-template-columns: 30px 1fr;
-        gap: 8px;
-    }
-    
-    .checkbox-label {
-        grid-column: 2;
-        font-size: 0.9em;
-    }
-    
-    .remove-option-btn {
-        grid-column: 2;
-        justify-self: end;
-    }
-    
-    .form-actions {
-        flex-direction: column;
-    }
-    
-    .save-quiz-btn, .cancel-btn {
-        width: 100%;
-    }
-    
-    .result-card-header {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-    }
+}
+
+/* ============================================
+   УТИЛІТИ
+   ============================================ */
+
+.text-center {
+    text-align: center;
+}
+
+.mt-lg {
+    margin-top: var(--spacing-lg);
+}
+
+.mb-lg {
+    margin-bottom: var(--spacing-lg);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Стилі для повідомлень */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    border: 2px solid;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(185, 28, 28, 0.1) 100%);
+    color: var(--text-white);
+    border-color: var(--primary-color);
+    box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.1);
+}
+
+.alert-error {
+    background: linear-gradient(135deg, rgba(255, 23, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%);
+    color: var(--text-white);
+    border-color: var(--error-color);
+    box-shadow: inset 0 0 20px rgba(255, 23, 68, 0.1);
+}
+
+.alert-info {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%);
+    color: var(--text-white);
+    border-color: var(--info-color);
+    box-shadow: inset 0 0 20px rgba(220, 38, 38, 0.08);
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, rgba(255, 82, 82, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%);
+    color: var(--text-white);
+    border-color: var(--warning-color);
+    box-shadow: inset 0 0 20px rgba(255, 82, 82, 0.1);
 }
