@@ -91,17 +91,6 @@ function changeLanguage(lang) {
 }
 
 /**
- * Скинути всі дані та завантажити дефолтні квізи
- */
-function resetAllData() {
-    if (confirm('Ви впевнені? Це видалить ВСІ квізи та результати і завантажить дефолтні математичні квізи!')) {
-        storageService.resetStorage();
-        alert('Дані скинуто! Завантажено нові математичні квізи.');
-        location.reload();
-    }
-}
-
-/**
  * Екранувати HTML для безпеки
  * @param {string} text
  * @returns {string}

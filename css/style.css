@@ -271,23 +271,6 @@ body {
     font-size: 0.9em;
 }
 
-.reset-data-btn {
-    background: #ff9800;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 15px;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-}
-
-.reset-data-btn:hover {
-    background: #f57c00;
-    transform: scale(1.05);
-}
-
 /* Container for quiz page */
 body.quiz-page {
     display: flex;
