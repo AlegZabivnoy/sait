@@ -755,11 +755,47 @@ body.quiz-page::after {
     box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
 }
 
+.options-section {
+    margin-top: var(--spacing-md);
+}
+
+.options-section label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
 .option-item {
     display: flex;
     gap: var(--spacing-sm);
     align-items: center;
     margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-small);
+    border: 1px solid rgba(220, 38, 38, 0.1);
+}
+
+.option-number {
+    min-width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 0.9rem;
+    flex-shrink: 0;
 }
 
 .option-item input[type="text"] {
@@ -771,6 +807,37 @@ body.quiz-page::after {
     transition: all var(--transition-fast);
     background: var(--bg-secondary);
     color: var(--text-white);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius-small);
+    background: var(--bg-hover);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.checkbox-label:hover {
+    background: rgba(220, 38, 38, 0.15);
+    border-color: var(--primary-color);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-label span {
+    color: var(--text-white);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .option-item input[type="text"]:focus {
@@ -813,6 +880,67 @@ body.quiz-page::after {
     background: linear-gradient(135deg, var(--red-glow), var(--error-color));
     transform: scale(1.05);
     box-shadow: var(--shadow-red-glow);
+}
+
+/* Альтернативний клас для кнопки видалення питання */
+.remove-question-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-glow);
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.remove-question-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow), var(--error-color));
+    transform: scale(1.05);
+    box-shadow: var(--shadow-red-glow);
+}
+
+/* Кнопка додавання варіанту відповіді */
+.add-option-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-sm);
+}
+
+.add-option-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+
+/* Кнопка видалення варіанту відповіді */
+.remove-option-btn {
+    padding: 0.4rem 0.8rem;
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    color: var(--text-white);
+    border: 2px solid var(--text-light);
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 35px;
+}
+
+.remove-option-btn:hover {
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    transform: scale(1.1);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
 }
 
 .answers-container {
