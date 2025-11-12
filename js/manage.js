@@ -45,14 +45,14 @@ function createManageQuizItem(quiz) {
         <div class="manage-item-info">
             <h3 class="manage-quiz-name">${escapeHtml(quiz.name)}</h3>
             <p class="manage-quiz-description">${escapeHtml(quiz.description)}</p>
-            <p class="manage-quiz-meta">📝 ${questionCount} питань${questionCount === 1 ? 'ня' : ''}</p>
+            <p class="manage-quiz-meta">${questionCount} питань${questionCount === 1 ? 'ня' : ''}</p>
         </div>
         <div class="manage-item-actions">
             <button onclick="editQuiz('${escapeHtml(quiz.name)}')" class="edit-btn" title="Редагувати">
-                ✏️ Редагувати
+                Редагувати
             </button>
             <button onclick="deleteQuiz('${escapeHtml(quiz.name)}')" class="delete-btn" title="Видалити">
-                🗑️ Видалити
+                Видалити
             </button>
         </div>
     `;

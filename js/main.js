@@ -96,7 +96,7 @@ function createQuizCard(quiz) {
         <div class="quiz-card-body">
             <p class="quiz-description">${escapeHtml(quiz.description)}</p>
             <p class="quiz-info">
-                <span class="quiz-questions-count">📝 ${questionCount} питань${questionCount === 1 ? 'ня' : ''}</span>
+                <span class="quiz-questions-count">${questionCount} питань${questionCount === 1 ? 'ня' : ''}</span>
             </p>
         </div>
         <div class="quiz-card-footer">
