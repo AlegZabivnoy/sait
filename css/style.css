@@ -1,7 +1,3 @@
-/* ============================================
-   ГЛОБАЛЬНІ СТИЛІ ТА СКИДАННЯ
-   ============================================ */
-
 /* Скидання стилів браузера за замовчуванням */
 * {
     margin: 0;
@@ -145,10 +141,7 @@ body.quiz-page::after {
         radial-gradient(circle at 70% 60%, rgba(220, 38, 38, 0.15) 0%, transparent 50%);
 }
 
-/* ============================================
-   ШАПКА САЙТУ (HEADER)
-   ============================================ */
-
+/* Шапка сайту з навігацією */
 .header {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
     box-shadow: var(--shadow-lg);
@@ -266,10 +259,7 @@ body.quiz-page::after {
     box-shadow: var(--shadow-red-glow);
 }
 
-/* ============================================
-   КОНТЕЙНЕР ТА ОСНОВНИЙ МАКЕТ
-   ============================================ */
-
+/* Основний контейнер сторінки */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -283,10 +273,7 @@ body.quiz-page::after {
     padding-bottom: var(--spacing-xl);
 }
 
-/* ============================================
-   СЕКЦІЯ ПРИВІТАННЯ
-   ============================================ */
-
+/* Секція привітання на головній сторінці */
 .welcome-section {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -399,10 +386,6 @@ body.quiz-page::after {
     background: linear-gradient(135deg, var(--red-glow) 0%, var(--primary-light) 100%);
 }
 
-/* ============================================
-   СЕКЦІЯ КВІЗІВ
-   ============================================ */
-
 /* Основний контейнер для відображення списку квізів */
 .quizzes-section {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
@@ -429,10 +412,6 @@ body.quiz-page::after {
     color: var(--text-white);
     text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
 }
-
-/* ============================================
-   СІТКА КВІЗІВ (GRID)
-   ============================================ */
 
 /* Адаптивна сітка для відображення карток квізів */
 .quiz-grid {
@@ -528,21 +507,25 @@ body.quiz-page::after {
     justify-content: center;
 }
 
+/* Назва квізу - основний заголовок */
 .quiz-name {
     font-size: 1.5rem;
     color: var(--text-white);
 }
 
+/* Опис квізу - коротка інформація про зміст */
 .quiz-description {
     color: var(--text-secondary);
     line-height: 1.6;
 }
 
+/* Кількість питань у квізі - допоміжна інформація */
 .quiz-questions-count {
     color: var(--text-light);
     font-size: 0.9rem;
 }
 
+/* Кнопка переходу до квізу - повна ширина */
 .go-to-quiz-btn {
     width: 100%;
     padding: 0.8rem 1.2rem;
@@ -557,6 +540,7 @@ body.quiz-page::after {
     font-size: 1rem;
 }
 
+/* Ефект наведення на кнопку переходу - збільшення та свічення */
 .go-to-quiz-btn:hover {
     background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
     transform: scale(1.05);
@@ -564,6 +548,7 @@ body.quiz-page::after {
     border-color: var(--red-glow);
 }
 
+/* Параграфи в картці квізу - загальний текстовий контент */
 .quiz-card p {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-md);
@@ -572,6 +557,7 @@ body.quiz-page::after {
     z-index: 1;
 }
 
+/* Інформаційна панель квізу - метадані та кнопка старту */
 .quiz-info {
     display: flex;
     justify-content: space-between;
@@ -583,12 +569,14 @@ body.quiz-page::after {
     z-index: 1;
 }
 
+/* Лічильник питань - відображає кількість питань у квізі */
 .quiz-questions {
     font-size: 0.9rem;
     color: var(--text-light);
     font-weight: 600;
 }
 
+/* Кнопка початку проходження квізу */
 .start-quiz-btn {
     padding: 0.6rem 1.2rem;
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -601,6 +589,7 @@ body.quiz-page::after {
     box-shadow: var(--shadow-sm);
 }
 
+/* Ефект наведення на кнопку старту */
 .start-quiz-btn:hover {
     background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
     transform: scale(1.05);
@@ -608,10 +597,7 @@ body.quiz-page::after {
     border-color: var(--red-bright);
 }
 
-/* ============================================
-   ПОРОЖНІЙ СТАН (EMPTY STATE)
-   ============================================ */
-
+/* Порожній стан - відображається коли немає квізів */
 .empty-state {
     text-align: center;
     padding: var(--spacing-xl);
@@ -623,6 +609,7 @@ body.quiz-page::after {
     margin-bottom: var(--spacing-lg);
 }
 
+/* Кнопка створення квізу в порожньому стані */
 .create-quiz-btn {
     padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -643,10 +630,7 @@ body.quiz-page::after {
     border-color: var(--red-glow);
 }
 
-/* ============================================
-   ФОРМА СТВОРЕННЯ КВІЗУ
-   ============================================ */
-
+/* Секція створення квізу - основний контейнер форми */
 .create-section {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -656,11 +640,13 @@ body.quiz-page::after {
     border: 2px solid rgba(220, 38, 38, 0.3);
 }
 
+/* Форма квізу - обмежена ширина для кращої читабельності */
 .quiz-form {
     max-width: 800px;
     margin: 0 auto;
 }
 
+/* Група полів форми - контейнер для label та input */
 .form-group {
     margin-bottom: var(--spacing-lg);
 }
@@ -699,10 +685,7 @@ body.quiz-page::after {
     min-height: 80px;
 }
 
-/* ============================================
-   СЕКЦІЯ ПИТАНЬ
-   ============================================ */
-
+/* Секція питань - контейнер для всіх питань квізу */
 .questions-section {
     margin-top: var(--spacing-xl);
 }
@@ -1005,10 +988,7 @@ body.quiz-page::after {
     min-width: 120px;
 }
 
-/* ============================================
-   КНОПКИ ДІЙ ФОРМИ
-   ============================================ */
-
+/* Контейнер для кнопок дій форми - збереження та скасування */
 .form-actions {
     display: flex;
     gap: var(--spacing-md);
@@ -1056,10 +1036,7 @@ body.quiz-page::after {
     border-color: var(--text-secondary);
 }
 
-/* ============================================
-   СТОРІНКА КВІЗУ (ПРОХОДЖЕННЯ)
-   ============================================ */
-
+/* Контейнер сторінки проходження квізу */
 #quiz-container {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -1245,10 +1222,7 @@ body.quiz-page::after {
     }
 }
 
-/* ============================================
-   НАВІГАЦІЯ КВІЗУ
-   ============================================ */
-
+/* Навігація квізу - кнопки переходу між питаннями */
 .navigation {
     display: flex;
     justify-content: space-between;
@@ -1309,10 +1283,7 @@ body.quiz-page::after {
     border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
-/* ============================================
-   КОНТЕЙНЕР РЕЗУЛЬТАТІВ
-   ============================================ */
-
+/* Контейнер результатів квізу після завершення */
 #result-container {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -1391,10 +1362,7 @@ body.quiz-page::after {
     border-color: var(--red-glow);
 }
 
-/* ============================================
-   СТОРІНКА УПРАВЛІННЯ
-   ============================================ */
-
+/* Секція управління квізами - адміністративна панель */
 .manage-section {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -1565,10 +1533,7 @@ body.quiz-page::after {
     box-shadow: var(--shadow-red-glow);
 }
 
-/* ============================================
-   СТОРІНКА РЕЗУЛЬТАТІВ
-   ============================================ */
-
+/* Секція результатів - історія проходження квізів */
 .results-section {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -1666,10 +1631,9 @@ body.quiz-page::after {
     color: var(--text-secondary);
 }
 
-/* ============================================
-   АНІМАЦІЇ
-   ============================================ */
+/* Анімації для плавної появи елементів */
 
+/* Анімація появи знизу вгору */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1681,6 +1645,7 @@ body.quiz-page::after {
     }
 }
 
+/* Анімація появи зі збільшенням */
 @keyframes fadeInScale {
     from {
         opacity: 0;
@@ -1692,6 +1657,7 @@ body.quiz-page::after {
     }
 }
 
+/* Анімація пульсації - ефект дихання */
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
@@ -1703,11 +1669,9 @@ body.quiz-page::after {
     }
 }
 
-/* ============================================
-   АДАПТИВНИЙ ДИЗАЙН (RESPONSIVE)
-   ============================================ */
+/* Адаптивний дизайн для різних розмірів екранів */
 
-/* Планшети */
+/* Стилі для планшетів - до 768px */
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
@@ -1741,7 +1705,7 @@ body.quiz-page::after {
     }
 }
 
-/* Мобільні пристрої */
+/* Стилі для мобільних пристроїв - до 480px */
 @media (max-width: 480px) {
     .container {
         padding: var(--spacing-md);
@@ -1787,22 +1751,24 @@ body.quiz-page::after {
     }
 }
 
-/* ============================================
-   УТИЛІТИ
-   ============================================ */
+/* Утиліти - допоміжні класи для швидкого застосування стилів */
 
+/* Центрування тексту */
 .text-center {
     text-align: center;
 }
 
+/* Великий відступ зверху */
 .mt-lg {
     margin-top: var(--spacing-lg);
 }
 
+/* Великий відступ знизу */
 .mb-lg {
     margin-bottom: var(--spacing-lg);
 }
 
+/* Приховування елемента */
 .hidden {
     display: none !important;
 }
