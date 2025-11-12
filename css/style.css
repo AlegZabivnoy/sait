@@ -301,6 +301,7 @@ body.quiz-page::after {
 }
 
 /* Світловий ефект по краях */
+/* Світловий ефект по краях секції привітання - анімований градієнт */
 .welcome-section::before {
     content: '';
     position: absolute;
@@ -324,12 +325,14 @@ body.quiz-page::after {
     animation: borderRotate 4s linear infinite;
 }
 
+/* Анімація обертання градієнта на рамці */
 @keyframes borderRotate {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
+/* Заголовок секції привітання */
 .welcome-section h2 {
     font-size: 2.5rem;
     margin-bottom: var(--spacing-md);
@@ -339,6 +342,7 @@ body.quiz-page::after {
     z-index: 1;
 }
 
+/* Текст привітання - основний опис на головній сторінці */
 .welcome-text {
     font-size: 1.1rem;
     color: var(--text-secondary);
@@ -349,6 +353,7 @@ body.quiz-page::after {
     z-index: 1;
 }
 
+/* Головна кнопка Call-to-Action для створення квізу */
 .create-quiz-cta {
     padding: 1rem 2rem;
     font-size: 1.1rem;
@@ -365,6 +370,7 @@ body.quiz-page::after {
     z-index: 1;
 }
 
+/* Ефект розширення білого кола при наведенні на кнопку CTA */
 .create-quiz-cta::before {
     content: '';
     position: absolute;
@@ -379,11 +385,13 @@ body.quiz-page::after {
     z-index: -1;
 }
 
+/* Розгортання білого кола при наведенні */
 .create-quiz-cta:hover::before {
     width: 300px;
     height: 300px;
 }
 
+/* Стан наведення на кнопку CTA - збільшення та посилення свічення */
 .create-quiz-cta:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: var(--shadow-red-intense);
@@ -395,6 +403,7 @@ body.quiz-page::after {
    СЕКЦІЯ КВІЗІВ
    ============================================ */
 
+/* Основний контейнер для відображення списку квізів */
 .quizzes-section {
     background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
     border-radius: var(--border-radius-large);
@@ -404,6 +413,7 @@ body.quiz-page::after {
     border: 2px solid rgba(220, 38, 38, 0.3);
 }
 
+/* Заголовок секції - світлий варіант */
 .section-title {
     font-size: 2rem;
     margin-bottom: var(--spacing-lg);
@@ -412,6 +422,7 @@ body.quiz-page::after {
     text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
 }
 
+/* Заголовок секції - темний варіант */
 .section-title-dark {
     font-size: 2rem;
     margin-bottom: var(--spacing-lg);
@@ -423,6 +434,7 @@ body.quiz-page::after {
    СІТКА КВІЗІВ (GRID)
    ============================================ */
 
+/* Адаптивна сітка для відображення карток квізів */
 .quiz-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -443,6 +455,7 @@ body.quiz-page::after {
     box-shadow: var(--shadow-md);
 }
 
+/* Верхня червона лінія на картці квізу - з'являється при наведенні */
 .quiz-card::before {
     content: '';
     position: absolute;
@@ -455,6 +468,7 @@ body.quiz-page::after {
     transition: transform var(--transition-normal);
 }
 
+/* Радіальний градієнт свічення - з'являється при наведенні */
 .quiz-card::after {
     content: '';
     position: absolute;
@@ -469,6 +483,7 @@ body.quiz-page::after {
     z-index: 0;
 }
 
+/* Ефект наведення на картку квізу - підіймається з свіченням */
 .quiz-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-red-glow);
@@ -483,6 +498,7 @@ body.quiz-page::after {
     opacity: 1;
 }
 
+/* Назва квізу в картці */
 .quiz-card h3 {
     font-size: 1.5rem;
     margin-bottom: var(--spacing-sm);
@@ -491,16 +507,19 @@ body.quiz-page::after {
     z-index: 1;
 }
 
+/* Шапка картки квізу */
 .quiz-card-header {
     position: relative;
     z-index: 1;
 }
 
+/* Тіло картки квізу з описом */
 .quiz-card-body {
     position: relative;
     z-index: 1;
 }
 
+/* Футер картки з кнопкою дії */
 .quiz-card-footer {
     position: relative;
     z-index: 1;
