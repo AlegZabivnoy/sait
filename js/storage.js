@@ -35,29 +35,64 @@
  * @property {Quiz|null} selected - Вибраний квіз для проходження
  */
 
+// ====================================
+// КОНСТАНТИ
+// ====================================
+
+const STORAGE_CONFIG = {
+    STORAGE_KEY: 'quizAppStorage',
+    DEFAULT_OPTION_VALUE: 1
+};
+
+// ====================================
+// STORAGE SERVICE
+// ====================================
+
 /**
  * StorageService - сервіс для роботи з localStorage
+ * 
+ * Забезпечує централізоване управління даними квізів та результатів.
+ * Використовує localStorage для збереження стану між сесіями.
+ * 
+ * @class
+ * @example
+ * const service = new StorageService();
+ * const quizzes = service.getAllQuizzes();
+ * service.addQuiz({ name: "Test", description: "Test quiz", questions: [] });
  */
 class StorageService {
     constructor() {
-        this.storageKey = 'quizAppStorage';
+        this.storageKey = STORAGE_CONFIG.STORAGE_KEY;
         this.initStorage();
     }
 
     /**
      * Ініціалізація сховища даних
+     * Створює структуру даних, якщо вона не існує
      */
     initStorage() {
-        const storage = this.getStorage();
-        if (!storage || !storage.quizzes) {
-            const defaultStorage = {
-                timestamp: new Date().toISOString(),
-                quizzes: this.getDefaultQuizzes(),
-                results: [],
-                selected: null
-            };
-            this.setStorage(defaultStorage);
+        try {
+            const storage = this.getStorage();
+            if (!storage || !storage.quizzes) {
+                const defaultStorage = this.createDefaultStorage();
+                this.setStorage(defaultStorage);
+            }
+        } catch (error) {
+            console.error('Помилка ініціалізації сховища:', error);
         }
+    }
+
+    /**
+     * Створити дефолтну структуру сховища
+     * @returns {Storage}
+     */
+    createDefaultStorage() {
+        return {
+            timestamp: new Date().toISOString(),
+            quizzes: this.getDefaultQuizzes(),
+            results: [],
+            selected: null
+        };
     }
 
     /**
@@ -215,11 +250,16 @@ class StorageService {
 
     /**
      * Отримати весь об'єкт Storage
-     * @returns {Storage}
+     * @returns {Storage|null}
      */
     getStorage() {
-        const data = localStorage.getItem(this.storageKey);
-        return data ? JSON.parse(data) : null;
+        try {
+            const data = localStorage.getItem(this.storageKey);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('Помилка читання з localStorage:', error);
+            return null;
+        }
     }
 
     /**
@@ -227,8 +267,13 @@ class StorageService {
      * @param {Storage} storage
      */
     setStorage(storage) {
-        storage.timestamp = new Date().toISOString();
-        localStorage.setItem(this.storageKey, JSON.stringify(storage));
+        try {
+            storage.timestamp = new Date().toISOString();
+            localStorage.setItem(this.storageKey, JSON.stringify(storage));
+        } catch (error) {
+            console.error('Помилка запису в localStorage:', error);
+            throw error;
+        }
     }
 
     /**
