@@ -3,10 +3,6 @@
  * @file Управління створенням та редагуванням квізів
  */
 
-// ====================================
-// JSDOC ТИПИ
-// ====================================
-
 /**
  * @typedef {Object} QuizOption
  * @property {string} text - Текст варіанту відповіді
@@ -24,12 +20,8 @@
  * @typedef {Object} Quiz
  * @property {string} name - Назва квізу
  * @property {string} description - Опис квізу
- * @property {QuizQuestion[]} questions - Питання квізу
+ * @property {QuizQuestion[]} questions - Масив питань
  */
-
-// ====================================
-// КОНСТАНТИ
-// ====================================
 
 // Константи для DOM елементів
 const DOM_ELEMENTS = {
@@ -638,12 +630,8 @@ function showError(message) {
  * @param {string} message 
  */
 function showSuccess(message) {
-    alert(message);
+    showError(message);
 }
-
-// ====================================
-// ІНІЦІАЛІЗАЦІЯ
-// ====================================
 
 /**
  * Ініціалізація при завантаженні сторінки

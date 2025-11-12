@@ -35,18 +35,10 @@
  * @property {Quiz|null} selected - Вибраний квіз для проходження
  */
 
-// ====================================
-// КОНСТАНТИ
-// ====================================
-
 const STORAGE_CONFIG = {
     STORAGE_KEY: 'quizAppStorage',
     DEFAULT_OPTION_VALUE: 1
 };
-
-// ====================================
-// STORAGE SERVICE
-// ====================================
 
 /**
  * StorageService - сервіс для роботи з localStorage
