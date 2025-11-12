@@ -79,7 +79,7 @@ function addQuestion(questionData = null) {
         <div class="question-header">
             <h4>Питання ${questionCounter}</h4>
             <button type="button" onclick="removeQuestion(${questionCounter})" class="remove-question-btn" title="Видалити питання">
-                🗑️ Видалити
+                Видалити
             </button>
         </div>
         

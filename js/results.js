@@ -83,13 +83,13 @@ function createResultCard(result) {
             ${statusText ? `<span class="result-status">${statusText}</span>` : ''}
         </div>
         <div class="result-card-body">
-            <p class="result-date">📅 ${formattedDate}</p>
-            <p class="result-summary-text">📊 Результат: ${escapeHtml(result.summary)}</p>
-            ${result.score !== undefined ? `<p class="result-score-detail">✓ Правильних відповідей: ${result.score}</p>` : ''}
+            <p class="result-date">${formattedDate}</p>
+            <p class="result-summary-text">Результат: ${escapeHtml(result.summary)}</p>
+            ${result.score !== undefined ? `<p class="result-score-detail">Правильних відповідей: ${result.score}</p>` : ''}
         </div>
         <div class="result-card-footer">
             <button onclick="deleteResult('${result.timestamp}')" class="delete-result-btn">
-                🗑️ Видалити
+                Видалити
             </button>
         </div>
     `;
