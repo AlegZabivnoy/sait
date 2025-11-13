@@ -455,9 +455,23 @@ function calculateResults() {
         let answerText = '';
         
         if (question.type === QUESTION_TYPES.TEXT) {
-            // Текстові питання - не перевіряємо правильність автоматично
+            // Текстові питання - перевіряємо чи відповідь містить правильну відповідь
             answerText = userAnswer || '';
-            isCorrect = null; // Не визначено
+            
+            // Якщо є правильна відповідь для перевірки
+            if (question.correctAnswer && question.correctAnswer.trim().length > 0) {
+                const userAnswerLower = answerText.toLowerCase().trim();
+                const correctAnswerLower = question.correctAnswer.toLowerCase().trim();
+                
+                // Перевіряємо чи відповідь користувача містить правильну відповідь (часткове співпадіння)
+                isCorrect = userAnswerLower.includes(correctAnswerLower) || 
+                           correctAnswerLower.includes(userAnswerLower);
+                
+                if (isCorrect) correctCount++;
+            } else {
+                // Якщо немає правильної відповіді, вважаємо що відповідь не перевіряється
+                isCorrect = null;
+            }
         } else if (question.type === QUESTION_TYPES.MULTIPLE) {
             // Множинний вибір
             const selectedIndices = Array.isArray(userAnswer) ? userAnswer : [];
@@ -490,8 +504,10 @@ function calculateResults() {
         });
     });
     
-    const total = currentQuiz.questions.length;
-    const percentage = Math.round((correctCount / total) * 100);
+    // Підраховуємо тільки питання, які можна оцінити (isCorrect !== null)
+    const gradableQuestions = details.filter(d => d.isCorrect !== null).length;
+    const total = gradableQuestions > 0 ? gradableQuestions : currentQuiz.questions.length;
+    const percentage = total > 0 ? Math.round((correctCount / total) * 100) : 0;
     
     return {
         score: correctCount,
@@ -528,8 +544,8 @@ function generateResultsHTML(resultData) {
  * @returns {string}
  */
 function generateResultItemHTML(item, index) {
-    // Для текстових питань не показуємо статус правильності
-    if (item.type === QUESTION_TYPES.TEXT) {
+    // Для текстових питань без правильної відповіді не показуємо статус правильності
+    if (item.type === QUESTION_TYPES.TEXT && item.isCorrect === null) {
         return `
             <div class="${CSS_CLASSES.RESULT_ITEM}">
                 <div class="${CSS_CLASSES.RESULT_QUESTION}">
