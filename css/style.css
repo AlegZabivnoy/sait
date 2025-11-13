@@ -795,6 +795,7 @@ body.quiz-page::after {
     flex-direction: column;
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-sm);
+    width: 100%;
 }
 
 /* Окремий варіант відповіді у формі */
@@ -807,6 +808,8 @@ body.quiz-page::after {
     padding: var(--spacing-sm);
     border-radius: var(--border-radius-small);
     border: 1px solid rgba(220, 38, 38, 0.1);
+    width: 100%;
+    max-width: 100%;
 }
 
 /* Круглий номер варіанту відповіді */
@@ -828,6 +831,7 @@ body.quiz-page::after {
 /* Текстове поле варіанту відповіді */
 .option-item input[type="text"] {
     flex: 1;
+    min-width: 0;
     padding: 0.6rem;
     border: 2px solid rgba(220, 38, 38, 0.2);
     border-radius: var(--border-radius-small);
@@ -849,6 +853,8 @@ body.quiz-page::after {
     border: 1px solid rgba(220, 38, 38, 0.2);
     transition: all var(--transition-fast);
     white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 130px;
 }
 
 /* Ефект наведення на checkbox label */
@@ -973,7 +979,13 @@ body.quiz-page::after {
     transition: all var(--transition-fast);
     font-size: 0.85rem;
     font-weight: 600;
-    min-width: 35px;
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 /* Ефект наведення на кнопку видалення варіанту */
