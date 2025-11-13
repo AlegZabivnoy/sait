@@ -227,6 +227,10 @@ function addQuestion(questionData = null) {
     
     const questionDiv = createQuestionElement(questionData);
     container.appendChild(questionDiv);
+    
+    // Оновлюємо номери варіантів ПІСЛЯ додавання в DOM
+    updateOptionNumbers(questionCounter);
+    
     updateQuestionCounter();
     
     // Прокрутка до нового питання
@@ -250,9 +254,6 @@ function createQuestionElement(questionData) {
     
     // Прикріплюємо обробники подій до кнопок видалення варіантів
     attachOptionRemoveHandlers(questionDiv, questionCounter);
-    
-    // Оновлюємо номери варіантів
-    updateOptionNumbers(questionCounter);
     
     return questionDiv;
 }
