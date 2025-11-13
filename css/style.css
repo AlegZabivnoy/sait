@@ -783,7 +783,7 @@ body.quiz-page::after {
     align-items: center;
     margin-bottom: var(--spacing-sm);
     background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
-    padding: var(--spacing-sm);
+    padding: 8px;
     border-radius: var(--border-radius-small);
     border: 1px solid rgba(220, 38, 38, 0.1);
     width: 100%;
@@ -823,6 +823,7 @@ body.quiz-page::after {
 .checkbox-label {
     display: flex;
     align-items: center;
+    margin-top: 15px;
     gap: 0.4rem;
     cursor: pointer;
     padding: 0.4rem 0.8rem;
@@ -833,6 +834,7 @@ body.quiz-page::after {
     white-space: nowrap;
     flex-shrink: 0;
     min-width: 130px;
+    user-select: none;
 }
 
 /* Ефект наведення на checkbox label */
@@ -869,6 +871,34 @@ body.quiz-page::after {
     height: 20px;
     cursor: pointer;
     accent-color: var(--primary-color);
+}
+
+#question-type {
+    padding: 0.7rem;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius-small);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    color: var(--text-white);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Стан фокусу для вибору типу запитання */
+#question-type:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2), 0 0 15px rgba(220, 38, 38, 0.3);
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+}
+
+/* Опції у select для типу запитання */
+#question-type option {
+    background: var(--bg-secondary);
+    color: var(--text-white);
+    font-weight: 500;
 }
 
 /* Шапка картки питання з номером та кнопкою видалення */
@@ -1480,7 +1510,7 @@ body.quiz-page::after {
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
     animation: fadeInUp 0.6s ease-out;
-    border: 2px solid rgba(220, 38, 38, 0.3);
+    border: 2px solid var(--primary-color);
 }
 
 /* Кнопка створення нового квізу на сторінці управління */
@@ -1674,7 +1704,7 @@ body.quiz-page::after {
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
     animation: fadeInUp 0.6s ease-out;
-    border: 2px solid rgba(220, 38, 38, 0.3);
+    border: 2px solid var(--primary-color);
 }
 
 /* Кнопка очищення всієї історії результатів */
@@ -1720,7 +1750,7 @@ body.quiz-page::after {
 /* Ефект наведення на картку результату */
 .result-card:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: translateX(5px);
     border-color: var(--primary-color);
 }
 
@@ -1805,33 +1835,34 @@ body.quiz-page::after {
 
 /* Статус "Відмінно" */
 .result-card-header.excellent .result-status {
-    background: linear-gradient(135deg, var(--success-color), #059669);
+    background: linear-gradient(135deg, #059669, #0e7e5b);
     color: var(--text-white);
     border: 2px solid #10b981;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 10px #10b9814d;
 }
 
 /* Статус "Добре" */
 .result-card-header.good .result-status {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: linear-gradient(135deg, #b9d906, rgb(156, 158, 1));
     color: var(--text-white);
-    border: 2px solid var(--red-bright);
-    box-shadow: var(--shadow-red-glow);
+    border: 2px solid #cfe93c;
+    box-shadow: 0 0 10px #7a9000;
 }
 
 /* Статус "Задовільно" */
 .result-card-header.average .result-status {
-    background: linear-gradient(135deg, var(--warning-color), #d97706);
+    background: linear-gradient(135deg, #d95706, #d95706);
     color: var(--text-white);
-    border: 2px solid #f59e0b;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+    border: 2px solid #ee6f21;
+    box-shadow: 0 0 10px #ac4200;
 }
 
 /* Статус "Потрібно покращити" */
 .result-card-header.poor .result-status {
-    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
-    color: var(--text-light);
-    border: 2px solid var(--text-light);
+    background: linear-gradient(135deg, #ba0e0e, #7e0303);
+    color: var(--text-white);
+    border: 2px solid #e22d2d;
+    box-shadow: 0 0 10px #710000;
 }
 
 /* Деталі результату - правильні/неправильні відповіді */
