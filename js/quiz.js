@@ -60,11 +60,18 @@ const SYMBOLS = {
     INCORRECT: '-'
 };
 
+// Типи питань
+const QUESTION_TYPES = {
+    SINGLE: 'single',
+    MULTIPLE: 'multiple',
+    TEXT: 'text'
+};
+
 // Глобальні змінні стану
 let questions = [];
 let currentQuiz = null;
 let currentQuestion = 0;
-let userAnswers = [];
+let userAnswers = []; // Для single: число, для multiple: масив чисел, для text: рядок
 
 /**
  * Ініціалізація квізу
@@ -104,7 +111,9 @@ function loadQuiz() {
 function convertQuizStructure(quizQuestions) {
     return quizQuestions.map(q => ({
         question: q.text,
-        answers: q.options.map(o => o.text)
+        type: q.type || QUESTION_TYPES.SINGLE,
+        answers: q.options ? q.options.map(o => o.text) : [],
+        correctAnswer: q.correctAnswer || ''
     }));
 }
 
@@ -140,7 +149,13 @@ function showQuestion() {
         const currentQuestionData = questions[currentQuestion];
         
         updateQuestionText(questionElement, currentQuestionData.question);
-        renderAnswerButtons(answersElement, currentQuestionData.answers);
+        
+        if (currentQuestionData.type === QUESTION_TYPES.TEXT) {
+            renderTextInput(answersElement);
+        } else {
+            renderAnswerButtons(answersElement, currentQuestionData.answers, currentQuestionData.type);
+        }
+        
         updateQuestionCounter(counterElement);
         updateNavigationButtons(prevBtn, nextBtn);
     } catch (error) {
@@ -172,15 +187,48 @@ function updateQuestionText(element, questionText) {
 }
 
 /**
+ * Відрендерити текстове поле для відповіді
+ * @param {HTMLElement} answersElement 
+ */
+function renderTextInput(answersElement) {
+    answersElement.innerHTML = '';
+    
+    const textarea = document.createElement('textarea');
+    textarea.className = 'text-answer-input';
+    textarea.placeholder = 'Введіть вашу відповідь...';
+    textarea.rows = 5;
+    textarea.style.width = '100%';
+    textarea.style.padding = '1rem';
+    textarea.style.borderRadius = '8px';
+    textarea.style.border = '2px solid rgba(220, 38, 38, 0.3)';
+    textarea.style.background = 'var(--bg-secondary)';
+    textarea.style.color = 'var(--text-white)';
+    textarea.style.fontSize = '1rem';
+    textarea.style.fontFamily = 'inherit';
+    
+    // Заповнюємо попередню відповідь якщо є
+    if (userAnswers[currentQuestion]) {
+        textarea.value = userAnswers[currentQuestion];
+    }
+    
+    textarea.addEventListener('input', (e) => {
+        userAnswers[currentQuestion] = e.target.value;
+    });
+    
+    answersElement.appendChild(textarea);
+}
+
+/**
  * Відрендерити кнопки відповідей
  * @param {HTMLElement} answersElement 
  * @param {string[]} answers 
+ * @param {string} questionType
  */
-function renderAnswerButtons(answersElement, answers) {
+function renderAnswerButtons(answersElement, answers, questionType = QUESTION_TYPES.SINGLE) {
     answersElement.innerHTML = '';
     
     answers.forEach((answer, index) => {
-        const button = createAnswerButton(answer, index);
+        const button = createAnswerButton(answer, index, questionType);
         answersElement.appendChild(button);
     });
 }
@@ -189,16 +237,27 @@ function renderAnswerButtons(answersElement, answers) {
  * Створити кнопку відповіді
  * @param {string} answerText 
  * @param {number} index 
+ * @param {string} questionType
  * @returns {HTMLElement}
  */
-function createAnswerButton(answerText, index) {
+function createAnswerButton(answerText, index, questionType = QUESTION_TYPES.SINGLE) {
     const button = document.createElement('button');
     button.className = CSS_CLASSES.ANSWER_BTN;
     button.textContent = answerText;
     button.onclick = () => selectAnswer(index);
     
-    if (userAnswers[currentQuestion] === index) {
-        button.classList.add(CSS_CLASSES.SELECTED);
+    // Для одиночної відповіді
+    if (questionType === QUESTION_TYPES.SINGLE) {
+        if (userAnswers[currentQuestion] === index) {
+            button.classList.add(CSS_CLASSES.SELECTED);
+        }
+    } 
+    // Для множинного вибору
+    else if (questionType === QUESTION_TYPES.MULTIPLE) {
+        const currentAnswers = userAnswers[currentQuestion] || [];
+        if (currentAnswers.includes(index)) {
+            button.classList.add(CSS_CLASSES.SELECTED);
+        }
     }
     
     return button;
@@ -243,23 +302,59 @@ function isLastQuestion() {
  * @param {number} answerIndex 
  */
 function selectAnswer(answerIndex) {
-    userAnswers[currentQuestion] = answerIndex;
-    updateAnswerButtonsSelection(answerIndex);
+    const currentQuestionData = questions[currentQuestion];
+    
+    if (currentQuestionData.type === QUESTION_TYPES.MULTIPLE) {
+        // Множинний вибір - додаємо/видаляємо з масиву
+        if (!Array.isArray(userAnswers[currentQuestion])) {
+            userAnswers[currentQuestion] = [];
+        }
+        
+        const currentAnswers = userAnswers[currentQuestion];
+        const indexPos = currentAnswers.indexOf(answerIndex);
+        
+        if (indexPos > -1) {
+            currentAnswers.splice(indexPos, 1);
+        } else {
+            currentAnswers.push(answerIndex);
+        }
+        
+        updateAnswerButtonsSelection(currentAnswers, currentQuestionData.type);
+    } else {
+        // Одиночний вибір
+        userAnswers[currentQuestion] = answerIndex;
+        updateAnswerButtonsSelection(answerIndex, currentQuestionData.type);
+    }
 }
 
 /**
  * Оновити виділення кнопок відповідей
- * @param {number} selectedIndex 
+ * @param {number|number[]} selected - Індекс або масив індексів
+ * @param {string} questionType
  */
-function updateAnswerButtonsSelection(selectedIndex) {
+function updateAnswerButtonsSelection(selected, questionType = QUESTION_TYPES.SINGLE) {
     const buttons = document.querySelectorAll(`.${CSS_CLASSES.ANSWER_BTN}`);
-    buttons.forEach((btn, index) => {
-        if (index === selectedIndex) {
-            btn.classList.add(CSS_CLASSES.SELECTED);
-        } else {
-            btn.classList.remove(CSS_CLASSES.SELECTED);
-        }
-    });
+    
+    if (questionType === QUESTION_TYPES.MULTIPLE) {
+        // Множинний вибір
+        const selectedArray = Array.isArray(selected) ? selected : [];
+        buttons.forEach((btn, index) => {
+            if (selectedArray.includes(index)) {
+                btn.classList.add(CSS_CLASSES.SELECTED);
+            } else {
+                btn.classList.remove(CSS_CLASSES.SELECTED);
+            }
+        });
+    } else {
+        // Одиночний вибір
+        buttons.forEach((btn, index) => {
+            if (index === selected) {
+                btn.classList.add(CSS_CLASSES.SELECTED);
+            } else {
+                btn.classList.remove(CSS_CLASSES.SELECTED);
+            }
+        });
+    }
 }
 
 /**
@@ -299,7 +394,19 @@ function previousQuestion() {
  * @returns {boolean}
  */
 function hasAnswerSelected() {
-    return userAnswers[currentQuestion] !== undefined;
+    const answer = userAnswers[currentQuestion];
+    const currentQuestionData = questions[currentQuestion];
+    
+    if (currentQuestionData.type === QUESTION_TYPES.TEXT) {
+        // Для текстових питань перевіряємо чи є текст
+        return answer !== undefined && answer.trim().length > 0;
+    } else if (currentQuestionData.type === QUESTION_TYPES.MULTIPLE) {
+        // Для множинного вибору перевіряємо чи є хоча б одна відповідь
+        return Array.isArray(answer) && answer.length > 0;
+    } else {
+        // Для одиночного вибору
+        return answer !== undefined;
+    }
 }
 
 /**
@@ -343,18 +450,43 @@ function calculateResults() {
     const details = [];
     
     currentQuiz.questions.forEach((question, index) => {
-        const userAnswerIndex = userAnswers[index];
-        const selectedOption = question.options[userAnswerIndex];
-        const isCorrect = selectedOption.isCorrect;
+        const userAnswer = userAnswers[index];
+        let isCorrect = false;
+        let answerText = '';
         
-        if (isCorrect) {
-            correctCount++;
+        if (question.type === QUESTION_TYPES.TEXT) {
+            // Текстові питання - не перевіряємо правильність автоматично
+            answerText = userAnswer || '';
+            isCorrect = null; // Не визначено
+        } else if (question.type === QUESTION_TYPES.MULTIPLE) {
+            // Множинний вибір
+            const selectedIndices = Array.isArray(userAnswer) ? userAnswer : [];
+            answerText = selectedIndices.map(idx => question.options[idx]?.text).filter(Boolean).join(', ');
+            
+            // Перевіряємо чи всі вибрані відповіді правильні і чи вибрані всі правильні
+            const correctIndices = question.options
+                .map((opt, idx) => opt.isCorrect ? idx : -1)
+                .filter(idx => idx !== -1);
+            
+            isCorrect = selectedIndices.length === correctIndices.length &&
+                        selectedIndices.every(idx => correctIndices.includes(idx));
+            
+            if (isCorrect) correctCount++;
+        } else {
+            // Одиночний вибір
+            const selectedOption = question.options[userAnswer];
+            if (selectedOption) {
+                answerText = selectedOption.text;
+                isCorrect = selectedOption.isCorrect;
+                if (isCorrect) correctCount++;
+            }
         }
         
         details.push({
             question: question.text,
-            answer: selectedOption.text,
-            isCorrect: isCorrect
+            answer: answerText,
+            isCorrect: isCorrect,
+            type: question.type
         });
     });
     
@@ -391,22 +523,36 @@ function generateResultsHTML(resultData) {
 
 /**
  * Генерувати HTML для одного елемента результату
- * @param {{question: string, answer: string, isCorrect: boolean}} item 
+ * @param {{question: string, answer: string, isCorrect: boolean|null, type: string}} item 
  * @param {number} index 
  * @returns {string}
  */
 function generateResultItemHTML(item, index) {
+    // Для текстових питань не показуємо статус правильності
+    if (item.type === QUESTION_TYPES.TEXT) {
+        return `
+            <div class="${CSS_CLASSES.RESULT_ITEM}">
+                <div class="${CSS_CLASSES.RESULT_QUESTION}">
+                    <span class="${CSS_CLASSES.QUESTION_NUMBER}">${index + 1}.</span> ${escapeHtml(item.question)}
+                </div>
+                <div class="${CSS_CLASSES.RESULT_ANSWER}">
+                    <strong>Ваша відповідь:</strong> ${escapeHtml(item.answer)}
+                </div>
+            </div>
+        `;
+    }
+    
     const statusClass = item.isCorrect ? CSS_CLASSES.CORRECT : CSS_CLASSES.INCORRECT;
     const statusIcon = item.isCorrect ? SYMBOLS.CORRECT : SYMBOLS.INCORRECT;
     
     return `
         <div class="${CSS_CLASSES.RESULT_ITEM} ${statusClass}">
             <div class="${CSS_CLASSES.RESULT_QUESTION}">
-                <span class="${CSS_CLASSES.QUESTION_NUMBER}">${index + 1}.</span> ${item.question}
+                <span class="${CSS_CLASSES.QUESTION_NUMBER}">${index + 1}.</span> ${escapeHtml(item.question)}
             </div>
             <div class="${CSS_CLASSES.RESULT_ANSWER}">
                 <span class="${CSS_CLASSES.STATUS_ICON}">${statusIcon}</span>
-                Ваша відповідь: ${item.answer}
+                Ваша відповідь: ${escapeHtml(item.answer)}
             </div>
         </div>
     `;

@@ -13,7 +13,9 @@
 /**
  * @typedef {Object} QuizQuestion
  * @property {string} text - Текст питання
- * @property {QuizOption[]} options - Варіанти відповідей
+ * @property {string} type - Тип питання: 'single', 'multiple', 'text'
+ * @property {QuizOption[]} options - Варіанти відповідей (для single/multiple)
+ * @property {string} correctAnswer - Правильна відповідь (для text)
  */
 
 /**
@@ -38,6 +40,7 @@ const CSS_CLASSES = {
     QUESTION_BLOCK: 'question-block',
     QUESTION_HEADER: 'question-header',
     QUESTION_TEXT: 'question-text',
+    QUESTION_TYPE: 'question-type',
     OPTIONS_SECTION: 'options-section',
     OPTIONS_CONTAINER: 'options-container',
     OPTION_ITEM: 'option-item',
@@ -48,7 +51,8 @@ const CSS_CLASSES = {
     FORM_GROUP: 'form-group',
     REMOVE_QUESTION_BTN: 'remove-question-btn',
     ADD_OPTION_BTN: 'add-option-btn',
-    REMOVE_OPTION_BTN: 'remove-option-btn'
+    REMOVE_OPTION_BTN: 'remove-option-btn',
+    TEXT_ANSWER: 'text-answer'
 };
 
 // Константи для мінімальних вимог
@@ -99,7 +103,15 @@ const TEXT = {
 // Константи для значень за замовчуванням
 const DEFAULTS = {
     OPTION_VALUE: 1,
-    MIN_OPTIONS: 2
+    MIN_OPTIONS: 2,
+    QUESTION_TYPE: 'single'
+};
+
+// Типи питань
+const QUESTION_TYPES = {
+    SINGLE: 'single',
+    MULTIPLE: 'multiple',
+    TEXT: 'text'
 };
 
 // Глобальні змінні стану
@@ -248,9 +260,20 @@ function createQuestionElement(questionData) {
     questionDiv.id = `question-${questionCounter}`;
     
     const questionText = questionData ? questionData.text : '';
-    const options = questionData ? questionData.options : getDefaultOptions();
+    const questionType = getQuestionType(questionData);
+    const options = questionData && questionData.options ? questionData.options : getDefaultOptions();
     
-    questionDiv.innerHTML = buildQuestionHTML(questionText, options);
+    questionDiv.innerHTML = buildQuestionHTML(questionText, options, questionType);
+    
+    // Якщо це текстове питання і є дані, заповнюємо правильну відповідь
+    if (questionType === QUESTION_TYPES.TEXT && questionData && questionData.correctAnswer) {
+        setTimeout(() => {
+            const textAnswer = questionDiv.querySelector(`.${CSS_CLASSES.TEXT_ANSWER}`);
+            if (textAnswer) {
+                textAnswer.value = questionData.correctAnswer;
+            }
+        }, 0);
+    }
     
     // Прикріплюємо обробники подій до кнопок видалення варіантів
     attachOptionRemoveHandlers(questionDiv, questionCounter);
@@ -270,12 +293,25 @@ function getDefaultOptions() {
 }
 
 /**
+ * Отримати тип питання за замовчуванням
+ * @param {QuizQuestion|null} questionData
+ * @returns {string}
+ */
+function getQuestionType(questionData) {
+    return questionData && questionData.type ? questionData.type : DEFAULTS.QUESTION_TYPE;
+}
+
+/**
  * Побудувати HTML для питання
  * @param {string} questionText 
  * @param {QuizOption[]} options 
+ * @param {string} questionType
  * @returns {string}
  */
-function buildQuestionHTML(questionText, options) {
+function buildQuestionHTML(questionText, options, questionType = DEFAULTS.QUESTION_TYPE) {
+    const typeLabel = questionType === QUESTION_TYPES.SINGLE ? '(одна правильна)' : 
+                      questionType === QUESTION_TYPES.MULTIPLE ? '(кілька правильних)' : '';
+    
     return `
         <div class="${CSS_CLASSES.QUESTION_HEADER}">
             <h4>Питання ${questionCounter}</h4>
@@ -289,13 +325,29 @@ function buildQuestionHTML(questionText, options) {
             <input type="text" class="${CSS_CLASSES.QUESTION_TEXT}" required placeholder="Введіть текст питання" value="${escapeHtml(questionText)}">
         </div>
 
-        <div class="${CSS_CLASSES.OPTIONS_SECTION}">
-            <label>Варіанти відповідей (позначте правильні)</label>
-            <div class="${CSS_CLASSES.OPTIONS_CONTAINER}" id="options-${questionCounter}">
-                ${options.map((opt, index) => createOptionHTML(questionCounter, index, opt)).join('')}
-            </div>
-            <button type="button" onclick="addOption(${questionCounter})" class="${CSS_CLASSES.ADD_OPTION_BTN}">+ Додати варіант</button>
+        <div class="form-group">
+            <label>Тип питання</label>
+            <select class="${CSS_CLASSES.QUESTION_TYPE}" onchange="handleQuestionTypeChange(${questionCounter})">
+                <option value="${QUESTION_TYPES.SINGLE}" ${questionType === QUESTION_TYPES.SINGLE ? 'selected' : ''}>Одна правильна відповідь</option>
+                <option value="${QUESTION_TYPES.MULTIPLE}" ${questionType === QUESTION_TYPES.MULTIPLE ? 'selected' : ''}>Кілька правильних відповідей</option>
+                <option value="${QUESTION_TYPES.TEXT}" ${questionType === QUESTION_TYPES.TEXT ? 'selected' : ''}>Розгорнута відповідь</option>
+            </select>
         </div>
+
+        ${questionType !== QUESTION_TYPES.TEXT ? `
+            <div class="${CSS_CLASSES.OPTIONS_SECTION}">
+                <label>Варіанти відповідей ${typeLabel}</label>
+                <div class="${CSS_CLASSES.OPTIONS_CONTAINER}" id="options-${questionCounter}">
+                    ${options.map((opt, index) => createOptionHTML(questionCounter, index, opt)).join('')}
+                </div>
+                <button type="button" onclick="addOption(${questionCounter})" class="${CSS_CLASSES.ADD_OPTION_BTN}">+ Додати варіант</button>
+            </div>
+        ` : `
+            <div class="form-group">
+                <label>Правильна відповідь (для перевірки)</label>
+                <textarea class="${CSS_CLASSES.TEXT_ANSWER}" placeholder="Введіть правильну відповідь або ключові слова" rows="3"></textarea>
+            </div>
+        `}
     `;
 }
 
@@ -573,6 +625,8 @@ function collectQuestions() {
     
     questionBlocks.forEach((block, blockIndex) => {
         const questionText = block.querySelector(`.${CSS_CLASSES.QUESTION_TEXT}`).value.trim();
+        const questionTypeSelect = block.querySelector(`.${CSS_CLASSES.QUESTION_TYPE}`);
+        const questionType = questionTypeSelect ? questionTypeSelect.value : DEFAULTS.QUESTION_TYPE;
         
         if (!questionText) {
             const errorMsg = `Питання ${blockIndex + 1}: Текст питання не може бути порожнім!`;
@@ -580,18 +634,30 @@ function collectQuestions() {
             throw new Error(errorMsg);
         }
         
-        const options = collectOptions(block, blockIndex + 1);
+        const question = {
+            text: questionText,
+            type: questionType
+        };
         
-        if (options.length < MIN_REQUIREMENTS.OPTIONS_PER_QUESTION) {
-            const errorMsg = `Питання ${blockIndex + 1}: ${MESSAGES.MIN_OPTIONS_REQUIRED}`;
-            showError(errorMsg);
-            throw new Error(errorMsg);
+        if (questionType === QUESTION_TYPES.TEXT) {
+            // Для текстових питань збираємо правильну відповідь
+            const textAnswer = block.querySelector(`.${CSS_CLASSES.TEXT_ANSWER}`);
+            question.correctAnswer = textAnswer ? textAnswer.value.trim() : '';
+            question.options = []; // Порожній масив для текстових питань
+        } else {
+            // Для питань з варіантами відповідей
+            const options = collectOptions(block, blockIndex + 1, questionType);
+            
+            if (options.length < MIN_REQUIREMENTS.OPTIONS_PER_QUESTION) {
+                const errorMsg = `Питання ${blockIndex + 1}: ${MESSAGES.MIN_OPTIONS_REQUIRED}`;
+                showError(errorMsg);
+                throw new Error(errorMsg);
+            }
+            
+            question.options = options;
         }
         
-        questions.push({
-            text: questionText,
-            options: options
-        });
+        questions.push(question);
     });
     
     return questions;
@@ -601,9 +667,10 @@ function collectQuestions() {
  * Зібрати варіанти відповідей для питання
  * @param {HTMLElement} questionBlock 
  * @param {number} questionNumber - Номер питання для повідомлень про помилки
+ * @param {string} questionType - Тип питання
  * @returns {QuizOption[]}
  */
-function collectOptions(questionBlock, questionNumber = 0) {
+function collectOptions(questionBlock, questionNumber = 0, questionType = DEFAULTS.QUESTION_TYPE) {
     const options = [];
     const optionItems = questionBlock.querySelectorAll(`.${CSS_CLASSES.OPTION_ITEM}`);
     
@@ -648,15 +715,21 @@ function validateQuizData(name, description, questions) {
         throw new Error(MESSAGES.MIN_QUESTIONS_REQUIRED);
     }
     
-    // Перевірка наявності рівно однієї правильної відповіді в кожному питанні
+    // Перевірка наявності правильної відповіді в кожному питанні
     questions.forEach((question, index) => {
+        if (question.type === QUESTION_TYPES.TEXT) {
+            // Для текстових питань правильна відповідь не обов'язкова
+            return;
+        }
+        
         const correctAnswersCount = question.options.filter(opt => opt.isCorrect).length;
         
         if (correctAnswersCount === 0) {
             throw new Error(`Питання ${index + 1}: ${MESSAGES.CORRECT_ANSWER_REQUIRED}`);
         }
         
-        if (correctAnswersCount > 1) {
+        // Для питань з однією відповіддю перевіряємо, що вибрана тільки одна
+        if (question.type === QUESTION_TYPES.SINGLE && correctAnswersCount > 1) {
             throw new Error(`Питання ${index + 1}: можлива тільки одна правильна відповідь`);
         }
     });
@@ -699,6 +772,57 @@ function createNewQuiz(quiz) {
     
     storageService.addQuiz(quiz);
     showSuccess(MESSAGES.QUIZ_SAVED);
+}
+
+/**
+ * Обробити зміну типу питання
+ * @param {number} questionId
+ */
+function handleQuestionTypeChange(questionId) {
+    const questionBlock = document.getElementById(`question-${questionId}`);
+    if (!questionBlock) return;
+    
+    const typeSelect = questionBlock.querySelector(`.${CSS_CLASSES.QUESTION_TYPE}`);
+    const newType = typeSelect.value;
+    
+    const optionsSection = questionBlock.querySelector(`.${CSS_CLASSES.OPTIONS_SECTION}`);
+    const textAnswerSection = questionBlock.querySelector(`.${CSS_CLASSES.TEXT_ANSWER}`)?.parentElement;
+    
+    if (newType === QUESTION_TYPES.TEXT) {
+        // Перехід на текстову відповідь
+        if (optionsSection) {
+            optionsSection.style.display = 'none';
+        }
+        
+        if (!textAnswerSection) {
+            // Створюємо секцію текстової відповіді
+            const formGroup = document.createElement('div');
+            formGroup.className = 'form-group';
+            formGroup.innerHTML = `
+                <label>Правильна відповідь (для перевірки)</label>
+                <textarea class="${CSS_CLASSES.TEXT_ANSWER}" placeholder="Введіть правильну відповідь або ключові слова" rows="3"></textarea>
+            `;
+            typeSelect.parentElement.after(formGroup);
+        } else {
+            textAnswerSection.style.display = 'block';
+        }
+    } else {
+        // Перехід на варіанти відповідей
+        if (textAnswerSection) {
+            textAnswerSection.style.display = 'none';
+        }
+        
+        if (optionsSection) {
+            optionsSection.style.display = 'block';
+            
+            // Оновлюємо підказку в залежності від типу
+            const label = optionsSection.querySelector('label');
+            if (label) {
+                const typeLabel = newType === QUESTION_TYPES.SINGLE ? '(одна правильна)' : '(кілька правильних)';
+                label.textContent = `Варіанти відповідей ${typeLabel}`;
+            }
+        }
+    }
 }
 
 /**
