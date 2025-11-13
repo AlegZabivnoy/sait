@@ -455,7 +455,7 @@ function calculateResults() {
         let answerText = '';
         
         if (question.type === QUESTION_TYPES.TEXT) {
-            // Текстові питання - перевіряємо чи відповідь містить правильну відповідь
+            // Текстові питання - перевіряємо точну відповідність
             answerText = userAnswer || '';
             
             // Якщо є правильна відповідь для перевірки
@@ -463,9 +463,8 @@ function calculateResults() {
                 const userAnswerLower = answerText.toLowerCase().trim();
                 const correctAnswerLower = question.correctAnswer.toLowerCase().trim();
                 
-                // Перевіряємо чи відповідь користувача містить правильну відповідь (часткове співпадіння)
-                isCorrect = userAnswerLower.includes(correctAnswerLower) || 
-                           correctAnswerLower.includes(userAnswerLower);
+                // Перевіряємо точну відповідність (без часткового співпадіння)
+                isCorrect = userAnswerLower === correctAnswerLower;
                 
                 if (isCorrect) correctCount++;
             } else {
