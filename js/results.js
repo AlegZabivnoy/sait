@@ -180,7 +180,6 @@ function createResultCard(result) {
         <div class="${CSS_CLASSES.RESULT_CARD_BODY}">
             <p class="${CSS_CLASSES.RESULT_DATE}">${formattedDate}</p>
             <p class="${CSS_CLASSES.RESULT_SUMMARY_TEXT}">Результат: ${escapeHtml(result.summary)}</p>
-            ${result.score !== undefined ? `<p class="${CSS_CLASSES.RESULT_SCORE_DETAIL}">Правильних відповідей: ${result.score}</p>` : ''}
         </div>
         <div class="${CSS_CLASSES.RESULT_CARD_FOOTER}">
             <button onclick="deleteResult('${result.timestamp}')" class="${CSS_CLASSES.DELETE_RESULT_BTN}">
