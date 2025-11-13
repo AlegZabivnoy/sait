@@ -451,6 +451,16 @@ function restartQuiz() {
 }
 
 /**
+ * Вийти з квізу (перервати тестування)
+ */
+function exitQuiz() {
+    const confirmExit = confirm('Ви впевнені, що хочете вийти? Прогрес не буде збережено.');
+    if (confirmExit) {
+        navigateToHome();
+    }
+}
+
+/**
  * Перейти на головну сторінку
  */
 function navigateToHome() {

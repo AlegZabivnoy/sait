@@ -1288,6 +1288,44 @@ body.quiz-page::after {
     }
 }
 
+/* Заголовок квізу з кнопкою виходу */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid rgba(220, 38, 38, 0.2);
+}
+
+.quiz-header h1 {
+    margin: 0;
+}
+
+/* Кнопка виходу з квізу */
+.exit-quiz-btn {
+    padding: 0.6rem 1.2rem;
+    background: rgba(139, 0, 0, 0.3);
+    color: var(--text-white);
+    border: 2px solid rgba(220, 38, 38, 0.5);
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.95rem;
+}
+
+.exit-quiz-btn:hover {
+    background: rgba(139, 0, 0, 0.6);
+    border-color: var(--red-bright);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+}
+
+.exit-quiz-btn:active {
+    transform: translateY(0);
+}
+
 /* Навігація квізу - кнопки переходу між питаннями */
 .navigation {
     display: flex;
