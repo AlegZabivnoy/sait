@@ -93,7 +93,7 @@ const TEXT = {
     PAGE_TITLE_CREATE: 'Створення квізу',
     ADD_OPTION_BTN: '+ Додати варіант',
     REMOVE_BTN: 'Видалити',
-    CORRECT_LABEL: '✓ Правильна'
+    CORRECT_LABEL: 'Правильна'
 };
 
 // Константи для значень за замовчуванням
@@ -310,7 +310,7 @@ function createOptionHTML(questionId, optionIndex, optionData = null) {
             <input type="text" class="${CSS_CLASSES.OPTION_TEXT}" required placeholder="Текст варіанту" value="${escapeHtml(text)}">
             <label class="${CSS_CLASSES.CHECKBOX_LABEL}" title="Позначити як правильну відповідь">
                 <input type="checkbox" class="${CSS_CLASSES.OPTION_CORRECT}" ${isCorrect ? 'checked' : ''}>
-                <span>✓ Правильна</span>
+                <span>Правильна</span>
             </label>
             <button type="button" onclick="removeOption(${questionId}, ${optionIndex})" class="${CSS_CLASSES.REMOVE_OPTION_BTN}" title="Видалити варіант">✖</button>
         </div>

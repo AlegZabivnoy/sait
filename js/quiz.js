@@ -56,8 +56,8 @@ const URLS = {
 
 // Константи для символів
 const SYMBOLS = {
-    CORRECT: '✓',
-    INCORRECT: '✗'
+    CORRECT: '+',
+    INCORRECT: '-'
 };
 
 // Глобальні змінні стану
