@@ -801,8 +801,7 @@ body.quiz-page::after {
 .option-item {
     display: flex;
     gap: var(--spacing-sm);
-    align-items: stretch;
-    min-height: 50px;
+    align-items: center;
     margin-bottom: var(--spacing-sm);
     background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
     padding: var(--spacing-sm);
@@ -813,6 +812,7 @@ body.quiz-page::after {
 /* Круглий номер варіанту відповіді */
 .option-number {
     min-width: 30px;
+    width: 30px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -835,7 +835,6 @@ body.quiz-page::after {
     transition: all var(--transition-fast);
     background: var(--bg-secondary);
     color: var(--text-white);
-    align-self: center;
 }
 
 /* Label з чекбоксом для позначення правильної відповіді */
@@ -850,7 +849,6 @@ body.quiz-page::after {
     border: 1px solid rgba(220, 38, 38, 0.2);
     transition: all var(--transition-fast);
     white-space: nowrap;
-    align-self: center;
 }
 
 /* Ефект наведення на checkbox label */
