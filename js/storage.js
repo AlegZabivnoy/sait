@@ -14,8 +14,6 @@
  * @version 1.0.0
  */
 
-// ==================== ТИПИ ДАНИХ ====================
-
 /**
  * Варіант відповіді на питання квізу
  * 
@@ -106,8 +104,6 @@
  * }
  */
 
-// ==================== КОНФІГУРАЦІЯ ====================
-
 /**
  * Конфігураційні константи для StorageService
  * 
@@ -119,8 +115,6 @@ const STORAGE_CONFIG = {
     STORAGE_KEY: 'quizAppStorage',
     DEFAULT_OPTION_VALUE: 1
 };
-
-// ==================== КЛАС STORAGESERVICE ====================
 
 /**
  * StorageService - сервіс для роботи з localStorage
@@ -176,8 +170,6 @@ class StorageService {
         this.storageKey = STORAGE_CONFIG.STORAGE_KEY;
         this.initStorage();
     }
-
-    // ==================== МЕТОДИ ІНІЦІАЛІЗАЦІЇ ====================
 
     /**
      * Ініціалізація сховища даних
@@ -375,8 +367,6 @@ class StorageService {
             }
         ];
     }
-
-    // ==================== GENERIC МЕТОДИ (згідно ТЗ) ====================
 
     /**
      * Отримати весь об'єкт Storage з localStorage
