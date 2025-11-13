@@ -188,7 +188,6 @@ body.quiz-page::after {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--text-white);
-    cursor: pointer;
     position: relative;
 }
 
