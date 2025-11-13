@@ -310,13 +310,15 @@ function createOptionHTML(questionId, optionIndex, optionData = null) {
     const isCorrect = optionData ? optionData.isCorrect : false;
     
     return `
-        <div class="${CSS_CLASSES.OPTION_NUMBER}">1</div>
-        <input type="text" class="${CSS_CLASSES.OPTION_TEXT}" required placeholder="Текст варіанту" value="${escapeHtml(text)}">
-        <label class="${CSS_CLASSES.CHECKBOX_LABEL}" title="Позначити як правильну відповідь">
-            <input type="checkbox" class="${CSS_CLASSES.OPTION_CORRECT}" ${isCorrect ? 'checked' : ''}>
-            <span>Правильна</span>
-        </label>
-        <button type="button" class="${CSS_CLASSES.REMOVE_OPTION_BTN}" title="Видалити варіант">✖</button>
+        <div class="${CSS_CLASSES.OPTION_ITEM}">
+            <div class="${CSS_CLASSES.OPTION_NUMBER}">1</div>
+            <input type="text" class="${CSS_CLASSES.OPTION_TEXT}" required placeholder="Текст варіанту" value="${escapeHtml(text)}">
+            <label class="${CSS_CLASSES.CHECKBOX_LABEL}" title="Позначити як правильну відповідь">
+                <input type="checkbox" class="${CSS_CLASSES.OPTION_CORRECT}" ${isCorrect ? 'checked' : ''}>
+                <span>Правильна</span>
+            </label>
+            <button type="button" class="${CSS_CLASSES.REMOVE_OPTION_BTN}" title="Видалити варіант">✖</button>
+        </div>
     `;
 }
 
@@ -349,9 +351,9 @@ function addOption(questionId) {
  * @returns {HTMLDivElement}
  */
 function createOptionElement(questionId, optionIndex) {
-    const optionDiv = document.createElement('div');
-    optionDiv.className = CSS_CLASSES.OPTION_ITEM;
-    optionDiv.innerHTML = createOptionHTML(questionId, optionIndex);
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = createOptionHTML(questionId, optionIndex);
+    const optionDiv = wrapper.firstElementChild;
     
     // Прикріплюємо обробник події до кнопки видалення
     const removeBtn = optionDiv.querySelector(`.${CSS_CLASSES.REMOVE_OPTION_BTN}`);
