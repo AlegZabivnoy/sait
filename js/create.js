@@ -800,6 +800,8 @@ function handleQuestionTypeChange(questionId) {
         // Перехід на текстову відповідь
         if (optionsSection) {
             optionsSection.style.display = 'none';
+            // Скидаємо всі чекбокси при переході на текстовий тип
+            resetAllCheckboxes(questionBlock);
         }
         
         if (!textAnswerSection) {
@@ -823,6 +825,9 @@ function handleQuestionTypeChange(questionId) {
         if (optionsSection) {
             optionsSection.style.display = 'block';
             
+            // Скидаємо всі чекбокси при зміні типу
+            resetAllCheckboxes(questionBlock);
+            
             // Оновлюємо підказку в залежності від типу
             const label = optionsSection.querySelector('label');
             if (label) {
@@ -831,6 +836,17 @@ function handleQuestionTypeChange(questionId) {
             }
         }
     }
+}
+
+/**
+ * Скинути всі чекбокси правильних відповідей у питанні
+ * @param {HTMLElement} questionBlock
+ */
+function resetAllCheckboxes(questionBlock) {
+    const checkboxes = questionBlock.querySelectorAll(`.${CSS_CLASSES.OPTION_CORRECT}`);
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
 }
 
 /**
