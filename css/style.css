@@ -1732,12 +1732,106 @@ body.quiz-page::after {
     margin-top: var(--spacing-xs);
 }
 
+/* Статус результату (відмінно, добре тощо) */
+.result-status {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius-small);
+    white-space: nowrap;
+}
+
+/* Тіло картки результату */
+.result-card-body {
+    margin-top: var(--spacing-md);
+}
+
+/* Текст підсумку результату */
+.result-summary-text {
+    color: var(--text-secondary);
+    margin: var(--spacing-xs) 0;
+}
+
+/* Деталі балів */
+.result-score-detail {
+    color: var(--text-light);
+    font-weight: 600;
+    margin: var(--spacing-xs) 0;
+}
+
+/* Назва квізу в результаті */
+.result-quiz-name {
+    margin: 0;
+    flex: 1;
+}
+
+/* Статус "Відмінно" */
+.result-card-header.excellent .result-status {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: var(--text-white);
+    border: 2px solid #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+/* Статус "Добре" */
+.result-card-header.good .result-status {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    box-shadow: var(--shadow-red-glow);
+}
+
+/* Статус "Задовільно" */
+.result-card-header.average .result-status {
+    background: linear-gradient(135deg, var(--warning-color), #d97706);
+    color: var(--text-white);
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+/* Статус "Потрібно покращити" */
+.result-card-header.poor .result-status {
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    color: var(--text-light);
+    border: 2px solid var(--text-light);
+}
+
 /* Деталі результату - правильні/неправильні відповіді */
 .result-details {
     margin-top: var(--spacing-md);
     padding-top: var(--spacing-md);
     border-top: 1px solid rgba(220, 38, 38, 0.2);
     color: var(--text-secondary);
+}
+
+/* Футер картки результату з кнопкою видалення */
+.result-card-footer {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(220, 38, 38, 0.15);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Кнопка видалення результату */
+.delete-result-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    color: var(--text-white);
+    border: 2px solid var(--text-light);
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.9rem;
+}
+
+/* Ефект наведення на кнопку видалення результату */
+.delete-result-btn:hover {
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
 }
 
 /* Анімації для плавної появи елементів */

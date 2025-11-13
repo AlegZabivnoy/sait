@@ -454,9 +454,8 @@ function saveQuiz(e) {
         navigateToManage();
     } catch (error) {
         console.error('Помилка збереження квізу:', error);
-        if (error.message !== 'Empty question' && error.message !== 'Empty option' && error.message !== 'Not enough options') {
-            showError(MESSAGES.ERROR_SAVING);
-        }
+        // Показуємо конкретне повідомлення про помилку
+        showError(error.message || MESSAGES.ERROR_SAVING);
     }
 }
 
@@ -484,19 +483,21 @@ function collectQuestions() {
     const questions = [];
     const questionBlocks = document.querySelectorAll(`.${CSS_CLASSES.QUESTION_BLOCK}`);
     
-    questionBlocks.forEach(block => {
+    questionBlocks.forEach((block, blockIndex) => {
         const questionText = block.querySelector(`.${CSS_CLASSES.QUESTION_TEXT}`).value.trim();
         
         if (!questionText) {
-            showError('Всі питання повинні мати текст!');
-            throw new Error('Empty question');
+            const errorMsg = `Питання ${blockIndex + 1}: Текст питання не може бути порожнім!`;
+            showError(errorMsg);
+            throw new Error(errorMsg);
         }
         
-        const options = collectOptions(block);
+        const options = collectOptions(block, blockIndex + 1);
         
         if (options.length < MIN_REQUIREMENTS.OPTIONS_PER_QUESTION) {
-            showError(MESSAGES.MIN_OPTIONS_REQUIRED);
-            throw new Error('Not enough options');
+            const errorMsg = `Питання ${blockIndex + 1}: ${MESSAGES.MIN_OPTIONS_REQUIRED}`;
+            showError(errorMsg);
+            throw new Error(errorMsg);
         }
         
         questions.push({
@@ -511,19 +512,23 @@ function collectQuestions() {
 /**
  * Зібрати варіанти відповідей для питання
  * @param {HTMLElement} questionBlock 
+ * @param {number} questionNumber - Номер питання для повідомлень про помилки
  * @returns {QuizOption[]}
  */
-function collectOptions(questionBlock) {
+function collectOptions(questionBlock, questionNumber = 0) {
     const options = [];
     const optionItems = questionBlock.querySelectorAll(`.${CSS_CLASSES.OPTION_ITEM}`);
     
-    optionItems.forEach(item => {
+    optionItems.forEach((item, index) => {
         const optionText = item.querySelector(`.${CSS_CLASSES.OPTION_TEXT}`).value.trim();
         const isCorrect = item.querySelector(`.${CSS_CLASSES.OPTION_CORRECT}`).checked;
         
         if (!optionText) {
-            showError(MESSAGES.OPTION_TEXT_REQUIRED);
-            throw new Error('Empty option');
+            const errorMsg = questionNumber > 0 
+                ? `Питання ${questionNumber}, Варіант ${index + 1}: ${MESSAGES.OPTION_TEXT_REQUIRED}`
+                : MESSAGES.OPTION_TEXT_REQUIRED;
+            showError(errorMsg);
+            throw new Error(errorMsg);
         }
         
         options.push({
@@ -554,6 +559,14 @@ function validateQuizData(name, description, questions) {
     if (questions.length < MIN_REQUIREMENTS.QUESTIONS_COUNT) {
         throw new Error(MESSAGES.MIN_QUESTIONS_REQUIRED);
     }
+    
+    // Перевірка наявності правильної відповіді в кожному питанні
+    questions.forEach((question, index) => {
+        const hasCorrectAnswer = question.options.some(opt => opt.isCorrect);
+        if (!hasCorrectAnswer) {
+            throw new Error(`Питання ${index + 1}: ${MESSAGES.CORRECT_ANSWER_REQUIRED}`);
+        }
+    });
 }
 
 /**
@@ -587,6 +600,7 @@ function updateExistingQuiz(quiz) {
 function createNewQuiz(quiz) {
     const existing = storageService.getQuizByName(quiz.name);
     if (existing) {
+        showError(MESSAGES.DUPLICATE_QUIZ_NAME);
         throw new Error(MESSAGES.DUPLICATE_QUIZ_NAME);
     }
     
