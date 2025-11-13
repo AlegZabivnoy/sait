@@ -424,15 +424,22 @@ function createOptionElement(questionId, optionIndex) {
 }
 
 /**
- * Обробник зміни правильної відповіді - дозволяє тільки одну правильну відповідь
+ * Обробник зміни правильної відповіді
  * @param {Event} event
  * @param {number} questionId
  */
 function handleCorrectAnswerChange(event, questionId) {
     const currentCheckbox = event.target;
+    const questionBlock = document.getElementById(`question-${questionId}`);
     
-    if (currentCheckbox.checked) {
-        // Знімаємо всі інші чекбокси в цьому питанні
+    if (!questionBlock) return;
+    
+    // Перевіряємо тип питання
+    const typeSelect = questionBlock.querySelector(`.${CSS_CLASSES.QUESTION_TYPE}`);
+    const questionType = typeSelect ? typeSelect.value : DEFAULTS.QUESTION_TYPE;
+    
+    // Для одиночного вибору - дозволяємо тільки одну правильну відповідь
+    if (questionType === QUESTION_TYPES.SINGLE && currentCheckbox.checked) {
         const optionsContainer = document.getElementById(`options-${questionId}`);
         if (optionsContainer) {
             const allCheckboxes = optionsContainer.querySelectorAll(`.${CSS_CLASSES.OPTION_CORRECT}`);
@@ -443,6 +450,7 @@ function handleCorrectAnswerChange(event, questionId) {
             });
         }
     }
+    // Для множинного вибору - дозволяємо будь-яку кількість
 }
 
 /**
@@ -506,7 +514,7 @@ function attachOptionRemoveHandlers(questionElement, questionId) {
         button.addEventListener('click', () => removeOptionByElement(optionElement, questionId));
     });
     
-    // Прикріплюємо обробники для чекбоксів (тільки одна правильна відповідь)
+    // Прикріплюємо обробники для чекбоксів
     const checkboxes = questionElement.querySelectorAll(`.${CSS_CLASSES.OPTION_CORRECT}`);
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', (e) => handleCorrectAnswerChange(e, questionId));
