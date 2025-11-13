@@ -248,6 +248,12 @@ function createQuestionElement(questionData) {
     
     questionDiv.innerHTML = buildQuestionHTML(questionText, options);
     
+    // Прикріплюємо обробники подій до кнопок видалення варіантів
+    attachOptionRemoveHandlers(questionDiv, questionCounter);
+    
+    // Оновлюємо номери варіантів
+    updateOptionNumbers(questionCounter);
+    
     return questionDiv;
 }
 
@@ -302,18 +308,15 @@ function buildQuestionHTML(questionText, options) {
 function createOptionHTML(questionId, optionIndex, optionData = null) {
     const text = optionData ? optionData.text : '';
     const isCorrect = optionData ? optionData.isCorrect : false;
-    const optionNumber = optionIndex + 1;
     
     return `
-        <div class="${CSS_CLASSES.OPTION_ITEM}" id="option-${questionId}-${optionIndex}">
-            <div class="${CSS_CLASSES.OPTION_NUMBER}">${optionNumber}</div>
-            <input type="text" class="${CSS_CLASSES.OPTION_TEXT}" required placeholder="Текст варіанту" value="${escapeHtml(text)}">
-            <label class="${CSS_CLASSES.CHECKBOX_LABEL}" title="Позначити як правильну відповідь">
-                <input type="checkbox" class="${CSS_CLASSES.OPTION_CORRECT}" ${isCorrect ? 'checked' : ''}>
-                <span>Правильна</span>
-            </label>
-            <button type="button" onclick="removeOption(${questionId}, ${optionIndex})" class="${CSS_CLASSES.REMOVE_OPTION_BTN}" title="Видалити варіант">✖</button>
-        </div>
+        <div class="${CSS_CLASSES.OPTION_NUMBER}">1</div>
+        <input type="text" class="${CSS_CLASSES.OPTION_TEXT}" required placeholder="Текст варіанту" value="${escapeHtml(text)}">
+        <label class="${CSS_CLASSES.CHECKBOX_LABEL}" title="Позначити як правильну відповідь">
+            <input type="checkbox" class="${CSS_CLASSES.OPTION_CORRECT}" ${isCorrect ? 'checked' : ''}>
+            <span>Правильна</span>
+        </label>
+        <button type="button" class="${CSS_CLASSES.REMOVE_OPTION_BTN}" title="Видалити варіант">✖</button>
     `;
 }
 
@@ -329,10 +332,14 @@ function addOption(questionId) {
         return;
     }
     
-    const currentOptions = optionsContainer.querySelectorAll(`.${CSS_CLASSES.OPTION_ITEM}`).length;
-    const optionDiv = createOptionElement(questionId, currentOptions);
+    // Створюємо новий варіант без прив'язки до індексу
+    const optionDiv = createOptionElement(questionId, 0);
     
+    // Додаємо до контейнера
     optionsContainer.appendChild(optionDiv);
+    
+    // Оновлюємо всі номери після додавання
+    updateOptionNumbers(questionId);
 }
 
 /**
@@ -344,25 +351,23 @@ function addOption(questionId) {
 function createOptionElement(questionId, optionIndex) {
     const optionDiv = document.createElement('div');
     optionDiv.className = CSS_CLASSES.OPTION_ITEM;
-    optionDiv.id = `option-${questionId}-${optionIndex}`;
     optionDiv.innerHTML = createOptionHTML(questionId, optionIndex);
+    
+    // Прикріплюємо обробник події до кнопки видалення
+    const removeBtn = optionDiv.querySelector(`.${CSS_CLASSES.REMOVE_OPTION_BTN}`);
+    if (removeBtn) {
+        removeBtn.addEventListener('click', () => removeOptionByElement(optionDiv, questionId));
+    }
     
     return optionDiv;
 }
 
 /**
- * Видалити варіант відповіді
+ * Видалити варіант відповіді за елементом
+ * @param {HTMLElement} optionElement
  * @param {number} questionId
- * @param {number} optionIndex
  */
-function removeOption(questionId, optionIndex) {
-    const optionElement = document.getElementById(`option-${questionId}-${optionIndex}`);
-    
-    if (!optionElement) {
-        console.error(`Option element not found: ${questionId}-${optionIndex}`);
-        return;
-    }
-    
+function removeOptionByElement(optionElement, questionId) {
     const container = optionElement.parentElement;
     
     if (!canRemoveOption(container)) {
@@ -371,6 +376,52 @@ function removeOption(questionId, optionIndex) {
     }
     
     optionElement.remove();
+    updateOptionNumbers(questionId);
+}
+
+/**
+ * Видалити варіант відповіді (застаріла функція для сумісності)
+ * @param {number} questionId
+ * @param {number} optionIndex
+ */
+function removeOption(questionId, optionIndex) {
+    const optionsContainer = document.getElementById(`options-${questionId}`);
+    if (!optionsContainer) return;
+    
+    const options = optionsContainer.querySelectorAll(`.${CSS_CLASSES.OPTION_ITEM}`);
+    if (options[optionIndex]) {
+        removeOptionByElement(options[optionIndex], questionId);
+    }
+}
+
+/**
+ * Оновити номери варіантів відповідей
+ * @param {number} questionId
+ */
+function updateOptionNumbers(questionId) {
+    const optionsContainer = document.getElementById(`options-${questionId}`);
+    if (!optionsContainer) return;
+    
+    const options = optionsContainer.querySelectorAll(`.${CSS_CLASSES.OPTION_ITEM}`);
+    options.forEach((option, index) => {
+        const numberElement = option.querySelector(`.${CSS_CLASSES.OPTION_NUMBER}`);
+        if (numberElement) {
+            numberElement.textContent = index + 1;
+        }
+    });
+}
+
+/**
+ * Прикріпити обробники подій до кнопок видалення варіантів
+ * @param {HTMLElement} questionElement
+ * @param {number} questionId
+ */
+function attachOptionRemoveHandlers(questionElement, questionId) {
+    const removeButtons = questionElement.querySelectorAll(`.${CSS_CLASSES.REMOVE_OPTION_BTN}`);
+    removeButtons.forEach(button => {
+        const optionElement = button.closest(`.${CSS_CLASSES.OPTION_ITEM}`);
+        button.addEventListener('click', () => removeOptionByElement(optionElement, questionId));
+    });
 }
 
 /**
