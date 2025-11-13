@@ -2070,3 +2070,18 @@ body.quiz-page::after {
     text-align: center;
     margin: 0;
 }
+
+/* Спеціальні налаштування для сторінки квізу */
+body.quiz-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body.quiz-page .container {
+    flex: 1;
+}
+
+body.quiz-page .footer {
+    margin-top: auto;
+}
