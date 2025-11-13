@@ -362,7 +362,35 @@ function createOptionElement(questionId, optionIndex) {
         removeBtn.addEventListener('click', () => removeOptionByElement(optionDiv, questionId));
     }
     
+    // Прикріплюємо обробник для чекбоксу (тільки одна правильна відповідь)
+    const checkbox = optionDiv.querySelector(`.${CSS_CLASSES.OPTION_CORRECT}`);
+    if (checkbox) {
+        checkbox.addEventListener('change', (e) => handleCorrectAnswerChange(e, questionId));
+    }
+    
     return optionDiv;
+}
+
+/**
+ * Обробник зміни правильної відповіді - дозволяє тільки одну правильну відповідь
+ * @param {Event} event
+ * @param {number} questionId
+ */
+function handleCorrectAnswerChange(event, questionId) {
+    const currentCheckbox = event.target;
+    
+    if (currentCheckbox.checked) {
+        // Знімаємо всі інші чекбокси в цьому питанні
+        const optionsContainer = document.getElementById(`options-${questionId}`);
+        if (optionsContainer) {
+            const allCheckboxes = optionsContainer.querySelectorAll(`.${CSS_CLASSES.OPTION_CORRECT}`);
+            allCheckboxes.forEach(checkbox => {
+                if (checkbox !== currentCheckbox) {
+                    checkbox.checked = false;
+                }
+            });
+        }
+    }
 }
 
 /**
@@ -415,7 +443,7 @@ function updateOptionNumbers(questionId) {
 }
 
 /**
- * Прикріпити обробники подій до кнопок видалення варіантів
+ * Прикріпити обробники подій до кнопок видалення варіантів та чекбоксів
  * @param {HTMLElement} questionElement
  * @param {number} questionId
  */
@@ -424,6 +452,12 @@ function attachOptionRemoveHandlers(questionElement, questionId) {
     removeButtons.forEach(button => {
         const optionElement = button.closest(`.${CSS_CLASSES.OPTION_ITEM}`);
         button.addEventListener('click', () => removeOptionByElement(optionElement, questionId));
+    });
+    
+    // Прикріплюємо обробники для чекбоксів (тільки одна правильна відповідь)
+    const checkboxes = questionElement.querySelectorAll(`.${CSS_CLASSES.OPTION_CORRECT}`);
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => handleCorrectAnswerChange(e, questionId));
     });
 }
 
@@ -614,11 +648,16 @@ function validateQuizData(name, description, questions) {
         throw new Error(MESSAGES.MIN_QUESTIONS_REQUIRED);
     }
     
-    // Перевірка наявності правильної відповіді в кожному питанні
+    // Перевірка наявності рівно однієї правильної відповіді в кожному питанні
     questions.forEach((question, index) => {
-        const hasCorrectAnswer = question.options.some(opt => opt.isCorrect);
-        if (!hasCorrectAnswer) {
+        const correctAnswersCount = question.options.filter(opt => opt.isCorrect).length;
+        
+        if (correctAnswersCount === 0) {
             throw new Error(`Питання ${index + 1}: ${MESSAGES.CORRECT_ANSWER_REQUIRED}`);
+        }
+        
+        if (correctAnswersCount > 1) {
+            throw new Error(`Питання ${index + 1}: можлива тільки одна правильна відповідь`);
         }
     });
 }
