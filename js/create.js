@@ -278,12 +278,12 @@ function buildQuestionHTML(questionText, options) {
         </div>
         
         <div class="form-group">
-            <label>Текст питання *</label>
+            <label>Текст питання</label>
             <input type="text" class="${CSS_CLASSES.QUESTION_TEXT}" required placeholder="Введіть текст питання" value="${escapeHtml(questionText)}">
         </div>
 
         <div class="${CSS_CLASSES.OPTIONS_SECTION}">
-            <label>Варіанти відповідей * (позначте правильні)</label>
+            <label>Варіанти відповідей (позначте правильні)</label>
             <div class="${CSS_CLASSES.OPTIONS_CONTAINER}" id="options-${questionCounter}">
                 ${options.map((opt, index) => createOptionHTML(questionCounter, index, opt)).join('')}
             </div>
