@@ -901,6 +901,49 @@ body.quiz-page::after {
     font-weight: 500;
 }
 
+/* Стилі для випадаючого списку типу питання (клас) */
+.question-type {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius-small);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    color: var(--text-white);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    padding-right: 2.5rem;
+}
+
+/* Стан наведення для випадаючого списку */
+.question-type:hover {
+    border-color: var(--primary-light);
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
+}
+
+/* Стан фокусу для вибору типу питання */
+.question-type:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2), 0 0 15px rgba(220, 38, 38, 0.3);
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+}
+
+/* Опції у випадаючому списку */
+.question-type option {
+    background: var(--bg-secondary);
+    color: var(--text-white);
+    font-weight: 500;
+    padding: 0.5rem;
+}
+
 /* Шапка картки питання з номером та кнопкою видалення */
 .question-header {
     display: flex;

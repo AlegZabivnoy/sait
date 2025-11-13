@@ -682,9 +682,22 @@ function collectOptions(questionBlock, questionNumber = 0, questionType = DEFAUL
     const options = [];
     const optionItems = questionBlock.querySelectorAll(`.${CSS_CLASSES.OPTION_ITEM}`);
     
+    // Якщо опцій немає (для текстових питань), повертаємо порожній масив
+    if (optionItems.length === 0) {
+        return options;
+    }
+    
     optionItems.forEach((item, index) => {
-        const optionText = item.querySelector(`.${CSS_CLASSES.OPTION_TEXT}`).value.trim();
-        const isCorrect = item.querySelector(`.${CSS_CLASSES.OPTION_CORRECT}`).checked;
+        const optionTextInput = item.querySelector(`.${CSS_CLASSES.OPTION_TEXT}`);
+        const optionCorrectCheckbox = item.querySelector(`.${CSS_CLASSES.OPTION_CORRECT}`);
+        
+        // Перевіряємо чи існують елементи
+        if (!optionTextInput || !optionCorrectCheckbox) {
+            return; // Пропускаємо цей варіант
+        }
+        
+        const optionText = optionTextInput.value.trim();
+        const isCorrect = optionCorrectCheckbox.checked;
         
         if (!optionText) {
             const errorMsg = questionNumber > 0 
@@ -800,6 +813,11 @@ function handleQuestionTypeChange(questionId) {
         // Перехід на текстову відповідь
         if (optionsSection) {
             optionsSection.style.display = 'none';
+            // Видаляємо required з прихованих полів варіантів
+            const optionInputs = optionsSection.querySelectorAll(`.${CSS_CLASSES.OPTION_TEXT}`);
+            optionInputs.forEach(input => {
+                input.removeAttribute('required');
+            });
             // Скидаємо всі чекбокси при переході на текстовий тип
             resetAllCheckboxes(questionBlock);
         }
@@ -824,6 +842,11 @@ function handleQuestionTypeChange(questionId) {
         
         if (optionsSection) {
             optionsSection.style.display = 'block';
+            // Повертаємо required для полів варіантів
+            const optionInputs = optionsSection.querySelectorAll(`.${CSS_CLASSES.OPTION_TEXT}`);
+            optionInputs.forEach(input => {
+                input.setAttribute('required', '');
+            });
             
             // Скидаємо всі чекбокси при зміні типу
             resetAllCheckboxes(questionBlock);
