@@ -310,7 +310,7 @@ function getQuestionType(questionData) {
  */
 function buildQuestionHTML(questionText, options, questionType = DEFAULTS.QUESTION_TYPE) {
     const typeLabel = questionType === QUESTION_TYPES.SINGLE ? '(одна правильна)' : 
-                      questionType === QUESTION_TYPES.MULTIPLE ? '(кілька правильних)' : '';
+        questionType === QUESTION_TYPES.MULTIPLE ? '(кілька правильних)' : '';
     
     return `
         <div class="${CSS_CLASSES.QUESTION_HEADER}">

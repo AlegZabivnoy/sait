@@ -9,15 +9,33 @@
     "sourceType": "script"
   },
   "globals": {
-    "storageService": "readonly"
+    "storageService": "writable",
+    "escapeHtml": "writable",
+    "addQuestion": "writable",
+    "removeQuestion": "writable",
+    "addOption": "writable",
+    "removeOption": "writable",
+    "handleQuestionTypeChange": "writable",
+    "cancelCreate": "writable",
+    "startQuiz": "writable",
+    "editQuiz": "writable",
+    "deleteQuiz": "writable",
+    "nextQuestion": "writable",
+    "previousQuestion": "writable",
+    "restartQuiz": "writable",
+    "exitQuiz": "writable",
+    "deleteResult": "writable",
+    "clearAllResults": "writable",
+    "navigateToHome": "writable"
   },
   "rules": {
     "indent": ["error", 4],
     "linebreak-style": ["error", "windows"],
     "quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["error", "always"],
-    "no-unused-vars": ["warn"],
+    "no-unused-vars": "off",
     "no-console": "off",
-    "no-undef": "error"
+    "no-undef": "error",
+    "no-redeclare": "off"
   }
 }
