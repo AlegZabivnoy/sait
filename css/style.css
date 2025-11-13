@@ -2058,4 +2058,15 @@ body.quiz-page::after {
     margin: 0 auto;
     padding: 0 var(--spacing-md);
     min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Текст футера */
+.footer-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0;
 }
