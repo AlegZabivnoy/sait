@@ -187,21 +187,9 @@ body.quiz-page::after {
 .site-title {
     font-size: 1.75rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--text-white) 0%, var(--red-bright) 50%, var(--red-glow) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-white);
     cursor: pointer;
-    transition: all var(--transition-normal);
     position: relative;
-    text-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
-    filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.6));
-}
-
-.site-title:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.9));
-    animation: pulse 1s ease-in-out infinite;
 }
 
 .header-nav {
