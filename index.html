@@ -14,88 +14,154 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Шапка сайту з логотипом та навігаційним меню -->
-    <header class="header">
-        <div class="header-content">
-            <!-- Логотип/назва сайту -->
-            <h1 class="site-title"> Our first quiz site</h1>
-            
-            <!-- Навігаційне меню -->
-            <nav class="header-nav">
-                <!-- Кнопка переходу до результатів -->
-                <button onclick="location.href='results/index.html'" class="nav-btn">
-                     Результати
-                </button>
-                
-                <!-- Кнопка переходу до управління квізами -->
-                <button onclick="location.href='manage/index.html'" class="nav-btn manage-btn">
-                     Керування
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    </header>
-
-    <!-- Основний контент сторінки -->
-    <div class="container main-container">
-        
-        <!-- Секція привітання -->
-        <section class="welcome-section">
-            <h2>Система квізів</h2>
-            <p class="welcome-text">
-                Тут ви можете створювати, проходити та керувати своїми квізами.
-            </p>
-            
-            <!-- Кнопка для створення нового квізу -->
-            <button onclick="location.href='create/index.html'" class="create-quiz-cta">
-                 Створити новий квіз
-            </button>
-        </section>
-
-        <!-- Секція зі списком доступних квізів -->
-        <section class="quizzes-section">
-            <h2 class="section-title"> Доступні квізи</h2>
-            
-            <!-- 
-                Контейнер для карток квізів
-                Буде заповнений динамічно через JavaScript (main.js)
-                Використовує CSS Grid для адаптивної сітки
-            -->
-            <div id="quiz-list" class="quiz-grid">
-                <!-- Квізи будуть додані тут за допомогою JavaScript -->
-            </div>
-            
-            <!-- 
-                Порожній стан (Empty State)
-                Показується коли немає жодного квізу
-                За замовчуванням прихований (display: none)
-            -->
-            <div id="empty-state" class="empty-state" style="display: none;">
-                <p> Поки немає доступних квізів.</p>
-                <button onclick="location.href='create/index.html'" class="create-quiz-btn">
-                    Створити перший квіз
-                </button>
-            </div>
-        </section>
-    </div>
-
-    <!-- Підключення JavaScript файлів (порядок має значення!) -->
+    <!-- React Root Element -->
+    <div id="root"></div>
     
-    <!-- 1. Спочатку підключаємо utils.js (спільні утилітні функції) -->
+    <!-- React CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Підключення існуючих сервісів -->
     <script src="js/utils.js"></script>
-    
-    <!-- 2. Потім storage.js (сервіс для роботи з даними) -->
     <script src="js/storage.js"></script>
     
-    <!-- 3. І нарешті main.js (використовує функції з попередніх файлів) -->
-    <script src="js/main.js"></script>
-
-    <!-- Футер сайту -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="footer-text">Powered by Банда "Вуличні Койоти"</p>
-        </div>
-    </footer>
+    <!-- React App -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Header Component
+        function Header() {
+            return (
+                <header className="header">
+                    <div className="header-content">
+                        <h1 className="site-title">Our first quiz site</h1>
+                        <nav className="header-nav">
+                            <button onClick={() => window.location.href = 'results/index.html'} className="nav-btn">
+                                Результати
+                            </button>
+                            <button onClick={() => window.location.href = 'manage/index.html'} className="nav-btn manage-btn">
+                                Керування
+                            </button>
+                        </nav>
+                    </div>
+                </header>
+            );
+        }
+        
+        // WelcomeSection Component
+        function WelcomeSection() {
+            return (
+                <section className="welcome-section">
+                    <h2>Система квізів</h2>
+                    <p className="welcome-text">
+                        Тут ви можете створювати, проходити та керувати своїми квізами.
+                    </p>
+                    <button 
+                        onClick={() => window.location.href = 'create/index.html'} 
+                        className="create-quiz-cta"
+                    >
+                        Створити новий квіз
+                    </button>
+                </section>
+            );
+        }
+        
+        // QuizCard Component
+        function QuizCard({ quiz }) {
+            const questionsCount = quiz.questions ? quiz.questions.length : 0;
+            
+            const handleStartQuiz = () => {
+                window.storageService.setSelectedQuiz(quiz);
+                window.location.href = 'quiz/index.html';
+            };
+            
+            return (
+                <div className="quiz-card">
+                    <div className="quiz-card-header">
+                        <h3 className="quiz-name">{quiz.name}</h3>
+                    </div>
+                    <div className="quiz-card-body">
+                        <p className="quiz-description">{quiz.description}</p>
+                        <p className="quiz-questions-count">
+                            Питань: {questionsCount}
+                        </p>
+                    </div>
+                    <div className="quiz-card-footer">
+                        <button onClick={handleStartQuiz} className="go-to-quiz-btn">
+                            Почати квіз
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+        
+        // QuizzesSection Component
+        function QuizzesSection() {
+            const [quizzes, setQuizzes] = useState([]);
+            
+            useEffect(() => {
+                const loadedQuizzes = window.storageService.getAllQuizzes();
+                setQuizzes(loadedQuizzes || []);
+            }, []);
+            
+            if (quizzes.length === 0) {
+                return (
+                    <section className="quizzes-section">
+                        <h2 className="section-title">Доступні квізи</h2>
+                        <div className="empty-state">
+                            <p>Поки немає доступних квізів.</p>
+                            <button 
+                                onClick={() => window.location.href = 'create/index.html'} 
+                                className="create-quiz-btn"
+                            >
+                                Створити перший квіз
+                            </button>
+                        </div>
+                    </section>
+                );
+            }
+            
+            return (
+                <section className="quizzes-section">
+                    <h2 className="section-title">Доступні квізи</h2>
+                    <div className="quiz-grid">
+                        {quizzes.map((quiz, index) => (
+                            <QuizCard key={index} quiz={quiz} />
+                        ))}
+                    </div>
+                </section>
+            );
+        }
+        
+        // Footer Component
+        function Footer() {
+            return (
+                <footer className="footer">
+                    <div className="footer-content">
+                        <p className="footer-text">Powered by Банда "Вуличні Койоти"</p>
+                    </div>
+                </footer>
+            );
+        }
+        
+        // Main App Component
+        function App() {
+            return (
+                <>
+                    <Header />
+                    <div className="container main-container">
+                        <WelcomeSection />
+                        <QuizzesSection />
+                    </div>
+                    <Footer />
+                </>
+            );
+        }
+        
+        // Render App
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
