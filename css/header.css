@@ -1,0 +1,91 @@
+.header {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-sm) 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--primary-color);
+    position: relative;
+}
+.header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--red-glow) 50%, 
+        transparent 100%);
+    box-shadow: 0 0 10px var(--red-glow);
+    animation: headerGlow 3s ease-in-out infinite;
+}
+@keyframes headerGlow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.site-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-white);
+    position: relative;
+    user-select: none;
+}
+.header-nav {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+.nav-btn {
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-white);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-small);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+.nav-btn:hover::before {
+    left: 100%;
+}
+.nav-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow) 0%, var(--primary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-bright);
+}
+.nav-btn:active {
+    transform: translateY(0);
+}
+.manage-btn {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
+}
+.manage-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--secondary-dark) 100%);
+    box-shadow: var(--shadow-red-glow);
+}

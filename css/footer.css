@@ -1,0 +1,22 @@
+.footer {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
+    border: 2px solid rgba(184, 8, 8, 0.5);
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg) 0;
+    box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
+}
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0;
+}

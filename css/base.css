@@ -1,0 +1,68 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #330000 100%);
+    min-height: 100vh;
+    color: var(--text-primary);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 100px,
+            rgba(220, 38, 38, 0.03) 100px,
+            rgba(220, 38, 38, 0.03) 200px
+        );
+    pointer-events: none;
+    z-index: 0;
+}
+body::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 23, 68, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(185, 28, 28, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+body.quiz-page {
+    background: linear-gradient(135deg, #0d0000 0%, #1a0505 50%, #2d0a0a 100%);
+}
+body.quiz-page::after {
+    background: 
+        radial-gradient(circle at 30% 40%, rgba(255, 23, 68, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(220, 38, 38, 0.15) 0%, transparent 50%);
+}
+body.quiz-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+body.quiz-page .container {
+    flex: 1;
+}
+body.quiz-page .footer {
+    margin-top: auto;
+}

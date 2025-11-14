@@ -1,0 +1,146 @@
+.manage-section {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
+    animation: fadeInUp 0.6s ease-out;
+    border: 2px solid var(--primary-color);
+}
+.create-new-btn {
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md);
+}
+.create-new-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+.manage-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+.manage-item {
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-fast);
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: var(--spacing-md);
+    margin-bottom: 10px;
+}
+.manage-item:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+.manage-item-info {
+    flex: 1;
+}
+.manage-quiz-name {
+    font-size: 1.3rem;
+    color: var(--text-white);
+    margin-bottom: var(--spacing-xs);
+}
+.manage-quiz-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.5;
+}
+.manage-quiz-meta {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-xs);
+}
+.manage-item-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+.manage-card {
+    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-fast);
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+}
+.manage-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+}
+.manage-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: var(--spacing-sm);
+}
+.manage-card h3 {
+    font-size: 1.3rem;
+    color: var(--text-white);
+}
+.manage-card p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+.manage-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+.edit-btn,
+.delete-btn,
+.view-btn {
+    padding: 0.6rem 1.2rem;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.9rem;
+}
+.edit-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-white);
+    border-color: var(--red-bright);
+}
+.edit-btn:hover {
+    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+}
+.delete-btn {
+    background: linear-gradient(135deg, var(--bg-dark), var(--bg-hover));
+    color: var(--text-white);
+    border-color: var(--text-light);
+}
+.delete-btn:hover {
+    background: linear-gradient(135deg, var(--error-color), var(--red-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+    border-color: var(--red-glow);
+}
+.view-btn {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border-color: var(--red-bright);
+}
+.view-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-red-glow);
+}
