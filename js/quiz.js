@@ -1,6 +1,4 @@
-/**
- * quiz.js - Логіка проходження квізу
- */
+
 
 (function() {
     'use strict';
@@ -76,9 +74,7 @@
     let currentQuestion = 0;
     let userAnswers = []; // Для single: число, для multiple: масив чисел, для text: рядок
 
-    /**
- * Ініціалізація квізу
- */
+    
     function initQuiz() {
         try {
             console.log('Ініціалізація квізу...');
@@ -93,9 +89,7 @@
         }
     }
 
-    /**
- * Завантажити квіз
- */
+    
     function loadQuiz() {
         currentQuiz = storageService.getSelectedQuiz();
     
@@ -106,11 +100,7 @@
         questions = convertQuizStructure(currentQuiz.questions);
     }
 
-    /**
- * Конвертувати структуру квізу для сумісності
- * @param {QuizQuestion[]} quizQuestions 
- * @returns {Array}
- */
+    
     function convertQuizStructure(quizQuestions) {
         return quizQuestions.map(q => ({
             question: q.text,
@@ -120,17 +110,13 @@
         }));
     }
 
-    /**
- * Скинути стан квізу
- */
+    
     function resetQuizState() {
         currentQuestion = 0;
         userAnswers = [];
     }
 
-    /**
- * Оновити заголовок сторінки
- */
+    
     function updateTitle() {
         const titleElement = document.querySelector('h1');
         if (titleElement && currentQuiz) {
@@ -138,9 +124,7 @@
         }
     }
 
-    /**
- * Показати поточне питання
- */
+    
     function showQuestion() {
         try {
             const questionElement = getElement(DOM_ELEMENTS.QUESTION);
@@ -167,11 +151,7 @@
         }
     }
 
-    /**
- * Отримати елемент DOM за ID з перевіркою існування
- * @param {string} elementId 
- * @returns {HTMLElement}
- */
+    
     function getElement(elementId) {
         const element = document.getElementById(elementId);
         if (!element) {
@@ -180,19 +160,12 @@
         return element;
     }
 
-    /**
- * Оновити текст питання
- * @param {HTMLElement} element 
- * @param {string} questionText 
- */
+    
     function updateQuestionText(element, questionText) {
         element.textContent = questionText;
     }
 
-    /**
- * Відрендерити текстове поле для відповіді
- * @param {HTMLElement} answersElement 
- */
+    
     function renderTextInput(answersElement) {
         answersElement.innerHTML = '';
     
@@ -221,12 +194,7 @@
         answersElement.appendChild(textarea);
     }
 
-    /**
- * Відрендерити кнопки відповідей
- * @param {HTMLElement} answersElement 
- * @param {string[]} answers 
- * @param {string} questionType
- */
+    
     function renderAnswerButtons(answersElement, answers, questionType = QUESTION_TYPES.SINGLE) {
         answersElement.innerHTML = '';
     
@@ -236,13 +204,7 @@
         });
     }
 
-    /**
- * Створити кнопку відповіді
- * @param {string} answerText 
- * @param {number} index 
- * @param {string} questionType
- * @returns {HTMLElement}
- */
+    
     function createAnswerButton(answerText, index, questionType = QUESTION_TYPES.SINGLE) {
         const button = document.createElement('button');
         button.className = CSS_CLASSES.ANSWER_BTN;
@@ -266,44 +228,28 @@
         return button;
     }
 
-    /**
- * Оновити лічильник питань
- * @param {HTMLElement} counterElement 
- */
+    
     function updateQuestionCounter(counterElement) {
         counterElement.textContent = `Питання ${currentQuestion + 1} з ${questions.length}`;
     }
 
-    /**
- * Оновити кнопки навігації
- * @param {HTMLElement} prevBtn 
- * @param {HTMLElement} nextBtn 
- */
+    
     function updateNavigationButtons(prevBtn, nextBtn) {
         prevBtn.disabled = isFirstQuestion();
         nextBtn.textContent = isLastQuestion() ? BUTTON_TEXT.FINISH : BUTTON_TEXT.NEXT;
     }
 
-    /**
- * Перевірити чи це перше питання
- * @returns {boolean}
- */
+    
     function isFirstQuestion() {
         return currentQuestion === 0;
     }
 
-    /**
- * Перевірити чи це останнє питання
- * @returns {boolean}
- */
+    
     function isLastQuestion() {
         return currentQuestion === questions.length - 1;
     }
 
-    /**
- * Вибрати відповідь
- * @param {number} answerIndex 
- */
+    
     function selectAnswer(answerIndex) {
         const currentQuestionData = questions[currentQuestion];
     
@@ -330,11 +276,7 @@
         }
     }
 
-    /**
- * Оновити виділення кнопок відповідей
- * @param {number|number[]} selected - Індекс або масив індексів
- * @param {string} questionType
- */
+    
     function updateAnswerButtonsSelection(selected, questionType = QUESTION_TYPES.SINGLE) {
         const buttons = document.querySelectorAll(`.${CSS_CLASSES.ANSWER_BTN}`);
     
@@ -360,9 +302,7 @@
         }
     }
 
-    /**
- * Перейти до наступного питання
- */
+    
     function nextQuestion() {
         try {
             if (!hasAnswerSelected()) {
@@ -382,9 +322,7 @@
         }
     }
 
-    /**
- * Перейти до попереднього питання
- */
+    
     function previousQuestion() {
         if (!isFirstQuestion()) {
             currentQuestion--;
@@ -392,10 +330,7 @@
         }
     }
 
-    /**
- * Перевірити чи вибрано відповідь
- * @returns {boolean}
- */
+    
     function hasAnswerSelected() {
         const answer = userAnswers[currentQuestion];
         const currentQuestionData = questions[currentQuestion];
@@ -412,9 +347,7 @@
         }
     }
 
-    /**
- * Показати результати квізу
- */
+    
     function showResults() {
         try {
             const quizContainer = getElement(DOM_ELEMENTS.QUIZ_CONTAINER);
@@ -434,20 +367,13 @@
         }
     }
 
-    /**
- * Сховати контейнер квізу і показати результати
- * @param {HTMLElement} quizContainer 
- * @param {HTMLElement} resultContainer 
- */
+    
     function hideQuizContainer(quizContainer, resultContainer) {
         quizContainer.style.display = DISPLAY.NONE;
         resultContainer.style.display = DISPLAY.BLOCK;
     }
 
-    /**
- * Підрахувати результати
- * @returns {{score: number, total: number, percentage: number, details: Array}}
- */
+    
     function calculateResults() {
         let correctCount = 0;
         const details = [];
@@ -519,11 +445,7 @@
         };
     }
 
-    /**
- * Генерувати HTML для результатів
- * @param {{score: number, total: number, percentage: number, details: Array}} resultData 
- * @returns {string}
- */
+    
     function generateResultsHTML(resultData) {
         let html = `
         <div class="${CSS_CLASSES.RESULT_SUMMARY}">
@@ -539,12 +461,7 @@
         return html;
     }
 
-    /**
- * Генерувати HTML для одного елемента результату
- * @param {{question: string, answer: string, isCorrect: boolean|null, type: string}} item 
- * @param {number} index 
- * @returns {string}
- */
+    
     function generateResultItemHTML(item, index) {
     // Для текстових питань без правильної відповіді не показуємо статус правильності
         if (item.type === QUESTION_TYPES.TEXT && item.isCorrect === null) {
@@ -576,10 +493,7 @@
     `;
     }
 
-    /**
- * Зберегти результат квізу
- * @param {{score: number, total: number, percentage: number}} resultData 
- */
+    
     function saveResult(resultData) {
         try {
             const result = {
@@ -596,9 +510,7 @@
         }
     }
 
-    /**
- * Перезапустити квіз
- */
+    
     function restartQuiz() {
         try {
             const quizContainer = getElement(DOM_ELEMENTS.QUIZ_CONTAINER);
@@ -614,9 +526,7 @@
         }
     }
 
-    /**
- * Вийти з квізу (перервати тестування)
- */
+    
     function exitQuiz() {
         const confirmExit = confirm('Ви впевнені, що хочете вийти? Прогрес не буде збережено.');
         if (confirmExit) {
@@ -624,24 +534,17 @@
         }
     }
 
-    /**
- * Перейти на головну сторінку
- */
+    
     function navigateToHome() {
         window.location.href = URLS.HOME;
     }
 
-    /**
- * Показати повідомлення про помилку
- * @param {string} message 
- */
+    
     function showError(message) {
         alert(message);
     }
 
-    /**
- * Ініціалізація квізу при завантаженні сторінки
- */
+    
     window.addEventListener('DOMContentLoaded', initQuiz);
 
     // Експортуємо функції для використання з HTML

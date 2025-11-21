@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <!-- Кодування символів для підтримки української мови -->
     <meta charset="UTF-8">
-    
-    <!-- Налаштування для адаптивного дизайну (responsive) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Назва сторінки (відображається у вкладці браузера) -->
     <title>Система Квізів - Головна</title>
     
-    <!-- Підключення модульних стилів CSS -->
     <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/quiz-card.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/utilities.css">
-    <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
@@ -30,23 +16,18 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- React Root Element -->
     <div id="root"></div>
     
-    <!-- React CDN -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <!-- Підключення існуючих сервісів -->
     <script src="js/utils.js"></script>
     <script src="js/storage.js"></script>
     
-    <!-- React App -->
     <script type="text/babel">
         const { useState, useEffect } = React;
         
-        // Header Component
         function Header() {
             return (
                 <header className="header">
@@ -65,7 +46,6 @@
             );
         }
         
-        // WelcomeSection Component
         function WelcomeSection() {
             return (
                 <section className="welcome-section">
@@ -83,7 +63,6 @@
             );
         }
         
-        // QuizCard Component
         function QuizCard({ quiz }) {
             const questionsCount = quiz.questions ? quiz.questions.length : 0;
             
@@ -112,7 +91,6 @@
             );
         }
         
-        // QuizzesSection Component
         function QuizzesSection() {
             const [quizzes, setQuizzes] = useState([]);
             
@@ -150,7 +128,6 @@
             );
         }
         
-        // Footer Component
         function Footer() {
             return (
                 <footer className="footer">
@@ -161,7 +138,6 @@
             );
         }
         
-        // Main App Component
         function App() {
             return (
                 <>
@@ -175,7 +151,6 @@
             );
         }
         
-        // Render App
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>

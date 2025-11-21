@@ -1,7 +1,4 @@
-/**
- * main.js - Логіка головної сторінки
- * Відповідає за відображення списку доступних квізів
- */
+
 
 (function() {
     'use strict';
@@ -38,9 +35,7 @@
         ERROR_LOADING: 'Помилка при завантаженні квізів. Спробуйте оновити сторінку.'
     };
 
-    /**
- * Ініціалізація головної сторінки
- */
+    
     function initMainPage() {
         try {
             console.log('Ініціалізація головної сторінки...');
@@ -51,9 +46,7 @@
         }
     }
 
-    /**
- * Завантажити та відобразити список квізів
- */
+    
     function loadQuizzes() {
         try {
             const quizzes = storageService.getAllQuizzes();
@@ -73,12 +66,7 @@
         }
     }
 
-    /**
- * Отримати елемент DOM за ID з перевіркою існування
- * @param {string} elementId - ID елемента
- * @returns {HTMLElement}
- * @throws {Error} Якщо елемент не знайдено
- */
+    
     function getElement(elementId) {
         const element = document.getElementById(elementId);
         if (!element) {
@@ -87,31 +75,19 @@
         return element;
     }
 
-    /**
- * Показати порожній стан (коли немає квізів)
- * @param {HTMLElement} quizList 
- * @param {HTMLElement} emptyState 
- */
+    
     function showEmptyState(quizList, emptyState) {
         quizList.style.display = DISPLAY.NONE;
         emptyState.style.display = DISPLAY.BLOCK;
     }
 
-    /**
- * Показати список квізів
- * @param {HTMLElement} quizList 
- * @param {HTMLElement} emptyState 
- */
+    
     function showQuizList(quizList, emptyState) {
         quizList.style.display = DISPLAY.GRID;
         emptyState.style.display = DISPLAY.NONE;
     }
 
-    /**
- * Відрендерити картки квізів
- * @param {HTMLElement} quizList 
- * @param {Quiz[]} quizzes 
- */
+    
     function renderQuizCards(quizList, quizzes) {
         quizList.innerHTML = '';
         quizzes.forEach(quiz => {
@@ -120,11 +96,7 @@
         });
     }
 
-    /**
- * Створити картку квізу
- * @param {Quiz} quiz - Об'єкт квізу
- * @returns {HTMLElement} DOM елемент картки
- */
+    
     function createQuizCard(quiz) {
         const card = document.createElement('div');
         card.className = CSS_CLASSES.QUIZ_CARD;
@@ -152,30 +124,19 @@
         return card;
     }
 
-    /**
- * Отримати кількість питань у квізі
- * @param {Quiz} quiz 
- * @returns {number}
- */
+    
     function getQuestionCount(quiz) {
         return quiz.questions ? quiz.questions.length : 0;
     }
 
-    /**
- * Отримати текст для кількості питань (з правильним відмінюванням)
- * @param {number} count 
- * @returns {string}
- */
+    
     function getQuestionText(count) {
         if (count === 1) return 'питання';
         if (count >= 2 && count <= 4) return 'питання';
         return 'питань';
     }
 
-    /**
- * Почати проходження квізу
- * @param {string} quizName - Назва квізу
- */
+    
     function startQuiz(quizName) {
         try {
             if (!quizName) {
@@ -196,24 +157,17 @@
         }
     }
 
-    /**
- * Перейти на сторінку проходження квізу
- */
+    
     function navigateToQuiz() {
         window.location.href = 'quiz/index.html';
     }
 
-    /**
- * Показати повідомлення про помилку
- * @param {string} message 
- */
+    
     function showError(message) {
         alert(message);
     }
 
-    /**
- * Ініціалізація при завантаженні сторінки
- */
+    
     window.addEventListener('DOMContentLoaded', initMainPage);
 
     // Експортуємо функцію для використання з HTML

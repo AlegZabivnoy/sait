@@ -1,6 +1,4 @@
-/**
- * manage.js - Логіка сторінки управління квізами
- */
+
 
 (function() {
     'use strict';
@@ -42,9 +40,7 @@
         CREATE_EDIT: '../create/index.html?edit=true'
     };
 
-    /**
- * Ініціалізація сторінки управління
- */
+    
     function initManagePage() {
         try {
             console.log('Ініціалізація сторінки управління...');
@@ -55,9 +51,7 @@
         }
     }
 
-    /**
- * Завантажити список квізів для управління
- */
+    
     function loadQuizzesForManagement() {
         try {
             const quizzes = storageService.getAllQuizzes();
@@ -77,12 +71,7 @@
         }
     }
 
-    /**
- * Отримати елемент DOM за ID з перевіркою існування
- * @param {string} elementId - ID елемента
- * @returns {HTMLElement}
- * @throws {Error} Якщо елемент не знайдено
- */
+    
     function getElement(elementId) {
         const element = document.getElementById(elementId);
         if (!element) {
@@ -91,31 +80,19 @@
         return element;
     }
 
-    /**
- * Показати порожній стан
- * @param {HTMLElement} manageList 
- * @param {HTMLElement} emptyState 
- */
+    
     function showEmptyState(manageList, emptyState) {
         manageList.style.display = DISPLAY.NONE;
         emptyState.style.display = DISPLAY.BLOCK;
     }
 
-    /**
- * Показати список квізів
- * @param {HTMLElement} manageList 
- * @param {HTMLElement} emptyState 
- */
+    
     function showManageList(manageList, emptyState) {
         manageList.style.display = DISPLAY.BLOCK;
         emptyState.style.display = DISPLAY.NONE;
     }
 
-    /**
- * Відрендерити елементи управління квізами
- * @param {HTMLElement} manageList 
- * @param {Quiz[]} quizzes 
- */
+    
     function renderManageItems(manageList, quizzes) {
         manageList.innerHTML = '';
         quizzes.forEach(quiz => {
@@ -124,11 +101,7 @@
         });
     }
 
-    /**
- * Створити елемент квізу для управління
- * @param {Quiz} quiz
- * @returns {HTMLElement}
- */
+    
     function createManageQuizItem(quiz) {
         const item = document.createElement('div');
         item.className = CSS_CLASSES.MANAGE_ITEM;
@@ -155,30 +128,19 @@
         return item;
     }
 
-    /**
- * Отримати кількість питань у квізі
- * @param {Quiz} quiz 
- * @returns {number}
- */
+    
     function getQuestionCount(quiz) {
         return quiz.questions ? quiz.questions.length : 0;
     }
 
-    /**
- * Отримати текст для кількості питань (з правильним відмінюванням)
- * @param {number} count 
- * @returns {string}
- */
+    
     function getQuestionText(count) {
         if (count === 1) return 'питання';
         if (count >= 2 && count <= 4) return 'питання';
         return 'питань';
     }
 
-    /**
- * Редагувати квіз
- * @param {string} quizName
- */
+    
     function editQuiz(quizName) {
         try {
             if (!quizName) {
@@ -198,10 +160,7 @@
         }
     }
 
-    /**
- * Видалити квіз
- * @param {string} quizName
- */
+    
     function deleteQuiz(quizName) {
         try {
             if (!quizName) {
@@ -221,24 +180,17 @@
         }
     }
 
-    /**
- * Перейти на сторінку редагування
- */
+    
     function navigateToEdit() {
         window.location.href = URLS.CREATE_EDIT;
     }
 
-    /**
- * Показати повідомлення про помилку
- * @param {string} message 
- */
+    
     function showError(message) {
         alert(message);
     }
 
-    /**
- * Ініціалізація при завантаженні сторінки
- */
+    
     window.addEventListener('DOMContentLoaded', initManagePage);
 
     // Експортуємо функції для використання з HTML

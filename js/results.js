@@ -1,6 +1,4 @@
-/**
- * results.js - Логіка сторінки результатів
- */
+
 
 (function() {
     'use strict';
@@ -65,9 +63,7 @@
 
     const LOCALE = 'uk-UA';
 
-    /**
- * Ініціалізація сторінки результатів
- */
+    
     function initResultsPage() {
         try {
             console.log('Ініціалізація сторінки результатів...');
@@ -78,9 +74,7 @@
         }
     }
 
-    /**
- * Завантажити та відобразити результати
- */
+    
     function loadResults() {
         try {
             const results = storageService.getAllResults();
@@ -101,12 +95,7 @@
         }
     }
 
-    /**
- * Отримати елемент DOM за ID з перевіркою існування
- * @param {string} elementId - ID елемента
- * @returns {HTMLElement}
- * @throws {Error} Якщо елемент не знайдено
- */
+    
     function getElement(elementId) {
         const element = document.getElementById(elementId);
         if (!element) {
@@ -115,35 +104,21 @@
         return element;
     }
 
-    /**
- * Показати порожній стан
- * @param {HTMLElement} resultsList 
- * @param {HTMLElement} emptyState 
- * @param {HTMLElement} clearBtn 
- */
+    
     function showEmptyState(resultsList, emptyState, clearBtn) {
         resultsList.style.display = DISPLAY.NONE;
         emptyState.style.display = DISPLAY.BLOCK;
         clearBtn.style.display = DISPLAY.NONE;
     }
 
-    /**
- * Показати список результатів
- * @param {HTMLElement} resultsList 
- * @param {HTMLElement} emptyState 
- * @param {HTMLElement} clearBtn 
- */
+    
     function showResultsList(resultsList, emptyState, clearBtn) {
         resultsList.style.display = DISPLAY.BLOCK;
         emptyState.style.display = DISPLAY.NONE;
         clearBtn.style.display = DISPLAY.BLOCK;
     }
 
-    /**
- * Відрендерити результати
- * @param {HTMLElement} resultsList 
- * @param {QuizResult[]} results 
- */
+    
     function renderResults(resultsList, results) {
         resultsList.innerHTML = '';
         const sortedResults = sortResultsByDate(results);
@@ -154,20 +129,12 @@
         });
     }
 
-    /**
- * Сортувати результати за датою (новіші спочатку)
- * @param {QuizResult[]} results 
- * @returns {QuizResult[]}
- */
+    
     function sortResultsByDate(results) {
         return [...results].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     }
 
-    /**
- * Створити картку результату
- * @param {QuizResult} result
- * @returns {HTMLElement}
- */
+    
     function createResultCard(result) {
         const card = document.createElement('div');
         card.className = CSS_CLASSES.RESULT_CARD;
@@ -194,11 +161,7 @@
         return card;
     }
 
-    /**
- * Форматувати дату
- * @param {string} timestamp 
- * @returns {string}
- */
+    
     function formatDate(timestamp) {
         try {
             const date = new Date(timestamp);
@@ -209,11 +172,7 @@
         }
     }
 
-    /**
- * Отримати статус оцінки на основі результату
- * @param {string} summary 
- * @returns {{class: string, text: string}}
- */
+    
     function getGradeStatus(summary) {
         if (!summary || !summary.includes('%')) {
             return { class: '', text: '' };
@@ -235,20 +194,13 @@
         }
     }
 
-    /**
- * Витягти відсоток з рядка
- * @param {string} text 
- * @returns {number|null}
- */
+    
     function extractPercentage(text) {
         const percentMatch = text.match(/(\d+)%/);
         return percentMatch ? parseInt(percentMatch[1], 10) : null;
     }
 
-    /**
- * Видалити результат
- * @param {string} timestamp
- */
+    
     function deleteResult(timestamp) {
         try {
             if (!timestamp) {
@@ -267,9 +219,7 @@
         }
     }
 
-    /**
- * Очистити всі результати
- */
+    
     function clearAllResults() {
         try {
             if (!confirm(MESSAGES.CONFIRM_CLEAR_ALL)) {
@@ -284,17 +234,12 @@
         }
     }
 
-    /**
- * Показати повідомлення про помилку
- * @param {string} message 
- */
+    
     function showError(message) {
         alert(message);
     }
 
-    /**
- * Ініціалізація при завантаженні сторінки
- */
+    
     window.addEventListener('DOMContentLoaded', initResultsPage);
 
     // Експортуємо функції для використання з HTML
