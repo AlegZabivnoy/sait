@@ -147,7 +147,6 @@
             loadQuestions(quiz.questions);
         } catch (error) {
             console.error('Помилка завантаження квізу:', error);
-            showError(error.message);
             navigateToManage();
         }
     }
