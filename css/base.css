@@ -49,16 +49,14 @@ body::after {
 }
 body.quiz-page {
     background: linear-gradient(135deg, #0d0000 0%, #1a0505 50%, #2d0a0a 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 body.quiz-page::after {
     background: 
         radial-gradient(circle at 30% 40%, rgba(255, 23, 68, 0.2) 0%, transparent 50%),
         radial-gradient(circle at 70% 60%, rgba(220, 38, 38, 0.15) 0%, transparent 50%);
-}
-body.quiz-page {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 body.quiz-page .container {
     flex: 1;
