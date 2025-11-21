@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function WelcomeSection() {
+    const navigate = useNavigate();
+    
     return (
         <section className="welcome-section">
             <h2>Система квізів</h2>
@@ -8,7 +11,7 @@ function WelcomeSection() {
                 Тут ви можете створювати, проходити та керувати своїми квізами.
             </p>
             <button 
-                onClick={() => window.location.href = '/create/index.html'} 
+                onClick={() => navigate('/create')} 
                 className="create-quiz-cta"
             >
                 Створити новий квіз

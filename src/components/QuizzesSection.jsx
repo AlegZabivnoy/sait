@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuiz } from '../context/QuizContext';
 import QuizCard from './QuizCard';
 
 function QuizzesSection() {
-    const [quizzes, setQuizzes] = useState([]);
-    
-    useEffect(() => {
-        const loadedQuizzes = window.storageService.getAllQuizzes();
-        setQuizzes(loadedQuizzes || []);
-    }, []);
+    const navigate = useNavigate();
+    const { quizzes } = useQuiz();
     
     if (quizzes.length === 0) {
         return (
@@ -16,7 +14,7 @@ function QuizzesSection() {
                 <div className="empty-state">
                     <p>Поки немає доступних квізів.</p>
                     <button 
-                        onClick={() => window.location.href = '/create/index.html'} 
+                        onClick={() => navigate('/create')} 
                         className="create-quiz-btn"
                     >
                         Створити перший квіз

@@ -32,21 +32,13 @@ module.exports = {
         }),
     ],
     devServer: {
-        static: [
-            {
-                directory: path.join(__dirname, 'dist'),
-            },
-            {
-                directory: path.join(__dirname, 'public'),
-            },
-            {
-                directory: path.join(__dirname, 'src'),
-                publicPath: '/src',
-            },
-        ],
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
         compress: true,
         port: 3000,
         hot: true,
+        historyApiFallback: true,
     },
     mode: 'development',
 };

@@ -1,11 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuiz } from '../context/QuizContext';
 
 function QuizCard({ quiz }) {
+    const navigate = useNavigate();
+    const { setSelectedQuiz } = useQuiz();
     const questionsCount = quiz.questions ? quiz.questions.length : 0;
     
     const handleStartQuiz = () => {
-        window.storageService.setSelectedQuiz(quiz);
-        window.location.href = '/quiz/index.html';
+        setSelectedQuiz(quiz);
+        navigate('/quiz');
     };
     
     return (
