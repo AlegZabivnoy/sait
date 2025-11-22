@@ -1,27 +1,79 @@
-.manage-section {
-    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-tertiary) 100%);
+.manage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(153, 27, 27, 0.1) 100%);
     border-radius: var(--border-radius-large);
-    padding: var(--spacing-xl);
-    box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
-    animation: fadeInUp 0.6s ease-out;
-    border: 2px solid var(--primary-color);
+    border: 2px solid rgba(220, 38, 38, 0.3);
 }
+
+.manage-header h1 {
+    font-size: 2.5rem;
+    color: var(--text-white);
+    text-shadow: 0 2px 10px rgba(220, 38, 38, 0.3);
+    margin: 0;
+}
+
 .create-new-btn {
-    padding: 0.8rem 1.5rem;
+    padding: 1rem 2rem;
     background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
     color: var(--text-white);
     border: 2px solid var(--red-bright);
     border-radius: var(--border-radius);
     font-weight: 600;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all var(--transition-fast);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(220, 38, 38, 0.2);
 }
+
 .create-new-btn:hover {
     background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-red-glow);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-red-glow), 0 0 30px rgba(220, 38, 38, 0.4);
     border-color: var(--red-glow);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xxl);
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(153, 27, 27, 0.05) 100%);
+    border-radius: var(--border-radius-large);
+    border: 2px dashed rgba(220, 38, 38, 0.3);
+    animation: fadeInScale 0.6s ease-out;
+}
+
+.empty-state p {
+    font-size: 1.3rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.create-quiz-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-white);
+    border: 2px solid var(--red-bright);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(220, 38, 38, 0.2);
+}
+
+.create-quiz-btn:hover {
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-red-glow), 0 0 30px rgba(220, 38, 38, 0.4);
+    border-color: var(--red-glow);
+}
+
+.quizzes-list {
+    display: grid;
+    gap: var(--spacing-lg);
 }
 .manage-list {
     display: flex;
@@ -70,32 +122,88 @@
     gap: var(--spacing-sm);
     flex-wrap: wrap;
 }
-.manage-card {
-    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
-    border: 2px solid rgba(220, 38, 38, 0.2);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-lg);
+.quiz-manage-card {
+    background: linear-gradient(135deg, rgba(30, 30, 35, 0.9) 0%, rgba(20, 20, 25, 0.9) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: var(--border-radius-large);
+    padding: var(--spacing-xl);
     transition: all var(--transition-fast);
-    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), inset 0 0 40px rgba(220, 38, 38, 0.05);
+    animation: fadeInUp 0.5s ease-out;
 }
-.manage-card:hover {
-    box-shadow: var(--shadow-md);
+
+.quiz-manage-card:hover {
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3), inset 0 0 60px rgba(220, 38, 38, 0.1);
     border-color: var(--primary-color);
-    transform: translateX(5px);
+    transform: translateY(-5px);
 }
-.manage-card-header {
+
+.quiz-manage-header {
     display: flex;
     justify-content: space-between;
     align-items: start;
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
+}
+
+.quiz-manage-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-white);
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+}
+
+.quiz-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-shrink: 0;
+}
+
+.quiz-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
     margin-bottom: var(--spacing-sm);
 }
-.manage-card h3 {
-    font-size: 1.3rem;
-    color: var(--text-white);
+
+.quiz-info {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid rgba(220, 38, 38, 0.2);
 }
-.manage-card p {
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-md);
+
+.edit-btn, .delete-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: none;
+    font-size: 0.95rem;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+    border: 2px solid #10b981;
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #047857, #065f46);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #dc2626, #991b1b);
+    color: white;
+    border: 2px solid #ef4444;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #991b1b, #7f1d1d);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
 }
 .manage-actions {
     display: flex;

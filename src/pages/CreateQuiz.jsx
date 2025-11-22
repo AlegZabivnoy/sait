@@ -65,6 +65,13 @@ function CreateQuiz() {
         setQuestions(questions.map(q => {
             if (q.id === questionId) {
                 const newOptions = [...q.options];
+                
+                // Якщо це поле isCorrect і тип питання SINGLE
+                if (field === 'isCorrect' && q.type === QUESTION_TYPES.SINGLE && value === true) {
+                    // Спочатку знімаємо всі позначки
+                    newOptions.forEach(opt => opt.isCorrect = false);
+                }
+                
                 newOptions[optionIndex] = { ...newOptions[optionIndex], [field]: value };
                 return { ...q, options: newOptions };
             }
@@ -243,7 +250,8 @@ function QuestionBlock({
                             />
                             <label className="checkbox-label">
                                 <input
-                                    type="checkbox"
+                                    type={question.type === QUESTION_TYPES.SINGLE ? 'radio' : 'checkbox'}
+                                    name={question.type === QUESTION_TYPES.SINGLE ? `question-${question.id}` : undefined}
                                     checked={option.isCorrect}
                                     onChange={(e) => onUpdateOption(index, 'isCorrect', e.target.checked)}
                                 />
