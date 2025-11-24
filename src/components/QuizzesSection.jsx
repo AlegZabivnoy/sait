@@ -11,7 +11,7 @@ function QuizzesSection() {
         return (
             <section className="quizzes-section">
                 <h2 className="section-title">Доступні квізи</h2>
-                <div className="empty-state">
+                <div className="empty-state-inline">
                     <p>Поки немає доступних квізів.</p>
                     <button 
                         onClick={() => navigate('/create')} 

@@ -9,6 +9,9 @@ function Header() {
             <div className="header-content">
                 <h1 className="site-title">Our first quiz site</h1>
                 <nav className="header-nav">
+                    <button onClick={() => navigate('/')} className="nav-btn">
+                        Головна сторінка
+                    </button>
                     <button onClick={() => navigate('/results')} className="nav-btn">
                         Результати
                     </button>

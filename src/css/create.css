@@ -4,7 +4,7 @@
     padding: var(--spacing-xl);
     box-shadow: var(--shadow-xl), inset 0 0 60px rgba(220, 38, 38, 0.08);
     animation: fadeInUp 0.6s ease-out;
-    border: 2px solid rgba(220, 38, 38, 0.3);
+    border: 2px solid var(--primary-color);
 }
 .quiz-form {
     max-width: 800px;
@@ -87,16 +87,16 @@
     gap: var(--spacing-lg);
 }
 .question-card {
-    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
-    border: 2px solid rgba(220, 38, 38, 0.2);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.4);
     border-radius: var(--border-radius);
     padding: var(--spacing-lg);
     animation: fadeInScale 0.3s ease-out;
-    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(220, 38, 38, 0.08);
 }
 .question-block {
-    background: linear-gradient(135deg, var(--bg-hover) 0%, var(--bg-tertiary) 100%);
-    border: 2px solid rgba(220, 38, 38, 0.2);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.4);
     border-radius: var(--border-radius);
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
@@ -119,15 +119,16 @@
     margin-bottom: var(--spacing-sm);
     width: 100%;
 }
+/* Updated styles - v2 */
 .option-item {
     display: flex;
     gap: var(--spacing-sm);
     align-items: center;
     margin-bottom: var(--spacing-sm);
-    background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
-    padding: 8px;
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
+    padding: 12px;
     border-radius: var(--border-radius-small);
-    border: 1px solid rgba(220, 38, 38, 0.1);
+    border: 2px solid rgba(220, 38, 38, 0.3);
     width: 100%;
     max-width: 100%;
 }
@@ -160,25 +161,27 @@
     display: flex;
     align-items: center;
     margin-top: 15px;
-    gap: 0.4rem;
+    gap: 0.6rem;
     cursor: pointer;
-    padding: 0.4rem 0.8rem;
+    padding: 0.6rem 1rem;
     border-radius: var(--border-radius-small);
-    background: var(--bg-hover);
-    border: 1px solid rgba(220, 38, 38, 0.2);
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.3);
     transition: all var(--transition-fast);
     white-space: nowrap;
     flex-shrink: 0;
-    min-width: 130px;
+    min-width: 150px;
     user-select: none;
 }
 .checkbox-label:hover {
-    background: rgba(220, 38, 38, 0.15);
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
     border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
 }
-.checkbox-label input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+.checkbox-label input[type="checkbox"],
+.checkbox-label input[type="radio"] {
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     accent-color: var(--primary-color);
 }
@@ -384,7 +387,7 @@
 }
 .save-quiz-btn {
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
     color: var(--text-white);
     border: 2px solid var(--red-bright);
     border-radius: var(--border-radius);
@@ -395,16 +398,16 @@
     box-shadow: var(--shadow-md);
 }
 .save-quiz-btn:hover {
-    background: linear-gradient(135deg, var(--red-glow), var(--primary-color));
+    background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
     transform: translateY(-2px);
     box-shadow: var(--shadow-red-glow);
     border-color: var(--red-glow);
 }
 .cancel-btn {
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, var(--bg-hover), var(--bg-dark));
-    color: var(--text-white);
-    border: 2px solid var(--text-light);
+    background: linear-gradient(135deg, #ffffff, #e0e0e0);
+    color: #1a1a1a;
+    border: 2px solid #cccccc;
     border-radius: var(--border-radius);
     font-size: 1.1rem;
     font-weight: 600;
@@ -413,8 +416,8 @@
     box-shadow: var(--shadow-md);
 }
 .cancel-btn:hover {
-    background: linear-gradient(135deg, var(--text-secondary), var(--bg-dark));
+    background: linear-gradient(135deg, #f5f5f5, #d0d0d0);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--text-secondary);
+    border-color: #999999;
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuiz } from '../context/QuizContext';
+import '../css/home.css';
+import '../css/results.css';
 
 function Results() {
     const navigate = useNavigate();

@@ -7,6 +7,11 @@ body {
     position: relative;
     overflow-x: hidden;
 }
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 button {
     cursor: pointer;
     font-family: inherit;

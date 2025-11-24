@@ -255,7 +255,7 @@ function QuestionBlock({
                                     checked={option.isCorrect}
                                     onChange={(e) => onUpdateOption(index, 'isCorrect', e.target.checked)}
                                 />
-                                Правильна
+                                <span>Правильна</span>
                             </label>
                             {question.options.length > 2 && (
                                 <button

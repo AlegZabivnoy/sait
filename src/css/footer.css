@@ -1,9 +1,11 @@
 .footer {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
-    border: 2px solid rgba(184, 8, 8, 0.5);
-    margin-top: var(--spacing-xl);
+    border-top: 2px solid #000;
+    margin-top: auto;
     padding: var(--spacing-lg) 0;
     box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
+    position: relative;
+    width: 100%;
 }
 .footer-content {
     max-width: 1200px;
