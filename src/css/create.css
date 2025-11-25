@@ -348,76 +348,57 @@
     gap: var(--spacing-sm);
     margin-top: var(--spacing-md);
 }
-.answer-item {
-    display: flex;
-    gap: var(--spacing-sm);
-    align-items: center;
-}
-.answer-item input[type="text"] {
-    flex: 1;
-    padding: 0.6rem;
-    border: 2px solid rgba(220, 38, 38, 0.2);
-    border-radius: var(--border-radius-small);
-    font-size: 0.95rem;
-    transition: all var(--transition-fast);
-    background: var(--bg-secondary);
-    color: var(--text-white);
-}
-.answer-item input[type="text"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
-}
-.answer-item input[type="radio"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    accent-color: var(--primary-color);
-}
-.answer-item label {
-    font-weight: 500;
-    color: var(--text-secondary);
-    min-width: 120px;
-}
 .form-actions {
     display: flex;
     gap: var(--spacing-md);
     margin-top: var(--spacing-xl);
     justify-content: center;
 }
-.save-quiz-btn {
-    padding: 1rem 2rem;
+.save-quiz-btn,
+.save-btn {
+    padding: 0.9rem 2rem;
     background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
     color: var(--text-white);
     border: 2px solid var(--red-bright);
     border-radius: var(--border-radius);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-fast);
     box-shadow: var(--shadow-md);
+    min-width: 160px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
-.save-quiz-btn:hover {
+.save-quiz-btn:hover,
+.save-btn:hover {
     background: linear-gradient(135deg, var(--red-dark), var(--secondary-dark));
     transform: translateY(-2px);
     box-shadow: var(--shadow-red-glow);
     border-color: var(--red-glow);
 }
 .cancel-btn {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #ffffff, #e0e0e0);
-    color: #1a1a1a;
-    border: 2px solid #cccccc;
+    padding: 0.9rem 2rem;
+    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-dark));
+    color: var(--text-white);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: var(--border-radius);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-fast);
     box-shadow: var(--shadow-md);
+    min-width: 160px;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .cancel-btn:hover {
-    background: linear-gradient(135deg, #f5f5f5, #d0d0d0);
+    background: linear-gradient(135deg, var(--bg-hover), var(--bg-secondary));
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
-    border-color: #999999;
+    border-color: rgba(255, 255, 255, 0.5);
 }
