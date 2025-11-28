@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useQuiz } from '../context/QuizContext';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { addQuiz, updateQuiz, setSelectedQuiz } from '../store/quizzesSlice';
+import type { Question, QuestionType, QuestionOption } from '../types';
 import '../css/create.css';
 
-const QUESTION_TYPES = {
+const QUESTION_TYPES: Record<string, QuestionType> = {
     SINGLE: 'single',
     MULTIPLE: 'multiple',
     TEXT: 'text'
@@ -12,29 +14,30 @@ const QUESTION_TYPES = {
 function CreateQuiz() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { addQuiz, updateQuiz, selectedQuiz, setSelectedQuiz } = useQuiz();
+    const selectedQuiz = useAppSelector((state) => state.quizzes.selectedQuiz);
+    const dispatch = useAppDispatch();
     
     const [quizName, setQuizName] = useState('');
     const [quizDescription, setQuizDescription] = useState('');
-    const [questions, setQuestions] = useState([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [editMode, setEditMode] = useState(false);
-    const [originalQuizName, setOriginalQuizName] = useState('');
+    const [originalQuizId, setOriginalQuizId] = useState('');
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.get('edit') === 'true' && selectedQuiz) {
             setEditMode(true);
             setQuizName(selectedQuiz.name);
-            setQuizDescription(selectedQuiz.description);
+            setQuizDescription(selectedQuiz.description || '');
             setQuestions(selectedQuiz.questions || []);
-            setOriginalQuizName(selectedQuiz.name);
+            setOriginalQuizId(selectedQuiz.id);
         } else {
             addNewQuestion();
         }
     }, [selectedQuiz, location]);
 
     const addNewQuestion = () => {
-        const newQuestion = {
+        const newQuestion: Question = {
             id: Date.now(),
             text: '',
             type: QUESTION_TYPES.SINGLE,
@@ -47,29 +50,29 @@ function CreateQuiz() {
         setQuestions([...questions, newQuestion]);
     };
 
-    const updateQuestion = (questionId, field, value) => {
-        setQuestions(questions.map(q => 
+    const updateQuestion = (questionId: number, field: keyof Question, value: string | QuestionType) => {
+        setQuestions(questions.map((q: Question) => 
             q.id === questionId ? { ...q, [field]: value } : q
         ));
     };
 
-    const addOption = (questionId) => {
-        setQuestions(questions.map(q => 
+    const addOption = (questionId: number) => {
+        setQuestions(questions.map((q: Question) => 
             q.id === questionId 
                 ? { ...q, options: [...q.options, { text: '', isCorrect: false }] }
                 : q
         ));
     };
 
-    const updateOption = (questionId, optionIndex, field, value) => {
-        setQuestions(questions.map(q => {
+    const updateOption = (questionId: number, optionIndex: number, field: keyof QuestionOption, value: string | boolean) => {
+        setQuestions(questions.map((q: Question) => {
             if (q.id === questionId) {
                 const newOptions = [...q.options];
                 
                 // Якщо це поле isCorrect і тип питання SINGLE
                 if (field === 'isCorrect' && q.type === QUESTION_TYPES.SINGLE && value === true) {
                     // Спочатку знімаємо всі позначки
-                    newOptions.forEach(opt => opt.isCorrect = false);
+                    newOptions.forEach((opt: QuestionOption) => opt.isCorrect = false);
                 }
                 
                 newOptions[optionIndex] = { ...newOptions[optionIndex], [field]: value };
@@ -79,23 +82,23 @@ function CreateQuiz() {
         }));
     };
 
-    const removeOption = (questionId, optionIndex) => {
-        setQuestions(questions.map(q => {
+    const removeOption = (questionId: number, optionIndex: number) => {
+        setQuestions(questions.map((q: Question) => {
             if (q.id === questionId && q.options.length > 2) {
-                const newOptions = q.options.filter((_, i) => i !== optionIndex);
+                const newOptions = q.options.filter((_: QuestionOption, i: number) => i !== optionIndex);
                 return { ...q, options: newOptions };
             }
             return q;
         }));
     };
 
-    const removeQuestion = (questionId) => {
+    const removeQuestion = (questionId: number) => {
         if (questions.length > 1) {
-            setQuestions(questions.filter(q => q.id !== questionId));
+            setQuestions(questions.filter((q: Question) => q.id !== questionId));
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!quizName.trim() || !quizDescription.trim()) {
@@ -109,15 +112,17 @@ function CreateQuiz() {
         }
 
         const quiz = {
+            id: editMode ? originalQuizId : `${Date.now()}-${Math.random()}`,
             name: quizName.trim(),
             description: quizDescription.trim(),
-            questions: questions
+            questions: questions,
+            createdAt: new Date().toISOString()
         };
 
         if (editMode) {
-            updateQuiz(originalQuizName, quiz);
+            dispatch(updateQuiz({ oldId: originalQuizId, updatedQuiz: quiz }));
         } else {
-            addQuiz(quiz);
+            dispatch(addQuiz(quiz));
         }
 
         navigate('/manage');
@@ -147,7 +152,7 @@ function CreateQuiz() {
                         value={quizDescription}
                         onChange={(e) => setQuizDescription(e.target.value)}
                         placeholder="Короткий опис квізу..."
-                        rows="3"
+                        rows={3}
                         required
                     />
                 </div>
@@ -156,7 +161,7 @@ function CreateQuiz() {
                     <h2>Питання</h2>
                     <p className="question-count">Всього питань: {questions.length}</p>
 
-                    {questions.map((question, qIndex) => (
+                    {questions.map((question: Question, qIndex: number) => (
                         <QuestionBlock
                             key={question.id}
                             question={question}
@@ -190,6 +195,17 @@ function CreateQuiz() {
     );
 }
 
+interface QuestionBlockProps {
+    question: Question;
+    questionNumber: number;
+    onUpdate: (field: keyof Question, value: string | QuestionType) => void;
+    onAddOption: () => void;
+    onUpdateOption: (optionIndex: number, field: keyof QuestionOption, value: string | boolean) => void;
+    onRemoveOption: (optionIndex: number) => void;
+    onRemove: () => void;
+    canRemove: boolean;
+}
+
 function QuestionBlock({ 
     question, 
     questionNumber, 
@@ -199,7 +215,7 @@ function QuestionBlock({
     onRemoveOption, 
     onRemove,
     canRemove 
-}) {
+}: QuestionBlockProps) {
     return (
         <div className="question-block">
             <div className="question-header">
@@ -226,7 +242,7 @@ function QuestionBlock({
                 <label>Тип питання</label>
                 <select
                     value={question.type}
-                    onChange={(e) => onUpdate('type', e.target.value)}
+                    onChange={(e) => onUpdate('type', e.target.value as QuestionType)}
                     className="question-type"
                 >
                     <option value={QUESTION_TYPES.SINGLE}>Одна правильна відповідь</option>
@@ -238,7 +254,7 @@ function QuestionBlock({
             {question.type !== QUESTION_TYPES.TEXT ? (
                 <div className="options-section">
                     <label>Варіанти відповідей</label>
-                    {question.options.map((option, index) => (
+                    {question.options.map((option: QuestionOption, index: number) => (
                         <div key={index} className="option-item">
                             <span className="option-number">{index + 1}</span>
                             <input
@@ -276,10 +292,10 @@ function QuestionBlock({
                 <div className="form-group">
                     <label>Правильна відповідь (для перевірки)</label>
                     <textarea
-                        value={question.correctAnswer}
+                        value={question.correctAnswer || ''}
                         onChange={(e) => onUpdate('correctAnswer', e.target.value)}
                         placeholder="Введіть правильну відповідь або ключові слова"
-                        rows="3"
+                        rows={3}
                     />
                 </div>
             )}

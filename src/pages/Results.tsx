@@ -1,46 +1,45 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuiz } from '../context/QuizContext';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { deleteResult, clearAllResults } from '../store/resultsSlice';
+import type { QuizResult } from '../types';
 import '../css/home.css';
 import '../css/results.css';
 
 function Results() {
     const navigate = useNavigate();
-    const { results, deleteResult, clearAllResults } = useQuiz();
+    const results = useAppSelector((state) => state.results.results);
+    const dispatch = useAppDispatch();
 
     const handleClearAll = () => {
         if (window.confirm('Видалити ВСЮ історію результатів? Цю дію не можна скасувати!')) {
-            clearAllResults();
+            dispatch(clearAllResults());
         }
     };
 
-    const handleDeleteOne = (index) => {
+    const handleDeleteOne = (id: string) => {
         if (window.confirm('Видалити цей результат?')) {
-            deleteResult(index);
+            dispatch(deleteResult(id));
         }
     };
 
-    const getStatusClass = (summary) => {
-        const match = summary.match(/\((\d+)%\)/);
-        if (!match) return 'average';
-        const percentage = parseInt(match[1]);
+    const getStatusClass = (score: number, total: number): string => {
+        const percentage = (score / total) * 100;
         if (percentage >= 80) return 'excellent';
         if (percentage >= 60) return 'good';
         if (percentage >= 40) return 'average';
         return 'poor';
     };
 
-    const getStatusText = (summary) => {
-        const match = summary.match(/\((\d+)%\)/);
-        if (!match) return 'Невідомо';
-        const percentage = parseInt(match[1]);
+    const getStatusText = (score: number, total: number): string => {
+        const percentage = (score / total) * 100;
         if (percentage >= 80) return 'Відмінно!';
         if (percentage >= 60) return 'Добре';
         if (percentage >= 40) return 'Задовільно';
         return 'Потрібно покращити';
     };
 
-    const formatDate = (timestamp) => {
+    const formatDate = (timestamp: string): string => {
         const date = new Date(timestamp);
         return date.toLocaleString('uk-UA', {
             year: 'numeric',
@@ -71,22 +70,23 @@ function Results() {
                 </div>
             ) : (
                 <div className="results-list">
-                    {results.map((result, index) => (
-                        <div key={index} className="result-card">
+                    {results.map((result: QuizResult) => (
+                        <div key={result.id} className="result-card">
                             <div className="result-card-header">
                                 <h3 className="result-quiz-name">{result.quizName}</h3>
-                                <span className={`result-status ${getStatusClass(result.summary)}`}>
-                                    {getStatusText(result.summary)}
+                                <span className={`result-status ${getStatusClass(result.score, result.totalQuestions)}`}>
+                                    {getStatusText(result.score, result.totalQuestions)}
                                 </span>
                             </div>
                             <div className="result-card-body">
-                                <p className="result-date">{formatDate(result.timestamp)}</p>
+                                <p className="result-date">{formatDate(result.date)}</p>
                                 <p className="result-summary-text">
-                                    <strong>Результат:</strong> {result.summary}
+                                    <strong>Результат:</strong> {result.score}/{result.totalQuestions} 
+                                    ({Math.round((result.score / result.totalQuestions) * 100)}%)
                                 </p>
                             </div>
                             <div className="result-card-footer">
-                                <button onClick={() => handleDeleteOne(index)} className="delete-result-btn">
+                                <button onClick={() => handleDeleteOne(result.id)} className="delete-result-btn">
                                     Видалити
                                 </button>
                             </div>

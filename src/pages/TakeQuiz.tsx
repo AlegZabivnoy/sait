@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuiz } from '../context/QuizContext';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { addResult } from '../store/resultsSlice';
+import type { Question, QuestionOption } from '../types';
 import '../css/quiz.css';
+
+type UserAnswer = number | number[] | string | null;
 
 function TakeQuiz() {
     const navigate = useNavigate();
-    const { selectedQuiz, addResult } = useQuiz();
+    const selectedQuiz = useAppSelector((state) => state.quizzes.selectedQuiz);
+    const dispatch = useAppDispatch();
+    
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [userAnswers, setUserAnswers] = useState([]);
+    const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
     const [showResults, setShowResults] = useState(false);
     const [score, setScore] = useState(0);
 
@@ -24,7 +30,7 @@ function TakeQuiz() {
     const currentQuestion = selectedQuiz.questions[currentQuestionIndex];
     const totalQuestions = selectedQuiz.questions.length;
 
-    const handleAnswer = (answer) => {
+    const handleAnswer = (answer: UserAnswer) => {
         const newAnswers = [...userAnswers];
         newAnswers[currentQuestionIndex] = answer;
         setUserAnswers(newAnswers);
@@ -46,22 +52,25 @@ function TakeQuiz() {
 
     const finishQuiz = () => {
         let correctCount = 0;
-        selectedQuiz.questions.forEach((question, index) => {
+        
+        selectedQuiz.questions.forEach((question: Question, index: number) => {
             const userAnswer = userAnswers[index];
             
             if (question.type === 'single') {
-                const correctOption = question.options.findIndex(opt => opt.isCorrect);
+                const correctOption = question.options.findIndex((opt: QuestionOption) => opt.isCorrect);
                 if (userAnswer === correctOption) correctCount++;
             } else if (question.type === 'multiple') {
                 const correctOptions = question.options
-                    .map((opt, i) => opt.isCorrect ? i : -1)
-                    .filter(i => i !== -1);
-                const userSelected = userAnswer || [];
+                    .map((opt: QuestionOption, i: number) => opt.isCorrect ? i : -1)
+                    .filter((i: number) => i !== -1);
+                const userSelected = (userAnswer as number[]) || [];
                 if (JSON.stringify(correctOptions.sort()) === JSON.stringify(userSelected.sort())) {
                     correctCount++;
                 }
             } else if (question.type === 'text') {
-                if (userAnswer?.toLowerCase().includes(question.correctAnswer?.toLowerCase())) {
+                const userText = (userAnswer as string)?.toLowerCase() || '';
+                const correctText = question.correctAnswer?.toLowerCase() || '';
+                if (userText.includes(correctText)) {
                     correctCount++;
                 }
             }
@@ -70,14 +79,25 @@ function TakeQuiz() {
         setScore(correctCount);
         
         const result = {
-            timestamp: new Date().toISOString(),
+            id: `${Date.now()}-${Math.random()}`,
             quizName: selectedQuiz.name,
-            summary: `${correctCount}/${totalQuestions} (${Math.round(correctCount / totalQuestions * 100)}%)`,
-            answers: userAnswers,
-            score: correctCount
+            score: correctCount,
+            totalQuestions,
+            date: new Date().toISOString(),
+            answers: userAnswers.map((answer: UserAnswer, index: number) => {
+                const question = selectedQuiz.questions[index];
+                const correctOption = question.options.findIndex((opt: QuestionOption) => opt.isCorrect);
+                return {
+                    questionId: question.id.toString(),
+                    question: question.text,
+                    selectedAnswer: typeof answer === 'number' ? answer : -1,
+                    correctAnswer: correctOption,
+                    isCorrect: answer === correctOption
+                };
+            })
         };
         
-        addResult(result);
+        dispatch(addResult(result));
         setShowResults(true);
     };
 
@@ -137,15 +157,15 @@ function TakeQuiz() {
                     
                     {currentQuestion.type === 'text' ? (
                         <textarea
-                            value={userAnswers[currentQuestionIndex] || ''}
+                            value={(userAnswers[currentQuestionIndex] as string) || ''}
                             onChange={(e) => handleAnswer(e.target.value)}
                             placeholder="Введіть вашу відповідь..."
-                            rows="5"
+                            rows={5}
                             className="text-answer"
                         />
                     ) : currentQuestion.type === 'single' ? (
                         <div className="answers-grid">
-                            {currentQuestion.options.map((option, index) => (
+                            {currentQuestion.options.map((option: QuestionOption, index: number) => (
                                 <button
                                     key={index}
                                     onClick={() => handleAnswer(index)}
@@ -157,16 +177,16 @@ function TakeQuiz() {
                         </div>
                     ) : (
                         <div className="answers-grid">
-                            {currentQuestion.options.map((option, index) => (
+                            {currentQuestion.options.map((option: QuestionOption, index: number) => (
                                 <label key={index} className="checkbox-answer">
                                     <input
                                         type="checkbox"
-                                        checked={(userAnswers[currentQuestionIndex] || []).includes(index)}
+                                        checked={((userAnswers[currentQuestionIndex] as number[]) || []).includes(index)}
                                         onChange={(e) => {
-                                            const current = userAnswers[currentQuestionIndex] || [];
+                                            const current = (userAnswers[currentQuestionIndex] as number[]) || [];
                                             const newAnswer = e.target.checked
                                                 ? [...current, index]
-                                                : current.filter(i => i !== index);
+                                                : current.filter((i: number) => i !== index);
                                             handleAnswer(newAnswer);
                                         }}
                                     />

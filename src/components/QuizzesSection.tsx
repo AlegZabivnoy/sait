@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuiz } from '../context/QuizContext';
+import { useAppSelector } from '../store/hooks';
 import QuizCard from './QuizCard';
 
 function QuizzesSection() {
     const navigate = useNavigate();
-    const { quizzes } = useQuiz();
+    const quizzes = useAppSelector((state) => state.quizzes.quizzes);
     
     if (quizzes.length === 0) {
         return (
@@ -28,8 +28,8 @@ function QuizzesSection() {
         <section className="quizzes-section">
             <h2 className="section-title">Доступні квізи</h2>
             <div className="quiz-grid">
-                {quizzes.map((quiz, index) => (
-                    <QuizCard key={index} quiz={quiz} />
+                {quizzes.map((quiz) => (
+                    <QuizCard key={quiz.id} quiz={quiz} />
                 ))}
             </div>
         </section>

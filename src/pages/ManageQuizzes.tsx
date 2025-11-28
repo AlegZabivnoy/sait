@@ -1,20 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuiz } from '../context/QuizContext';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { deleteQuiz, setSelectedQuiz } from '../store/quizzesSlice';
+import { Quiz } from '../types';
 import '../css/manage.css';
 
 function ManageQuizzes() {
     const navigate = useNavigate();
-    const { quizzes, deleteQuiz, setSelectedQuiz } = useQuiz();
+    const quizzes = useAppSelector((state) => state.quizzes.quizzes);
+    const dispatch = useAppDispatch();
 
-    const handleEdit = (quiz) => {
-        setSelectedQuiz(quiz);
+    const handleEdit = (quiz: Quiz) => {
+        dispatch(setSelectedQuiz(quiz));
         navigate('/create?edit=true');
     };
 
-    const handleDelete = (quizName) => {
-        if (window.confirm(`Видалити квіз "${quizName}"?`)) {
-            deleteQuiz(quizName);
+    const handleDelete = (quizId: string) => {
+        const quiz = quizzes.find((q: Quiz) => q.id === quizId);
+        if (quiz && window.confirm(`Видалити квіз "${quiz.name}"?`)) {
+            dispatch(deleteQuiz(quizId));
         }
     };
 
@@ -36,15 +40,15 @@ function ManageQuizzes() {
                 </div>
             ) : (
                 <div className="quizzes-list">
-                    {quizzes.map((quiz, index) => (
-                        <div key={index} className="quiz-manage-card">
+                    {quizzes.map((quiz: Quiz) => (
+                        <div key={quiz.id} className="quiz-manage-card">
                             <div className="quiz-manage-header">
                                 <h3>{quiz.name}</h3>
                                 <div className="quiz-actions">
                                     <button onClick={() => handleEdit(quiz)} className="edit-btn">
                                         ✏️ Редагувати
                                     </button>
-                                    <button onClick={() => handleDelete(quiz.name)} className="delete-btn">
+                                    <button onClick={() => handleDelete(quiz.id)} className="delete-btn">
                                         🗑️ Видалити
                                     </button>
                                 </div>

@@ -3,6 +3,23 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+html, body {
+    height: 100%;
+}
+
+#root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 :root {
     --primary-color: #dc2626;
     --primary-dark: #991b1b;
@@ -205,7 +222,7 @@ body.quiz-page .footer {
 .footer {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-dark) 100%);
     border: 2px solid rgba(184, 8, 8, 0.5);
-    margin-top: var(--spacing-xl);
+    margin-top: auto;
     padding: var(--spacing-lg) 0;
     box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
 }

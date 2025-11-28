@@ -4,7 +4,7 @@ function Footer() {
     return (
         <footer className="footer">
             <div className="footer-content">
-                <p className="footer-text">Powered by Банда "Вуличні Койоти"</p>
+                <p>&copy; 2025 Quiz App. Банда Вуличні Койоти</p>
             </div>
         </footer>
     );
