@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../store/hooks';
 import QuizCard from './QuizCard';
+import type { Quiz } from '../types';
 
 function QuizzesSection() {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ function QuizzesSection() {
         <section className="quizzes-section">
             <h2 className="section-title">Доступні квізи</h2>
             <div className="quiz-grid">
-                {quizzes.map((quiz) => (
+                {quizzes.map((quiz: Quiz) => (
                     <QuizCard key={quiz.id} quiz={quiz} />
                 ))}
             </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { addQuiz, updateQuiz, setSelectedQuiz } from '../store/quizzesSlice';
+import { addQuiz, updateQuiz } from '../store/quizzesSlice';
 import type { Question, QuestionType, QuestionOption } from '../types';
 import '../css/create.css';
 
