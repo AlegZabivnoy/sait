@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { addQuiz, updateQuiz } from '../store/quizzesSlice';
+import { createQuiz, updateQuizAsync } from '../store/quizzesSlice';
 import type { Question, QuestionType, QuestionOption } from '../types';
 import '../css/create.css';
 
@@ -111,18 +111,16 @@ function CreateQuiz() {
             return;
         }
 
-        const quiz = {
-            id: editMode ? originalQuizId : `${Date.now()}-${Math.random()}`,
+        const quizData = {
             name: quizName.trim(),
             description: quizDescription.trim(),
-            questions: questions,
-            createdAt: new Date().toISOString()
+            questions: questions
         };
 
         if (editMode) {
-            dispatch(updateQuiz({ oldId: originalQuizId, updatedQuiz: quiz }));
+            dispatch(updateQuizAsync({ id: originalQuizId, quiz: quizData }));
         } else {
-            dispatch(addQuiz(quiz));
+            dispatch(createQuiz(quizData));
         }
 
         navigate('/manage');

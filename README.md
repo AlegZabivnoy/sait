@@ -1,15 +1,22 @@
-# Quiz Application - React SPA
+# Quiz Application - Full Stack React + Node.js
 
-Повноцінна Single Page Application для створення та проходження квізів на **React 19** з **TypeScript**, **Redux Toolkit** та **Vite**.
+Повноцінний Full Stack додаток для створення та проходження квізів з **React 19**, **TypeScript**, **Redux Toolkit**, **Node.js**, **Express** та **MongoDB**.
 
 ## 🚀 Технології
 
+### Frontend
 - **React 19** - UI бібліотека
 - **TypeScript** - типізація
 - **Redux Toolkit (RTK)** - управління станом
 - **React Router 7** - клієнтська навігація
 - **Vite** - швидка збірка та HMR
-- **LocalStorage** - збереження даних (без бекенду)
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express** - веб-фреймворк
+- **MongoDB** - NoSQL база даних
+- **Mongoose** - ODM для MongoDB
+- **express-validator** - валідація даних
 
 ## 📁 Структура проекту
 
@@ -40,30 +47,118 @@ sait/
 │   └── main.tsx           # Точка входу
 ├── index.html
 ├── vite.config.ts         # Конфігурація Vite
-├── tsconfig.json          # Конфігурація TypeScript
-└── package.json
+```
+sait/
+├── src/                   # Frontend код
+│   ├── components/        # React компоненти
+│   ├── pages/             # Сторінки
+│   ├── store/             # Redux store з async thunks
+│   ├── services/          # API сервіси
+│   ├── types/             # TypeScript типи
+│   └── css/               # Стилі
+├── server/                # Backend код
+│   ├── models/            # Mongoose моделі
+│   ├── routes/            # Express routes
+│   ├── server.js          # Express app
+│   └── package.json       # Backend залежності
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+└── package.json           # Frontend залежності
 ```
 
-## 🛠 Встановлення
+## 🛠 Встановлення та запуск
 
-1. Клонуйте репозиторій:
-```bash
-git clone https://github.com/AlegZabivnoy/sait.git
-cd sait
+### 1. Встановлення MongoDB
+
+**Windows:**
+```powershell
+# Завантажте з https://www.mongodb.com/try/download/community
+# Або через chocolatey:
+choco install mongodb
+
+# Запустіть MongoDB:
+mongod
 ```
 
-2. Встановіть залежності:
+**Або використовуйте MongoDB Atlas (Cloud):**
+- Створіть безкоштовний акаунт на [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- Отримайте connection string
+
+### 2. Backend Setup
+
 ```bash
+# Перейдіть в папку server
+cd server
+
+# Встановіть залежності
 npm install
+
+# Створіть .env файл
+copy .env.example .env
+
+# Відредагуйте .env:
+# PORT=5000
+# MONGODB_URI=mongodb://localhost:27017/quiz-app
+
+# Заповніть БД тестовими даними
+npm run seed
+
+# Запустіть сервер
+npm run dev
 ```
+
+Backend буде доступний на `http://localhost:5000`
+
+### 3. Frontend Setup
+
+```bash
+# Поверніться в кореневу папку
+cd ..
+
+# Встановіть залежності (якщо ще не встановлені)
+npm install
+
+# Створіть .env файл
+VITE_API_URL=http://localhost:5000/api
+
+# Запустіть frontend
+npm run dev
+```
+
+Frontend буде доступний на `http://localhost:3000`
 
 ## 🎮 Команди
 
+### Frontend
 ```bash
-npm run dev      # Запуск dev сервера (http://localhost:3000)
+npm run dev      # Запуск dev сервера
 npm run build    # Production збірка
 npm run preview  # Перегляд production збірки
 ```
+
+### Backend
+```bash
+cd server
+npm run dev      # Запуск з nodemon
+npm start        # Production запуск
+npm run seed     # Заповнити БД тестовими даними
+```
+
+## 🌐 API Endpoints
+
+### Quizzes
+- `GET /api/quizzes` - Отримати всі квізи
+- `GET /api/quizzes/:id` - Отримати квіз за ID
+- `POST /api/quizzes` - Створити новий квіз
+- `PUT /api/quizzes/:id` - Оновити квіз
+- `DELETE /api/quizzes/:id` - Видалити квіз
+
+### Results
+- `GET /api/results` - Отримати всі результати
+- `POST /api/results` - Зберегти результат
+- `DELETE /api/results/:id` - Видалити результат
+- `DELETE /api/results` - Видалити всі результати
 
 ## 🗺 Маршрути
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { deleteQuiz, setSelectedQuiz } from '../store/quizzesSlice';
+import { deleteQuizAsync, setSelectedQuiz } from '../store/quizzesSlice';
 import { Quiz } from '../types';
 import '../css/manage.css';
 
@@ -18,7 +18,7 @@ function ManageQuizzes() {
     const handleDelete = (quizId: string) => {
         const quiz = quizzes.find((q: Quiz) => q.id === quizId);
         if (quiz && window.confirm(`Видалити квіз "${quiz.name}"?`)) {
-            dispatch(deleteQuiz(quizId));
+            dispatch(deleteQuizAsync(quizId));
         }
     };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { deleteResult, clearAllResults } from '../store/resultsSlice';
+import { deleteResultAsync, deleteAllResultsAsync } from '../store/resultsSlice';
 import type { QuizResult } from '../types';
 import '../css/home.css';
 import '../css/results.css';
@@ -13,13 +13,13 @@ function Results() {
 
     const handleClearAll = () => {
         if (window.confirm('Видалити ВСЮ історію результатів? Цю дію не можна скасувати!')) {
-            dispatch(clearAllResults());
+            dispatch(deleteAllResultsAsync());
         }
     };
 
     const handleDeleteOne = (id: string) => {
         if (window.confirm('Видалити цей результат?')) {
-            dispatch(deleteResult(id));
+            dispatch(deleteResultAsync(id));
         }
     };
 

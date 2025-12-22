@@ -1,0 +1,8 @@
+node_modules/
+.env
+*.log
+.DS_Store
+
+# Data files (optional - uncomment if you don't want to commit data)
+# data/quizzes.json
+# data/results.json

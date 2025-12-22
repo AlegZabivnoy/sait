@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useAppDispatch } from './store/hooks';
+import { fetchQuizzes } from './store/quizzesSlice';
+import { fetchResults } from './store/resultsSlice';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -10,6 +13,14 @@ import Results from './pages/Results';
 import './css/main.css';
 
 function App() {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        // Завантажуємо дані при старті
+        dispatch(fetchQuizzes());
+        dispatch(fetchResults());
+    }, [dispatch]);
+
     return (
         <Router>
             <div className="app">

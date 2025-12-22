@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { addResult } from '../store/resultsSlice';
+import { createResult } from '../store/resultsSlice';
 import type { Question, QuestionOption } from '../types';
 import '../css/quiz.css';
 
@@ -79,7 +79,7 @@ function TakeQuiz() {
         setScore(correctCount);
         
         const result = {
-            id: `${Date.now()}-${Math.random()}`,
+            quizId: selectedQuiz.id,
             quizName: selectedQuiz.name,
             score: correctCount,
             totalQuestions,
@@ -97,7 +97,7 @@ function TakeQuiz() {
             })
         };
         
-        dispatch(addResult(result));
+        dispatch(createResult(result));
         setShowResults(true);
     };
 

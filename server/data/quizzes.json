@@ -1,0 +1,119 @@
+[
+  {
+    "name": "JavaScript Basics",
+    "description": "Test your knowledge of JavaScript fundamentals",
+    "questions": [
+      {
+        "id": 1,
+        "text": "What is the correct way to declare a variable in JavaScript?",
+        "type": "single",
+        "options": [
+          {
+            "text": "let x = 5;",
+            "isCorrect": true
+          },
+          {
+            "text": "variable x = 5;",
+            "isCorrect": false
+          },
+          {
+            "text": "var x := 5;",
+            "isCorrect": false
+          },
+          {
+            "text": "x = 5;",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "text": "Which of these are JavaScript data types?",
+        "type": "multiple",
+        "options": [
+          {
+            "text": "String",
+            "isCorrect": true
+          },
+          {
+            "text": "Number",
+            "isCorrect": true
+          },
+          {
+            "text": "Character",
+            "isCorrect": false
+          },
+          {
+            "text": "Boolean",
+            "isCorrect": true
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "text": "What does DOM stand for?",
+        "type": "text",
+        "options": [],
+        "correctAnswer": "Document Object Model"
+      }
+    ],
+    "id": "quiz_1766440265742_jvc4b7tzi",
+    "createdAt": "2025-12-22T21:51:05.742Z",
+    "updatedAt": "2025-12-22T21:51:05.742Z"
+  },
+  {
+    "name": "React Fundamentals",
+    "description": "Test your React knowledge",
+    "questions": [
+      {
+        "id": 1,
+        "text": "What is JSX?",
+        "type": "single",
+        "options": [
+          {
+            "text": "A syntax extension for JavaScript",
+            "isCorrect": true
+          },
+          {
+            "text": "A new programming language",
+            "isCorrect": false
+          },
+          {
+            "text": "A CSS framework",
+            "isCorrect": false
+          },
+          {
+            "text": "A database query language",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "text": "Which hooks are built into React?",
+        "type": "multiple",
+        "options": [
+          {
+            "text": "useState",
+            "isCorrect": true
+          },
+          {
+            "text": "useEffect",
+            "isCorrect": true
+          },
+          {
+            "text": "useData",
+            "isCorrect": false
+          },
+          {
+            "text": "useContext",
+            "isCorrect": true
+          }
+        ]
+      }
+    ],
+    "id": "quiz_1766440265743_4l3itlukl",
+    "createdAt": "2025-12-22T21:51:05.743Z",
+    "updatedAt": "2025-12-22T21:51:05.743Z"
+  }
+]
