@@ -142,31 +142,6 @@
     "updatedAt": "2025-12-25T11:21:23.007Z"
   },
   {
-    "name": "4укца",
-    "description": "уцкафів",
-    "questions": [
-      {
-        "id": 1766662509120,
-        "text": "уцкаів",
-        "type": "single",
-        "options": [
-          {
-            "text": "укаві",
-            "isCorrect": true
-          },
-          {
-            "text": "укаві",
-            "isCorrect": false
-          }
-        ],
-        "correctAnswer": ""
-      }
-    ],
-    "id": "quiz_1766662517142_wng6lsouq",
-    "createdAt": "2025-12-25T11:35:17.142Z",
-    "updatedAt": "2025-12-25T11:35:17.142Z"
-  },
-  {
     "name": "куіав",
     "description": "уцафв",
     "questions": [
