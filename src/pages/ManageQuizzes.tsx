@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { deleteQuizAsync, setSelectedQuiz } from '../store/quizzesSlice';
+import { deleteQuizAsync, setSelectedQuiz, fetchQuizzes } from '../store/quizzesSlice';
 import { Quiz } from '../types';
 import '../css/manage.css';
 
@@ -15,10 +15,17 @@ function ManageQuizzes() {
         navigate('/create?edit=true');
     };
 
-    const handleDelete = (quizId: string) => {
+    const handleDelete = async (quizId: string) => {
         const quiz = quizzes.find((q: Quiz) => q.id === quizId);
         if (quiz && window.confirm(`Видалити квіз "${quiz.name}"?`)) {
-            dispatch(deleteQuizAsync(quizId));
+            try {
+                await dispatch(deleteQuizAsync(quizId)).unwrap();
+                // Перезавантажити список квізів після видалення
+                await dispatch(fetchQuizzes()).unwrap();
+            } catch (error) {
+                console.error('Error deleting quiz:', error);
+                alert('Помилка при видаленні квізу. Спробуйте ще раз.');
+            }
         }
     };
 

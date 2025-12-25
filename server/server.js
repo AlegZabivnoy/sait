@@ -50,7 +50,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
   console.log(`📡 API available at http://localhost:${PORT}/api`);
   console.log(`💚 Health check: http://localhost:${PORT}/api/health`);
   console.log(`💾 Using file-based storage (no database required)`);
@@ -59,7 +59,7 @@ app.listen(PORT, () => {
 // Graceful shutdown
 process.on('SIGINT', () => {
   console.log('\n⚠️  Shutting down gracefully...');
-  console.log('✅ Server closed');
+  console.log('Server closed');
   process.exit(0);
 });
 

@@ -165,5 +165,30 @@
     "id": "quiz_1766662517142_wng6lsouq",
     "createdAt": "2025-12-25T11:35:17.142Z",
     "updatedAt": "2025-12-25T11:35:17.142Z"
+  },
+  {
+    "name": "куіав",
+    "description": "уцафв",
+    "questions": [
+      {
+        "id": 1766663248574,
+        "text": "уафів",
+        "type": "single",
+        "options": [
+          {
+            "text": "ув",
+            "isCorrect": true
+          },
+          {
+            "text": "уаві",
+            "isCorrect": false
+          }
+        ],
+        "correctAnswer": ""
+      }
+    ],
+    "id": "quiz_1766663255725_xtupjoqb1",
+    "createdAt": "2025-12-25T11:47:35.725Z",
+    "updatedAt": "2025-12-25T11:47:35.725Z"
   }
 ]

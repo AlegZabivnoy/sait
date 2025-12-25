@@ -78,22 +78,22 @@ async function seedDatabase() {
     console.log('🗑️  Cleared existing quizzes');
 
     // Create sample quizzes
-    console.log('📝 Creating sample quizzes...');
+    console.log('Creating sample quizzes...');
     const createdQuizzes = [];
     for (const quizData of sampleQuizzes) {
       const quiz = await quizStorage.create(quizData);
       createdQuizzes.push(quiz);
     }
     
-    console.log(`✅ Successfully created ${createdQuizzes.length} quizzes:`);
+    console.log(`Successfully created ${createdQuizzes.length} quizzes:`);
     createdQuizzes.forEach(quiz => {
       console.log(`   - ${quiz.name} (${quiz.questions.length} questions)`);
     });
 
-    console.log('✅ Database seeded successfully!');
+    console.log('Database seeded successfully!');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error seeding database:', error);
+    console.error('Error seeding database:', error);
     process.exit(1);
   }
 }

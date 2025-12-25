@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { createQuiz, updateQuizAsync } from '../store/quizzesSlice';
+import { createQuiz, updateQuizAsync, fetchQuizzes } from '../store/quizzesSlice';
 import type { Question, QuestionType, QuestionOption } from '../types';
 import '../css/create.css';
 
@@ -115,7 +115,7 @@ function CreateQuiz() {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!quizName.trim() || !quizDescription.trim()) {
@@ -174,13 +174,20 @@ function CreateQuiz() {
             })
         };
 
-        if (editMode) {
-            dispatch(updateQuizAsync({ id: originalQuizId, quiz: quizData }));
-        } else {
-            dispatch(createQuiz(quizData));
+        try {
+            if (editMode) {
+                await dispatch(updateQuizAsync({ id: originalQuizId, quiz: quizData })).unwrap();
+            } else {
+                await dispatch(createQuiz(quizData)).unwrap();
+            }
+            
+            // Перезавантажити список квізів після створення/оновлення
+            await dispatch(fetchQuizzes()).unwrap();
+            navigate('/manage');
+        } catch (error) {
+            console.error('Error saving quiz:', error);
+            alert('Помилка при збереженні квізу. Спробуйте ще раз.');
         }
-
-        navigate('/manage');
     };
 
     return (
