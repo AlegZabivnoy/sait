@@ -115,5 +115,30 @@
     "id": "quiz_1766440265743_4l3itlukl",
     "createdAt": "2025-12-22T21:51:05.743Z",
     "updatedAt": "2025-12-22T21:51:05.743Z"
+  },
+  {
+    "name": "аноми",
+    "description": "гнлр",
+    "questions": [
+      {
+        "id": 1766661670982,
+        "text": "фІЧ",
+        "type": "single",
+        "options": [
+          {
+            "text": "цй",
+            "isCorrect": true
+          },
+          {
+            "text": "цВУ",
+            "isCorrect": false
+          }
+        ],
+        "correctAnswer": ""
+      }
+    ],
+    "id": "quiz_1766661683006_fgrm7b46d",
+    "createdAt": "2025-12-25T11:21:23.006Z",
+    "updatedAt": "2025-12-25T11:21:23.007Z"
   }
 ]

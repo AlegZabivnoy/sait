@@ -43,10 +43,21 @@ router.post('/', [
   body('name').trim().isLength({ min: 3 }).withMessage('Quiz name must be at least 3 characters'),
   body('questions').isArray({ min: 1 }).withMessage('At least one question is required'),
   body('questions.*.text').notEmpty().withMessage('Question text is required'),
-  body('questions.*.type').isIn(['single', 'multiple', 'text']).withMessage('Invalid question type'),
-  body('questions.*.options').isArray({ min: 2 }).withMessage('At least 2 options are required')
+  body('questions.*.type').isIn(['single', 'multiple', 'text']).withMessage('Invalid question type')
 ], handleValidationErrors, async (req, res) => {
   try {
+    // Додаткова валідація для питань
+    const { questions } = req.body;
+    for (const question of questions) {
+      if ((question.type === 'single' || question.type === 'multiple')) {
+        if (!question.options || !Array.isArray(question.options) || question.options.length < 2) {
+          return res.status(400).json({ 
+            message: 'Questions with single or multiple choice must have at least 2 options' 
+          });
+        }
+      }
+    }
+
     const quiz = await quizStorage.create(req.body);
     res.status(201).json(quiz);
   } catch (error) {

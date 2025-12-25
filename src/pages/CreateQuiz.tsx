@@ -51,9 +51,26 @@ function CreateQuiz() {
     };
 
     const updateQuestion = (questionId: number, field: keyof Question, value: string | QuestionType) => {
-        setQuestions(questions.map((q: Question) => 
-            q.id === questionId ? { ...q, [field]: value } : q
-        ));
+        setQuestions(questions.map((q: Question) => {
+            if (q.id === questionId) {
+                const updated = { ...q, [field]: value };
+                
+                // Якщо тип змінюється на TEXT, очищаємо опції
+                if (field === 'type' && value === QUESTION_TYPES.TEXT) {
+                    updated.options = [];
+                }
+                // Якщо тип змінюється з TEXT на інший, додаємо дефолтні опції
+                else if (field === 'type' && q.type === QUESTION_TYPES.TEXT && value !== QUESTION_TYPES.TEXT) {
+                    updated.options = [
+                        { text: '', isCorrect: false },
+                        { text: '', isCorrect: false }
+                    ];
+                }
+                
+                return updated;
+            }
+            return q;
+        }));
     };
 
     const addOption = (questionId: number) => {
@@ -111,10 +128,50 @@ function CreateQuiz() {
             return;
         }
 
+        // Валідація питань
+        for (let i = 0; i < questions.length; i++) {
+            const q = questions[i];
+            if (!q.text.trim()) {
+                alert(`Заповніть текст питання ${i + 1}`);
+                return;
+            }
+
+            if (q.type === QUESTION_TYPES.SINGLE || q.type === QUESTION_TYPES.MULTIPLE) {
+                if (q.options.length < 2) {
+                    alert(`Питання ${i + 1} повинно мати хоча б 2 варіанти відповіді`);
+                    return;
+                }
+
+                const hasEmptyOption = q.options.some(opt => !opt.text.trim());
+                if (hasEmptyOption) {
+                    alert(`Заповніть всі варіанти відповіді для питання ${i + 1}`);
+                    return;
+                }
+
+                const hasCorrectAnswer = q.options.some(opt => opt.isCorrect);
+                if (!hasCorrectAnswer) {
+                    alert(`Оберіть правильну відповідь для питання ${i + 1}`);
+                    return;
+                }
+            }
+        }
+
         const quizData = {
             name: quizName.trim(),
             description: quizDescription.trim(),
-            questions: questions
+            questions: questions.map(q => {
+                // Для текстових питань видаляємо опції
+                if (q.type === QUESTION_TYPES.TEXT) {
+                    return {
+                        id: q.id,
+                        text: q.text,
+                        type: q.type,
+                        correctAnswer: q.correctAnswer || '',
+                        options: []
+                    };
+                }
+                return q;
+            })
         };
 
         if (editMode) {
