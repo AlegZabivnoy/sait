@@ -11,15 +11,25 @@ const RESULTS_FILE = path.join(__dirname, 'results.json');
 // Initialize data files if they don't exist
 async function initializeFiles() {
   try {
-    await fs.access(QUIZZES_FILE);
+    // Ensure the data directory exists
+    await fs.mkdir(__dirname, { recursive: true });
+  } catch (error) {
+    // Directory already exists or can't be created
+    console.log('Data directory check:', error.message);
+  }
+
+  try {
+    await fs.access(QUIZZES_FILE, fs.constants.R_OK | fs.constants.W_OK);
   } catch {
-    await fs.writeFile(QUIZZES_FILE, JSON.stringify([]));
+    console.log('Initializing quizzes.json...');
+    await fs.writeFile(QUIZZES_FILE, JSON.stringify([], null, 2), { mode: 0o666 });
   }
   
   try {
-    await fs.access(RESULTS_FILE);
+    await fs.access(RESULTS_FILE, fs.constants.R_OK | fs.constants.W_OK);
   } catch {
-    await fs.writeFile(RESULTS_FILE, JSON.stringify([]));
+    console.log('Initializing results.json...');
+    await fs.writeFile(RESULTS_FILE, JSON.stringify([], null, 2), { mode: 0o666 });
   }
 }
 
@@ -37,10 +47,17 @@ async function readData(filename) {
 // Write data to file
 async function writeData(filename, data) {
   try {
-    await fs.writeFile(filename, JSON.stringify(data, null, 2));
+    const jsonData = JSON.stringify(data, null, 2);
+    await fs.writeFile(filename, jsonData, { 
+      encoding: 'utf-8',
+      mode: 0o666,
+      flag: 'w'
+    });
+    console.log(`✓ Data written to ${path.basename(filename)}`);
   } catch (error) {
-    console.error(`Error writing ${filename}:`, error);
-    throw error;
+    console.error(`✗ Error writing ${filename}:`, error.message);
+    console.error('Full error:', error);
+    throw new Error(`Failed to save data: ${error.message}`);
   }
 }
 
@@ -56,16 +73,22 @@ export const quizStorage = {
   },
 
   async create(quiz) {
-    const quizzes = await readData(QUIZZES_FILE);
-    const newQuiz = {
-      ...quiz,
-      id: `quiz_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    quizzes.push(newQuiz);
-    await writeData(QUIZZES_FILE, quizzes);
-    return newQuiz;
+    try {
+      const quizzes = await readData(QUIZZES_FILE);
+      const newQuiz = {
+        ...quiz,
+        id: `quiz_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      quizzes.push(newQuiz);
+      await writeData(QUIZZES_FILE, quizzes);
+      console.log(`✓ Quiz created: ${newQuiz.name} (${newQuiz.id})`);
+      return newQuiz;
+    } catch (error) {
+      console.error('Failed to create quiz:', error);
+      throw error;
+    }
   },
 
   async update(id, updates) {

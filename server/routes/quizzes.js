@@ -58,10 +58,17 @@ router.post('/', [
       }
     }
 
+    console.log('Creating quiz:', req.body.name);
     const quiz = await quizStorage.create(req.body);
+    console.log('Quiz created successfully:', quiz.id);
     res.status(201).json(quiz);
   } catch (error) {
-    res.status(400).json({ message: 'Error creating quiz', error: error.message });
+    console.error('Error creating quiz:', error);
+    res.status(500).json({ 
+      message: 'Error creating quiz', 
+      error: error.message,
+      details: 'Check server logs for more information'
+    });
   }
 });
 

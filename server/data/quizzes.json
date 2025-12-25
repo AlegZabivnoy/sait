@@ -165,5 +165,55 @@
     "id": "quiz_1766663255725_xtupjoqb1",
     "createdAt": "2025-12-25T11:47:35.725Z",
     "updatedAt": "2025-12-25T11:47:35.725Z"
+  },
+  {
+    "name": "укаів",
+    "description": "куцафівс",
+    "questions": [
+      {
+        "id": 1766663798255,
+        "text": "уцвфсі",
+        "type": "single",
+        "options": [
+          {
+            "text": "увціч",
+            "isCorrect": true
+          },
+          {
+            "text": "уцвфс",
+            "isCorrect": false
+          }
+        ],
+        "correctAnswer": ""
+      }
+    ],
+    "id": "quiz_1766663804414_hn0o85zf2",
+    "createdAt": "2025-12-25T11:56:44.414Z",
+    "updatedAt": "2025-12-25T11:56:44.414Z"
+  },
+  {
+    "name": "76кпва",
+    "description": "5епіа",
+    "questions": [
+      {
+        "id": 1766663809900,
+        "text": "54ецуаі",
+        "type": "single",
+        "options": [
+          {
+            "text": "54ецуаів",
+            "isCorrect": true
+          },
+          {
+            "text": "45ека",
+            "isCorrect": false
+          }
+        ],
+        "correctAnswer": ""
+      }
+    ],
+    "id": "quiz_1766663830014_zt0xfitkj",
+    "createdAt": "2025-12-25T11:57:10.014Z",
+    "updatedAt": "2025-12-25T11:57:10.014Z"
   }
 ]
